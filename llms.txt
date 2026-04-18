@@ -1,0 +1,91 @@
+# TerraUI
+
+Vue 3 + Tailwind v4 component library. Import components from `@terranovasystems/terraui/components` and styles from `@terranovasystems/terraui/styles`.
+
+## Install
+
+```bash
+pnpm add @terranovasystems/terraui
+```
+
+Peer deps: `vue ^3.5`, `pinia ^3`, `vue-router ^5`, `zod ^4`, `@tanstack/vue-table ^8`.
+
+```ts
+import '@terranovasystems/terraui/styles'
+import { TButton } from '@terranovasystems/terraui/components'
+```
+
+## Components
+
+### Dashboard Shell
+
+- [TDashboardGroup](dist/llms/components/TDashboardGroup.md)
+- [TDashboardNavbar](dist/llms/components/TDashboardNavbar.md)
+- [TDashboardPanel](dist/llms/components/TDashboardPanel.md)
+- [TDashboardSidebar](dist/llms/components/TDashboardSidebar.md)
+- [TDashboardSidebarCollapse](dist/llms/components/TDashboardSidebarCollapse.md)
+
+### Data Display
+
+- [TAccordion](dist/llms/components/TAccordion.md)
+- [TCollapsibleSection](dist/llms/components/TCollapsibleSection.md)
+- [TEmptyState](dist/llms/components/TEmptyState.md)
+- [TLoadingState](dist/llms/components/TLoadingState.md)
+- [TStatTile](dist/llms/components/TStatTile.md)
+- [TTable](dist/llms/components/TTable.md)
+
+### Forms
+
+- [TCheckbox](dist/llms/components/TCheckbox.md)
+- [TFileInput](dist/llms/components/TFileInput.md)
+- [TForm](dist/llms/components/TForm.md)
+- [TFormField](dist/llms/components/TFormField.md)
+- [TFormGroup](dist/llms/components/TFormGroup.md)
+- [TInput](dist/llms/components/TInput.md)
+- [TNumberInput](dist/llms/components/TNumberInput.md)
+- [TNumberStepper](dist/llms/components/TNumberStepper.md)
+- [TPinInput](dist/llms/components/TPinInput.md)
+- [TRadioGroup](dist/llms/components/TRadioGroup.md)
+- [TSelect](dist/llms/components/TSelect.md)
+- [TTextarea](dist/llms/components/TTextarea.md)
+- [TToggle](dist/llms/components/TToggle.md)
+- [TUrlInput](dist/llms/components/TUrlInput.md)
+
+### Layout & Navigation
+
+- [TControlBar](dist/llms/components/TControlBar.md)
+- [TFilterDivider](dist/llms/components/TFilterDivider.md)
+- [TFilterLabel](dist/llms/components/TFilterLabel.md)
+- [TNavbar](dist/llms/components/TNavbar.md)
+- [TNavigationMenu](dist/llms/components/TNavigationMenu.md)
+- [TNavLink](dist/llms/components/TNavLink.md)
+- [TSubNavbar](dist/llms/components/TSubNavbar.md)
+- [TTabSelector](dist/llms/components/TTabSelector.md)
+
+### Overlays
+
+- [TDropdown](dist/llms/components/TDropdown.md)
+- [TDropdownMenu](dist/llms/components/TDropdownMenu.md)
+- [TFloatingWindow](dist/llms/components/TFloatingWindow.md)
+- [TModal](dist/llms/components/TModal.md)
+- [TToast](dist/llms/components/TToast.md)
+- [TToastContainer](dist/llms/components/TToastContainer.md)
+- [TWindowsContainer](dist/llms/components/TWindowsContainer.md)
+
+### Primitives
+
+- [TAlert](dist/llms/components/TAlert.md)
+- [TAvatar](dist/llms/components/TAvatar.md)
+- [TBadge](dist/llms/components/TBadge.md)
+- [TButton](dist/llms/components/TButton.md)
+- [TCard](dist/llms/components/TCard.md)
+- [THeading](dist/llms/components/THeading.md)
+- [TIcon](dist/llms/components/TIcon.md)
+- [TLogo](dist/llms/components/TLogo.md)
+- [TSeparator](dist/llms/components/TSeparator.md)
+- [TSkeleton](dist/llms/components/TSkeleton.md)
+- [TStatusIndicator](dist/llms/components/TStatusIndicator.md)
+
+### Windows
+
+- [NumericKeypadWindow](dist/llms/components/NumericKeypadWindow.md)
