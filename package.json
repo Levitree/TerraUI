@@ -1,6 +1,6 @@
 {
   "name": "@terranovasystems/terraui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Terranova design-system components, composables, and tokens. Framework: Vue 3, Tailwind v4, Lucide icons.",
   "license": "UNLICENSED",
   "type": "module",
