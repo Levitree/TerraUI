@@ -1,0 +1,250 @@
+/*
+ * Design tokens — single source of truth for all color values.
+ *
+ * Dark mode is the default. To add light mode, override the same tokens
+ * under :root[data-theme='light'] (stub at bottom of file). Every surface
+ * utility in templates (bg-surface, text-ink, border-line, etc.) resolves
+ * through these CSS custom properties, so a theme swap is a value swap —
+ * no component changes required.
+ *
+ * Naming: semantic and generic. Prefer color-danger over button-vfd-on.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Page & surfaces */
+  --color-page: #030712;
+  --color-surface: #050a16;
+  --color-elevated: #0b1426;
+  --color-chrome: #020611;
+  --color-overlay: rgba(2, 6, 16, 0.85);
+
+  /* Interactive fill overlays (translucent white on dark) */
+  --color-fill-subtle: rgba(255, 255, 255, 0.05);
+  --color-fill: rgba(255, 255, 255, 0.1);
+  --color-fill-strong: rgba(255, 255, 255, 0.15);
+
+  /* Borders / dividers */
+  --color-line-subtle: rgba(255, 255, 255, 0.1);
+  --color-line: rgba(255, 255, 255, 0.15);
+  --color-line-strong: rgba(255, 255, 255, 0.3);
+
+  /* Text */
+  --color-ink: #e2e8f0;
+  --color-ink-secondary: #cbd5e1;
+  --color-ink-muted: #94a3b8;
+  --color-ink-subtle: #64748b;
+  --color-ink-disabled: #475569;
+  --color-ink-placeholder: #64748b;
+  --color-ink-inverse: #0f172a;
+
+  /* Semantic state */
+  --color-success: #10b981;
+  --color-success-soft: rgba(16, 185, 129, 0.12);
+  --color-success-strong: #059669;
+  --color-danger: #ef4444;
+  --color-danger-soft: rgba(239, 68, 68, 0.12);
+  --color-danger-strong: #dc2626;
+  --color-warning: #f59e0b;
+  --color-warning-soft: rgba(245, 158, 11, 0.12);
+  --color-warning-strong: #d97706;
+  --color-info: #3b82f6;
+  --color-info-soft: rgba(59, 130, 246, 0.12);
+  --color-info-strong: #2563eb;
+
+  /* Chart series palette */
+  --color-series-1: #22c55e;
+  --color-series-2: #3b82f6;
+  --color-series-3: #f59e0b;
+  --color-series-4: #ef4444;
+  --color-series-5: #8b5cf6;
+  --color-series-6: #06b6d4;
+  --color-series-7: #ec4899;
+  --color-series-8: #84cc16;
+
+  /* Gradients */
+  --gradient-app:
+    radial-gradient(circle at 15% -20%, rgba(9, 154, 255, 0.2), transparent 45%),
+    radial-gradient(circle at 60% 0%, rgba(255, 110, 186, 0.15), transparent 40%);
+
+  /* Fonts */
+  --font-default: 'IBM Plex Mono', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+/*
+ * Light mode — applies when either:
+ *   (1) the OS system preference is light AND the user hasn't pinned dark, or
+ *   (2) the app explicitly sets <html data-theme="light">.
+ *
+ * To force a mode regardless of system preference: set data-theme="light"
+ * or data-theme="dark" on <html>. Omit data-theme to follow the system.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    color-scheme: light;
+
+    --color-page: #e7ecf2;
+    --color-surface: #ffffff;
+    --color-elevated: #f1f5f9;
+    --color-chrome: #ffffff;
+    --color-overlay: rgba(15, 23, 42, 0.45);
+
+    --color-fill-subtle: rgba(15, 23, 42, 0.05);
+    --color-fill: rgba(15, 23, 42, 0.09);
+    --color-fill-strong: rgba(15, 23, 42, 0.15);
+
+    --color-line-subtle: rgba(15, 23, 42, 0.14);
+    --color-line: rgba(15, 23, 42, 0.22);
+    --color-line-strong: rgba(15, 23, 42, 0.36);
+
+    --color-ink: #0f172a;
+    --color-ink-secondary: #1e293b;
+    --color-ink-muted: #334155;
+    --color-ink-subtle: #475569;
+    --color-ink-disabled: #94a3b8;
+    --color-ink-placeholder: #64748b;
+    --color-ink-inverse: #f8fafc;
+
+    --color-success: #059669;
+    --color-success-soft: rgba(16, 185, 129, 0.12);
+    --color-success-strong: #047857;
+    --color-danger: #dc2626;
+    --color-danger-soft: rgba(239, 68, 68, 0.12);
+    --color-danger-strong: #b91c1c;
+    --color-warning: #d97706;
+    --color-warning-soft: rgba(245, 158, 11, 0.15);
+    --color-warning-strong: #b45309;
+    --color-info: #2563eb;
+    --color-info-soft: rgba(59, 130, 246, 0.12);
+    --color-info-strong: #1d4ed8;
+
+    --color-series-1: #16a34a;
+    --color-series-2: #2563eb;
+    --color-series-3: #d97706;
+    --color-series-4: #dc2626;
+    --color-series-5: #7c3aed;
+    --color-series-6: #0891b2;
+    --color-series-7: #db2777;
+    --color-series-8: #65a30d;
+
+    --gradient-app:
+      radial-gradient(circle at 15% -20%, rgba(59, 130, 246, 0.08), transparent 45%),
+      radial-gradient(circle at 60% 0%, rgba(236, 72, 153, 0.06), transparent 40%);
+  }
+}
+
+/* Explicit light-mode pin (wins over system preference) */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  /* Page & surfaces */
+  --color-page: #e7ecf2;
+  --color-surface: #ffffff;
+  --color-elevated: #f1f5f9;
+  --color-chrome: #ffffff;
+  --color-overlay: rgba(15, 23, 42, 0.45);
+
+  /* Interactive fill overlays (translucent slate on light) */
+  --color-fill-subtle: rgba(15, 23, 42, 0.05);
+  --color-fill: rgba(15, 23, 42, 0.09);
+  --color-fill-strong: rgba(15, 23, 42, 0.15);
+
+  /* Borders / dividers */
+  --color-line-subtle: rgba(15, 23, 42, 0.14);
+  --color-line: rgba(15, 23, 42, 0.22);
+  --color-line-strong: rgba(15, 23, 42, 0.36);
+
+  /* Text */
+  --color-ink: #0f172a;
+  --color-ink-secondary: #1e293b;
+  --color-ink-muted: #334155;
+  --color-ink-subtle: #475569;
+  --color-ink-disabled: #94a3b8;
+  --color-ink-placeholder: #64748b;
+  --color-ink-inverse: #f8fafc;
+
+  /* Semantic state — slightly darker saturation for legibility on light surfaces */
+  --color-success: #059669;
+  --color-success-soft: rgba(16, 185, 129, 0.12);
+  --color-success-strong: #047857;
+  --color-danger: #dc2626;
+  --color-danger-soft: rgba(239, 68, 68, 0.12);
+  --color-danger-strong: #b91c1c;
+  --color-warning: #d97706;
+  --color-warning-soft: rgba(245, 158, 11, 0.15);
+  --color-warning-strong: #b45309;
+  --color-info: #2563eb;
+  --color-info-soft: rgba(59, 130, 246, 0.12);
+  --color-info-strong: #1d4ed8;
+
+  /* Chart series palette — slightly saturated for white backgrounds */
+  --color-series-1: #16a34a;
+  --color-series-2: #2563eb;
+  --color-series-3: #d97706;
+  --color-series-4: #dc2626;
+  --color-series-5: #7c3aed;
+  --color-series-6: #0891b2;
+  --color-series-7: #db2777;
+  --color-series-8: #65a30d;
+
+  /* Gradients — subtle tint on light background */
+  --gradient-app:
+    radial-gradient(circle at 15% -20%, rgba(59, 130, 246, 0.08), transparent 45%),
+    radial-gradient(circle at 60% 0%, rgba(236, 72, 153, 0.06), transparent 40%);
+}
+
+/*
+ * Register tokens with Tailwind so utilities like bg-surface, text-ink,
+ * border-line, ring-success, divide-line-subtle, etc. are generated.
+ * `@theme inline` preserves the var() reference so theme swaps at :root
+ * level propagate to the utilities at runtime.
+ */
+@theme inline {
+  --breakpoint-3xl: 1800px;
+
+  --color-page: var(--color-page);
+  --color-surface: var(--color-surface);
+  --color-elevated: var(--color-elevated);
+  --color-chrome: var(--color-chrome);
+  --color-overlay: var(--color-overlay);
+
+  --color-fill-subtle: var(--color-fill-subtle);
+  --color-fill: var(--color-fill);
+  --color-fill-strong: var(--color-fill-strong);
+
+  --color-line-subtle: var(--color-line-subtle);
+  --color-line: var(--color-line);
+  --color-line-strong: var(--color-line-strong);
+
+  --color-ink: var(--color-ink);
+  --color-ink-secondary: var(--color-ink-secondary);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-ink-subtle: var(--color-ink-subtle);
+  --color-ink-disabled: var(--color-ink-disabled);
+  --color-ink-placeholder: var(--color-ink-placeholder);
+  --color-ink-inverse: var(--color-ink-inverse);
+
+  --color-success: var(--color-success);
+  --color-success-soft: var(--color-success-soft);
+  --color-success-strong: var(--color-success-strong);
+  --color-danger: var(--color-danger);
+  --color-danger-soft: var(--color-danger-soft);
+  --color-danger-strong: var(--color-danger-strong);
+  --color-warning: var(--color-warning);
+  --color-warning-soft: var(--color-warning-soft);
+  --color-warning-strong: var(--color-warning-strong);
+  --color-info: var(--color-info);
+  --color-info-soft: var(--color-info-soft);
+  --color-info-strong: var(--color-info-strong);
+
+  --color-series-1: var(--color-series-1);
+  --color-series-2: var(--color-series-2);
+  --color-series-3: var(--color-series-3);
+  --color-series-4: var(--color-series-4);
+  --color-series-5: var(--color-series-5);
+  --color-series-6: var(--color-series-6);
+  --color-series-7: var(--color-series-7);
+  --color-series-8: var(--color-series-8);
+}

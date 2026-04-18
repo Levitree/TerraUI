@@ -1,0 +1,24 @@
+/*
+ * TerraUI styles entrypoint. Import once from the host app's main CSS:
+ *   @import '@terranova/terraui/styles';
+ *
+ * Ordering matters:
+ *   1. Tokens must come first — everything downstream references `--color-*`,
+ *      `--font-*`, `--gradient-app`, etc.
+ *   2. Base (reset + typography + scrollbars) applies globals that TerraUI
+ *      components implicitly depend on (uppercase text, `.font-mono`, etc.).
+ *   3. Animations expose utility classes (`animate-slide-in` used by TToast).
+ *
+ * The host app is still responsible for:
+ *   - Importing `tailwindcss` itself.
+ *   - Loading the IBM Plex font family (`--font-default` names it).
+ *   - Any non-TerraUI vendor overrides (e.g. Mapbox, vue-flow).
+ */
+
+@import './tokens/colors.css';
+
+@import './base/reset.css';
+@import './base/typography.css';
+@import './base/scrollbars.css';
+
+@import './animations/keyframes.css';
