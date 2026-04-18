@@ -106,15 +106,16 @@ const state = reactive<{
   disabled: false,
 })
 
+const plans = ['free', 'standard', 'premium', 'enterprise'] as const
 const schema = z.object({
-  plan: z.enum(['free', 'standard', 'premium', 'enterprise'], {
+  plan: z.string().refine((v) => (plans as readonly string[]).includes(v), {
     message: 'Select a plan',
   }),
 })
 
 const form = useForm({
   schema,
-  initialValues: { plan: '' as 'free' | 'standard' | 'premium' | 'enterprise' },
+  initialValues: { plan: '' },
   validateOnChange: true,
 })
 

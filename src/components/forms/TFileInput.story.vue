@@ -62,7 +62,7 @@
     <Variant title="With validation (zod + useForm)">
       <div class="p-6 bg-bg">
         <form class="flex flex-col gap-2" @submit.prevent="submit">
-          <TFileInput v-bind="form.getFieldProps('avatar')" accept="image/*" />
+          <TFileInput v-bind="form.getFieldProps('avatar') as unknown as Record<string, unknown>" accept="image/*" />
           <p v-if="form.errors.value.avatar" class="text-xs text-danger">
             {{ form.errors.value.avatar }}
           </p>

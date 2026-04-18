@@ -7,16 +7,16 @@
           <TForm :schema="schema" :initial-values="validInitial" @submit="onSubmit">
             <template #default="{ getFieldProps }">
               <TFormField name="name" label="Name" required>
-                <TInput v-bind="getFieldProps('name')" placeholder="Ada Lovelace" />
+                <TInput v-bind="getFieldProps('name') as unknown as Record<string, unknown>" placeholder="Ada Lovelace" />
               </TFormField>
               <TFormField name="email" label="Email" required>
-                <TInput v-bind="getFieldProps('email')" type="email" placeholder="ada@example.com" />
+                <TInput v-bind="getFieldProps('email') as unknown as Record<string, unknown>" type="email" placeholder="ada@example.com" />
               </TFormField>
               <TFormField name="role" label="Role">
-                <TSelect v-bind="getFieldProps('role')" :options="roleOptions" />
+                <TSelect v-bind="getFieldProps('role') as unknown as Record<string, unknown>" :options="roleOptions" />
               </TFormField>
               <TFormField name="bio" label="Bio" hint="Max 200 chars">
-                <TTextarea v-bind="getFieldProps('bio')" :rows="3" />
+                <TTextarea v-bind="getFieldProps('bio') as unknown as Record<string, unknown>" :rows="3" />
               </TFormField>
             </template>
             <template #actions="{ isSubmitting, hasErrors }">
@@ -36,16 +36,16 @@
           <TForm :schema="schema" :initial-values="invalidInitial" @submit="onSubmit">
             <template #default="{ getFieldProps }">
               <TFormField name="name" label="Name" required>
-                <TInput v-bind="getFieldProps('name')" placeholder="Ada Lovelace" />
+                <TInput v-bind="getFieldProps('name') as unknown as Record<string, unknown>" placeholder="Ada Lovelace" />
               </TFormField>
               <TFormField name="email" label="Email" required>
-                <TInput v-bind="getFieldProps('email')" type="email" />
+                <TInput v-bind="getFieldProps('email') as unknown as Record<string, unknown>" type="email" />
               </TFormField>
               <TFormField name="role" label="Role">
-                <TSelect v-bind="getFieldProps('role')" :options="roleOptions" />
+                <TSelect v-bind="getFieldProps('role') as unknown as Record<string, unknown>" :options="roleOptions" />
               </TFormField>
               <TFormField name="bio" label="Bio">
-                <TTextarea v-bind="getFieldProps('bio')" :rows="3" />
+                <TTextarea v-bind="getFieldProps('bio') as unknown as Record<string, unknown>" :rows="3" />
               </TFormField>
             </template>
             <template #actions>
@@ -66,9 +66,9 @@
         <TForm :schema="schema" :initial-values="validInitial" @submit="onSubmit">
           <template #default="{ getFieldProps, values, errors }">
             <div class="flex flex-col gap-3">
-              <TInput v-bind="getFieldProps('name')" placeholder="Name" />
-              <TInput v-bind="getFieldProps('email')" type="email" placeholder="Email" />
-              <TSelect v-bind="getFieldProps('role')" :options="roleOptions" />
+              <TInput v-bind="getFieldProps('name') as unknown as Record<string, unknown>" placeholder="Name" />
+              <TInput v-bind="getFieldProps('email') as unknown as Record<string, unknown>" type="email" placeholder="Email" />
+              <TSelect v-bind="getFieldProps('role') as unknown as Record<string, unknown>" :options="roleOptions" />
               <pre class="text-xs text-ink-muted">values: {{ JSON.stringify(values) }}</pre>
               <pre class="text-xs text-danger">errors: {{ JSON.stringify(errors) }}</pre>
             </div>
@@ -90,10 +90,10 @@
         <TForm :schema="schema" :initial-values="invalidInitial" validate-on-change @submit="onSubmit">
           <template #default="{ getFieldProps }">
             <TFormField name="name" label="Name" required>
-              <TInput v-bind="getFieldProps('name')" />
+              <TInput v-bind="getFieldProps('name') as unknown as Record<string, unknown>" />
             </TFormField>
             <TFormField name="email" label="Email" required>
-              <TInput v-bind="getFieldProps('email')" type="email" />
+              <TInput v-bind="getFieldProps('email') as unknown as Record<string, unknown>" type="email" />
             </TFormField>
           </template>
           <template #actions>

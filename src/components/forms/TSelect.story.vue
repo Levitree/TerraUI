@@ -73,7 +73,7 @@
       <div class="p-6 bg-bg max-w-md">
         <form class="flex flex-col gap-3" @submit.prevent="submit">
           <label class="text-xs uppercase tracking-wider text-ink-muted">Region</label>
-          <TSelect v-bind="form.getFieldProps('region')" :options="regionOptions" />
+          <TSelect v-bind="form.getFieldProps('region') as unknown as Record<string, unknown>" :options="regionOptions" />
           <p v-if="form.errors.value.region" class="text-xs text-danger">
             {{ form.errors.value.region }}
           </p>

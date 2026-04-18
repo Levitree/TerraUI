@@ -73,7 +73,7 @@
           <label class="text-xs uppercase tracking-wider text-ink-muted">
             Enter the 6-digit code sent to your device
           </label>
-          <TPinInput v-bind="form.getFieldProps('code')" :length="6" type="number" otp />
+          <TPinInput v-bind="form.getFieldProps('code') as unknown as Record<string, unknown>" :length="6" type="number" otp />
           <p v-if="form.errors.value.code" class="text-xs text-danger">
             {{ form.errors.value.code }}
           </p>

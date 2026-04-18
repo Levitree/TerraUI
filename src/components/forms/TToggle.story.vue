@@ -88,7 +88,7 @@ const state = reactive<{
 
 const schema = z.object({
   marketing: z.boolean(),
-  terms: z.literal(true, { message: 'You must accept the terms' }),
+  terms: z.boolean().refine((v) => v === true, { message: 'You must accept the terms' }),
 })
 
 const form = useForm({
