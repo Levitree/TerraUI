@@ -3,6 +3,14 @@
   "version": "0.4.1",
   "description": "Terranova design-system components, composables, and tokens. Framework: Vue 3, Tailwind v4, Lucide icons.",
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Levitree/TerraUI.git"
+  },
+  "homepage": "https://github.com/Levitree/TerraUI#readme",
+  "bugs": {
+    "url": "https://github.com/Levitree/TerraUI/issues"
+  },
   "type": "module",
   "sideEffects": [
     "**/*.css",
@@ -66,7 +74,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@histoire/plugin-vue": "1.0.0-beta.1",
     "@tailwindcss/cli": "^4.2.2",
+    "@tailwindcss/vite": "^4.2.2",
     "@tanstack/vue-table": "^8.21.3",
     "@vitejs/plugin-vue": "^6.0.6",
     "concurrently": "^9.2.1",
@@ -74,6 +84,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.8.0",
     "globals": "^17.5.0",
+    "histoire": "1.0.0-beta.1",
     "pinia": "^3.0.4",
     "prettier": "^3.8.3",
     "tailwindcss": "^4.2.2",
