@@ -1,7 +1,13 @@
 <template>
   <div class="relative" :class="{ 'w-full': fullWidth }">
+    <TIcon
+      v-if="icon"
+      :name="icon"
+      :size="iconSize"
+      class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted"
+    />
     <span
-      v-if="prefix"
+      v-else-if="prefix"
       class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-subtle"
       :class="prefixSizeClasses"
     >
@@ -36,6 +42,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useFormField } from '../../composables/useFormField'
+import TIcon from '../TIcon.vue'
 
 defineOptions({ inheritAttrs: false })
 
@@ -58,6 +65,7 @@ const props = withDefaults(
     error?: boolean | string
     prefix?: string
     suffix?: string
+    icon?: string
     fullWidth?: boolean
   }>(),
   {
@@ -114,11 +122,12 @@ const baseClasses = computed(() => {
     classes.push('border-line focus:border-line-strong')
   }
 
-  // Disabled/readonly states
+  // Disabled/readonly states — keep the value readable (profile emails,
+  // user IDs, etc. surface in disabled inputs and need to stay legible).
   if (props.disabled) {
-    classes.push('opacity-30 cursor-not-allowed')
+    classes.push('opacity-70 cursor-not-allowed')
   } else if (props.readonly) {
-    classes.push('opacity-60 cursor-not-allowed')
+    classes.push('opacity-80 cursor-not-allowed')
   }
 
   if (props.center) {
@@ -152,7 +161,7 @@ const sizeClasses = computed(() => {
 
 const paddingAdjustment = computed(() => {
   const classes: string[] = []
-  if (props.prefix) {
+  if (props.icon || props.prefix) {
     switch (props.size) {
       case 'sm':
         classes.push('pl-7')
@@ -161,7 +170,7 @@ const paddingAdjustment = computed(() => {
         classes.push('pl-10')
         break
       default:
-        classes.push('pl-8')
+        classes.push('pl-9')
     }
   }
   if (props.suffix) {
@@ -177,6 +186,17 @@ const paddingAdjustment = computed(() => {
     }
   }
   return classes.join(' ')
+})
+
+const iconSize = computed<'xs' | 'sm' | 'md' | 'lg'>(() => {
+  switch (props.size) {
+    case 'sm':
+      return 'xs'
+    case 'lg':
+      return 'md'
+    default:
+      return 'sm'
+  }
 })
 
 const prefixSizeClasses = computed(() => {

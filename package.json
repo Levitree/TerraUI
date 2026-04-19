@@ -44,17 +44,16 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/types/index.js"
     },
-    "./styles": "./dist/styles/terraui.css",
-    "./styles/tokens": "./dist/styles/tokens/colors.css",
+    "./styles": "./src/styles/index.css",
+    "./styles/tokens": "./src/styles/tokens/colors.css",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && pnpm build:js && pnpm build:css && pnpm build:types && pnpm build:llms",
+    "build": "pnpm clean && pnpm build:js && pnpm build:types && pnpm build:llms",
     "build:js": "vite build",
-    "build:css": "tailwindcss -i src/styles/index.css -o dist/styles/terraui.css --minify && mkdir -p dist/styles/tokens && cp src/styles/tokens/colors.css dist/styles/tokens/colors.css",
     "build:types": "vue-tsc -p tsconfig.build.json",
     "build:llms": "tsx scripts/build-llm-docs.ts",
-    "dev": "pnpm build:css && concurrently -n js,css,types -c blue,magenta,cyan \"vite build --watch\" \"tailwindcss -i src/styles/index.css -o dist/styles/terraui.css --watch\" \"vue-tsc -p tsconfig.build.json --watch --preserveWatchOutput\"",
+    "dev": "concurrently -n js,types -c blue,cyan \"vite build --watch\" \"vue-tsc -p tsconfig.build.json --watch --preserveWatchOutput\"",
     "clean": "rm -rf dist",
     "typecheck": "vue-tsc -p tsconfig.json",
     "lint": "eslint src",
@@ -74,13 +73,11 @@
     "zod": "^4.0.0"
   },
   "dependencies": {
-    "@floating-ui/vue": "^1.1.11",
     "lucide-vue-next": "^0.545.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@histoire/plugin-vue": "1.0.0-beta.1",
-    "@tailwindcss/cli": "^4.2.2",
     "@tailwindcss/vite": "^4.2.2",
     "@tanstack/vue-table": "^8.21.3",
     "@vitejs/plugin-vue": "^6.0.6",

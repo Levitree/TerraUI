@@ -7,11 +7,11 @@
       <Transition name="tdropdown">
         <div
           v-if="isOpen"
-          ref="floatingRef"
+          ref="menuRef"
           role="menu"
-          :style="floatingStyles"
+          :style="menuStyle"
           :class="[
-            'z-50 min-w-48 bg-elevated border border-line rounded-sm shadow-xl py-1 overflow-hidden',
+            'fixed z-50 min-w-48 bg-elevated border border-line rounded-sm shadow-xl py-1 overflow-hidden',
             ui?.content,
           ]"
         >
@@ -66,9 +66,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch, type CSSProperties } from 'vue'
 import { useRouter } from 'vue-router'
-import { autoUpdate, flip, offset, shift, useFloating, type Placement } from '@floating-ui/vue'
 import TAvatar from './TAvatar.vue'
 import TIcon from './TIcon.vue'
 
@@ -89,10 +88,11 @@ export type TDropdownMenuItem =
     }
 
 export interface TDropdownMenuContent {
+  /** Which side of the trigger the menu opens toward. Default 'bottom'. */
+  side?: 'top' | 'bottom'
+  /** Cross-axis edge alignment relative to the trigger. Default 'start'. */
   align?: 'start' | 'center' | 'end'
-  side?: 'top' | 'bottom' | 'left' | 'right'
-  collisionPadding?: number
-  /** Gap between trigger and menu. Defaults to 4px. */
+  /** Gap in px between trigger and menu. Default 4. */
   sideOffset?: number
 }
 
@@ -110,7 +110,8 @@ const router = useRouter()
 const isOpen = ref(false)
 const rootRef = ref<HTMLElement | null>(null)
 const triggerRef = ref<HTMLElement | null>(null)
-const floatingRef = ref<HTMLElement | null>(null)
+const menuRef = ref<HTMLElement | null>(null)
+const menuStyle = ref<CSSProperties>({})
 
 const groupedItems = computed<TDropdownMenuItem[][]>(() => {
   if (props.items.length === 0) return []
@@ -119,29 +120,47 @@ const groupedItems = computed<TDropdownMenuItem[][]>(() => {
     : [props.items as TDropdownMenuItem[]]
 })
 
-// Map our side+align API onto floating-ui's Placement string. Center align
-// collapses to the bare side (e.g. 'bottom'), since floating-ui only
-// distinguishes start/end on the cross axis.
-const placement = computed<Placement>(() => {
+// Teleport + position: fixed = menu is viewport-relative, so it can't be
+// clipped or trigger scroll in any ancestor (including overflow-hidden
+// sidebars and overflow-auto tables). We measure the trigger once per open,
+// compute coordinates for the requested side/align, and set left/right/top
+// as explicit px. Closing and re-opening re-measures, so normal interaction
+// picks up any layout changes naturally.
+const computePosition = () => {
+  const trigger = triggerRef.value
+  if (!trigger) return
+
+  const rect = trigger.getBoundingClientRect()
   const side = props.content?.side ?? 'bottom'
   const align = props.content?.align ?? 'start'
-  if (align === 'center') return side
-  return `${side}-${align}` as Placement
-})
+  const offset = props.content?.sideOffset ?? 4
 
-const padding = computed(() => props.content?.collisionPadding ?? 8)
-const sideOffset = computed(() => props.content?.sideOffset ?? 4)
+  const style: CSSProperties = {}
 
-const { floatingStyles } = useFloating(triggerRef, floatingRef, {
-  placement,
-  // `flip` swaps the side when the preferred one overflows; `shift` nudges
-  // along the cross-axis to keep the menu on-screen without hiding the arrow.
-  middleware: computed(() => [
-    offset(sideOffset.value),
-    flip({ padding: padding.value }),
-    shift({ padding: padding.value }),
-  ]),
-  whileElementsMounted: autoUpdate,
+  if (side === 'bottom') {
+    style.top = `${rect.bottom + offset}px`
+  } else {
+    // Anchor from the viewport bottom so the menu grows upward from its top
+    // edge (trigger.top - offset) without needing to know its own height.
+    style.bottom = `${window.innerHeight - rect.top + offset}px`
+  }
+
+  if (align === 'start') {
+    style.left = `${rect.left}px`
+  } else if (align === 'end') {
+    style.right = `${window.innerWidth - rect.right}px`
+  } else {
+    style.left = `${rect.left + rect.width / 2}px`
+    style.transform = 'translateX(-50%)'
+  }
+
+  menuStyle.value = style
+}
+
+watch(isOpen, async (open) => {
+  if (!open) return
+  await nextTick()
+  computePosition()
 })
 
 const toggle = () => {
@@ -197,14 +216,13 @@ const handleSelect = (
   if (item.type !== 'checkbox') close()
 }
 
-// Click-outside needs to account for the teleported floating panel: it lives
-// in <body>, not inside rootRef, so a click inside the menu would otherwise
-// count as "outside" and immediately close it.
+// Click-outside must accept both the root (trigger side) and the teleported
+// menu, since the menu is no longer a DOM descendant of root.
 const onDocumentClick = (event: MouseEvent) => {
   if (!isOpen.value) return
   const target = event.target as Node
   if (rootRef.value?.contains(target)) return
-  if (floatingRef.value?.contains(target)) return
+  if (menuRef.value?.contains(target)) return
   close()
 }
 

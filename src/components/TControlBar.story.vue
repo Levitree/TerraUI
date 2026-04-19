@@ -14,10 +14,10 @@
         <TControlBar :position="state.position" :blur="state.blur">
           <TButton size="sm" icon="plus" label="New" />
           <TButton size="sm" variant="secondary" icon="filter" label="Filter" />
-          <TFilterDivider />
+          <TSeparator orientation="vertical" class="h-5" />
           <TFilterLabel label="Sort" />
           <TButton size="sm" variant="ghost" label="Newest" icon-right icon="chevron-down" />
-          <TFilterDivider />
+          <TSeparator orientation="vertical" class="h-5" />
           <TButton size="sm" variant="ghost" icon="refresh-cw" />
         </TControlBar>
       </div>
@@ -27,7 +27,7 @@
       <div class="p-6 bg-bg">
         <TControlBar position="top">
           <TButton size="sm" icon="arrow-left" variant="ghost" label="Back" />
-          <TFilterDivider />
+          <TSeparator orientation="vertical" class="h-5" />
           <TFilterLabel label="View" />
           <TButton size="sm" variant="secondary" label="Grid" active />
           <TButton size="sm" variant="secondary" label="List" />
@@ -39,7 +39,7 @@
       <div class="p-6 bg-bg">
         <TControlBar position="bottom">
           <span class="text-xs text-ink-muted">42 items</span>
-          <TFilterDivider />
+          <TSeparator orientation="vertical" class="h-5" />
           <TButton size="sm" variant="ghost" icon="chevron-left" />
           <span class="text-xs text-ink">Page 1 of 5</span>
           <TButton size="sm" variant="ghost" icon="chevron-right" />
@@ -63,7 +63,7 @@
           <TButton size="sm" variant="secondary" label="Status" icon-right icon="chevron-down" />
           <TButton size="sm" variant="secondary" label="Owner" icon-right icon="chevron-down" />
           <TButton size="sm" variant="secondary" label="Tags" icon-right icon="chevron-down" />
-          <TFilterDivider />
+          <TSeparator orientation="vertical" class="h-5" />
           <TButton size="sm" variant="ghost" icon="x" label="Clear" />
         </TControlBar>
       </div>
@@ -75,7 +75,7 @@
 import { reactive } from 'vue'
 import TControlBar from './TControlBar.vue'
 import TButton from './TButton.vue'
-import TFilterDivider from './TFilterDivider.vue'
+import TSeparator from './TSeparator.vue'
 import TFilterLabel from './TFilterLabel.vue'
 
 const state = reactive<{

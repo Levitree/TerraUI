@@ -1,35 +1,73 @@
 <template>
-  <div class="flex items-center justify-between gap-4" :class="{ 'w-full': fullWidth }">
-    <div class="relative" :class="fullWidth ? 'w-full' : 'w-1/3 min-w-20'">
-      <input
-        type="number"
-        :value="displayValue"
-        :disabled="disabled"
-        :readonly="readonly || isCoarsePointer"
-        :inputmode="isCoarsePointer ? 'none' : undefined"
-        :placeholder="placeholder"
-        :min="min"
-        :max="max"
-        :step="step"
-        :class="inputClasses"
-        @input="handleInput"
-        @blur="handleBlur"
-        @focus="handleFocus"
-        @click="handleInputClick"
-      />
-      <span
-        v-if="suffix"
-        class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-subtle"
-        :class="suffixSizeClasses"
-      >
-        {{ suffix }}
-      </span>
-    </div>
+  <div v-if="stepper" class="flex items-center gap-2" :class="{ 'w-full': fullWidth }">
+    <button
+      type="button"
+      :disabled="disabled || atMin"
+      :class="stepperButtonClasses"
+      @click="adjust(-1)"
+    >
+      <TIcon name="minus" :size="stepperIconSize" />
+    </button>
+    <TInput
+      type="number"
+      class="flex-1"
+      :model-value="displayValue"
+      :min="min"
+      :max="max"
+      :step="step"
+      :size="size"
+      :disabled="disabled"
+      :readonly="readonly || isCoarsePointer"
+      :placeholder="placeholder"
+      :error="error"
+      :center="center"
+      :mono="mono"
+      :suffix="suffix"
+      :inputmode="isCoarsePointer ? 'none' : undefined"
+      :full-width="fullWidth"
+      @update:model-value="handleInput"
+      @blur="emit('blur', $event)"
+      @focus="emit('focus', $event)"
+      @click="handleCoarseClick"
+    />
+    <button
+      type="button"
+      :disabled="disabled || atMax"
+      :class="stepperButtonClasses"
+      @click="adjust(1)"
+    >
+      <TIcon name="plus" :size="stepperIconSize" />
+    </button>
   </div>
+  <TInput
+    v-else
+    type="number"
+    :class="fullWidth ? 'w-full' : 'w-1/3 min-w-20'"
+    :model-value="displayValue"
+    :min="min"
+    :max="max"
+    :step="step"
+    :size="size"
+    :disabled="disabled"
+    :readonly="readonly || isCoarsePointer"
+    :placeholder="placeholder"
+    :error="error"
+    :center="center"
+    :mono="mono"
+    :suffix="suffix"
+    :inputmode="isCoarsePointer ? 'none' : undefined"
+    :full-width="fullWidth"
+    @update:model-value="handleInput"
+    @blur="emit('blur', $event)"
+    @focus="emit('focus', $event)"
+    @click="handleCoarseClick"
+  />
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import TInput from './TInput.vue'
+import TIcon, { type IconSize } from '../TIcon.vue'
 import { useWindowManager } from '../../composables/useWindowManager'
 
 export type TNumberInputSize = 'sm' | 'md' | 'lg'
@@ -49,6 +87,11 @@ const props = withDefaults(
     center?: boolean
     mono?: boolean
     fullWidth?: boolean
+    /**
+     * Wraps the input with − and + buttons. Replaces the previous
+     * `TNumberStepper` component — use this prop instead.
+     */
+    stepper?: boolean
   }>(),
   {
     modelValue: 0,
@@ -59,6 +102,7 @@ const props = withDefaults(
     center: true,
     mono: false,
     fullWidth: true,
+    stepper: false,
   },
 )
 
@@ -69,7 +113,6 @@ const emit = defineEmits<{
 }>()
 
 const displayValue = computed(() => props.modelValue ?? 0)
-const hasError = computed(() => !!props.error)
 
 const clampValue = (value: number): number => {
   let clamped = value
@@ -78,22 +121,28 @@ const clampValue = (value: number): number => {
   return clamped
 }
 
-const handleInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const value = parseFloat(target.value)
-  if (!isNaN(value)) {
-    emit('update:modelValue', clampValue(value))
+const handleInput = (value: string | number) => {
+  const parsed = typeof value === 'number' ? value : parseFloat(value)
+  if (!isNaN(parsed)) {
+    emit('update:modelValue', clampValue(parsed))
   }
 }
 
-const handleBlur = (event: FocusEvent) => {
-  emit('blur', event)
+const atMin = computed(
+  () => props.min !== undefined && displayValue.value <= props.min,
+)
+const atMax = computed(
+  () => props.max !== undefined && displayValue.value >= props.max,
+)
+
+const adjust = (direction: -1 | 1) => {
+  if (props.disabled) return
+  const next = clampValue(displayValue.value + direction * (props.step ?? 1))
+  emit('update:modelValue', next)
 }
 
-const handleFocus = (event: FocusEvent) => {
-  emit('focus', event)
-}
-
+// Coarse-pointer (touch) keypad — on tap, swap the soft-keyboard out for our
+// dedicated numeric keypad window. Preserved from the pre-rewrite behavior.
 const isCoarsePointer = ref(false)
 let coarseMedia: MediaQueryList | null = null
 const syncCoarse = (e: MediaQueryListEvent | MediaQueryList) => {
@@ -114,7 +163,7 @@ onUnmounted(() => {
 
 const windowManager = useWindowManager()
 
-const handleInputClick = (event: MouseEvent) => {
+const handleCoarseClick = (event: MouseEvent) => {
   if (!isCoarsePointer.value) return
   if (props.disabled || props.readonly) return
   ;(event.target as HTMLInputElement).blur()
@@ -132,75 +181,34 @@ const handleInputClick = (event: MouseEvent) => {
   })
 }
 
-const baseInputClasses = computed(() => {
-  const classes = [
-    'bg-fill-subtle border rounded-sm text-ink placeholder-ink-placeholder',
-    'focus:outline-none transition-all w-full',
-    '[appearance:textfield]',
-    '[&::-webkit-outer-spin-button]:appearance-none',
-    '[&::-webkit-inner-spin-button]:appearance-none',
+const stepperButtonClasses = computed(() => {
+  const base = [
+    'flex items-center justify-center rounded-sm border border-line',
+    'bg-fill-subtle text-ink-secondary transition-all',
+    'enabled:hover:bg-fill enabled:hover:border-line-strong enabled:hover:text-ink',
+    'disabled:opacity-30 disabled:cursor-not-allowed',
   ]
-
-  if (hasError.value) {
-    classes.push('border-danger focus:border-danger')
-  } else {
-    classes.push('border-line focus:border-line-strong')
-  }
-
-  if (props.disabled) {
-    classes.push('opacity-30 cursor-not-allowed')
-  } else if (props.readonly) {
-    classes.push('opacity-60 cursor-not-allowed')
-  }
-
-  if (props.center) {
-    classes.push('text-center')
-  }
-
-  if (props.mono) {
-    classes.push('font-mono')
-  }
-
-  return classes.join(' ')
-})
-
-const sizeClasses = computed(() => {
   switch (props.size) {
     case 'sm':
-      return 'px-2 py-1 text-xs'
+      base.push('h-[26px] w-[26px]')
+      break
     case 'lg':
-      return 'px-4 py-3 text-base'
+      base.push('h-[46px] w-[46px]')
+      break
     default:
-      return 'px-3 py-2 text-sm'
+      base.push('h-[34px] w-[34px]')
   }
+  return base.join(' ')
 })
 
-const paddingAdjustment = computed(() => {
-  if (props.suffix) {
-    switch (props.size) {
-      case 'sm':
-        return 'pr-7'
-      case 'lg':
-        return 'pr-10'
-      default:
-        return 'pr-8'
-    }
-  }
-  return ''
-})
-
-const inputClasses = computed(() => {
-  return `${baseInputClasses.value} ${sizeClasses.value} ${paddingAdjustment.value}`
-})
-
-const suffixSizeClasses = computed(() => {
+const stepperIconSize = computed<IconSize>(() => {
   switch (props.size) {
     case 'sm':
-      return 'text-xs'
+      return 'xs'
     case 'lg':
-      return 'text-base'
+      return 'md'
     default:
-      return 'text-sm'
+      return 'sm'
   }
 })
 </script>

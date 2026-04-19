@@ -22,10 +22,10 @@
       <div class="p-6 bg-bg flex items-center gap-3">
         <TFilterLabel label="Status" />
         <span class="text-sm text-ink">Active</span>
-        <TFilterDivider />
+        <TSeparator orientation="vertical" class="h-5" />
         <TFilterLabel label="Tag" />
         <span class="text-sm text-ink">Production</span>
-        <TFilterDivider />
+        <TSeparator orientation="vertical" class="h-5" />
         <TFilterLabel label="Sort" />
         <span class="text-sm text-ink">Newest first</span>
       </div>
@@ -36,7 +36,7 @@
         <TFilterLabel label="View as" />
         <TButton size="sm" variant="secondary" label="Grid" active />
         <TButton size="sm" variant="secondary" label="List" />
-        <TFilterDivider />
+        <TSeparator orientation="vertical" class="h-5" />
         <TFilterLabel label="Group by" />
         <TButton size="sm" variant="ghost" label="Owner" icon-right icon="chevron-down" />
       </div>
@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import TFilterLabel from './TFilterLabel.vue'
-import TFilterDivider from './TFilterDivider.vue'
+import TSeparator from './TSeparator.vue'
 import TButton from './TButton.vue'
 
 const state = reactive<{

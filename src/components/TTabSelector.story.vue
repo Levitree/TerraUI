@@ -34,10 +34,24 @@
         <TControlBar position="top">
           <TFilterLabel label="Mode" />
           <TTabSelector v-model="mode" :tabs="modeTabs" />
-          <TFilterDivider />
+          <TSeparator orientation="vertical" class="h-5" />
           <TFilterLabel label="Range" />
           <TTabSelector v-model="range" :tabs="rangeTabs" />
         </TControlBar>
+      </div>
+    </Variant>
+
+    <Variant title="Separated (filter chips)">
+      <div class="p-6 bg-bg flex flex-col items-start gap-4">
+        <TTabSelector v-model="status" separated :tabs="statusTabs" />
+        <div class="text-sm text-ink">Status: <strong>{{ status }}</strong></div>
+      </div>
+    </Variant>
+
+    <Variant title="Separated with icons and counts">
+      <div class="p-6 bg-bg flex flex-col items-start gap-4">
+        <TTabSelector v-model="priority" separated :tabs="priorityTabs" />
+        <div class="text-sm text-ink">Priority: <strong>{{ priority }}</strong></div>
       </div>
     </Variant>
   </Story>
@@ -48,7 +62,7 @@ import { reactive, ref } from 'vue'
 import TTabSelector from './TTabSelector.vue'
 import TControlBar from './TControlBar.vue'
 import TFilterLabel from './TFilterLabel.vue'
-import TFilterDivider from './TFilterDivider.vue'
+import TSeparator from './TSeparator.vue'
 
 const playgroundTabs = [
   { label: 'All', value: 'all' },
@@ -78,5 +92,21 @@ const mode = ref('live')
 const modeTabs = [
   { label: 'Live', value: 'live' },
   { label: 'Historical', value: 'historical' },
+]
+
+const status = ref('active')
+const statusTabs = [
+  { label: 'Active', value: 'active' },
+  { label: 'Expired', value: 'expired' },
+  { label: 'Revoked', value: 'revoked' },
+  { label: 'All', value: 'all' },
+]
+
+const priority = ref('all')
+const priorityTabs = [
+  { label: 'All', value: 'all', count: 42 },
+  { label: 'High', value: 'high', icon: 'flame', count: 3 },
+  { label: 'Medium', value: 'medium', icon: 'circle-dot', count: 12 },
+  { label: 'Low', value: 'low', icon: 'minus', count: 27 },
 ]
 </script>

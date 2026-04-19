@@ -15,13 +15,13 @@ export { default as TStatusIndicator } from './TStatusIndicator.vue'
 
 // Layout / navigation
 export { default as TControlBar } from './TControlBar.vue'
-export { default as TFilterDivider } from './TFilterDivider.vue'
 export { default as TFilterLabel } from './TFilterLabel.vue'
 export { default as TNavLink } from './TNavLink.vue'
 export { default as TNavbar } from './TNavbar.vue'
 export { default as TNavigationMenu } from './TNavigationMenu.vue'
 export { default as TSubNavbar } from './TSubNavbar.vue'
 export { default as TTabSelector } from './TTabSelector.vue'
+export type { Tab } from './TTabSelector.vue'
 export type { NavItem } from './TNavigationMenu.vue'
 
 // Dashboard shell
@@ -29,7 +29,6 @@ export * from './dashboard'
 
 // Data display
 export { default as TAccordion } from './TAccordion.vue'
-export { default as TCollapsibleSection } from './TCollapsibleSection.vue'
 export { default as TEmptyState } from './TEmptyState.vue'
 export { default as TLoadingState } from './TLoadingState.vue'
 export { default as TStatTile } from './TStatTile.vue'

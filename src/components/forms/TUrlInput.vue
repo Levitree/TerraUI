@@ -25,39 +25,39 @@
 
   <TModal v-model:open="isManualOpen" title="URL Details" size="md">
     <div class="space-y-4">
-      <TFormGroup v-if="protocols.length > 1" label="Protocol" required>
+      <TFormField v-if="protocols.length > 1" label="Protocol" required>
         <TSelect
           :modelValue="manual.protocol"
           :options="protocolOptions"
           @update:modelValue="manual.protocol = $event as string"
         />
-      </TFormGroup>
+      </TFormField>
 
-      <TFormGroup label="Host" required :error="manualHostError">
+      <TFormField label="Host" required :error="manualHostError">
         <TInput v-model="manual.host" mono placeholder="192.168.1.50" full-width />
-      </TFormGroup>
+      </TFormField>
 
       <div class="grid grid-cols-2 gap-3">
-        <TFormGroup label="Port">
+        <TFormField label="Port">
           <TInput v-model="manual.port" mono :placeholder="portPlaceholder" full-width />
-        </TFormGroup>
-        <TFormGroup label="Path">
+        </TFormField>
+        <TFormField label="Path">
           <TInput v-model="manual.path" mono :placeholder="pathPlaceholder" full-width />
-        </TFormGroup>
+        </TFormField>
       </div>
 
       <div class="grid grid-cols-2 gap-3">
-        <TFormGroup :label="authRequired ? 'Username *' : 'Username'">
+        <TFormField :label="authRequired ? 'Username *' : 'Username'">
           <TInput v-model="manual.username" placeholder="admin" full-width />
-        </TFormGroup>
-        <TFormGroup :label="authRequired ? 'Password *' : 'Password'">
+        </TFormField>
+        <TFormField :label="authRequired ? 'Password *' : 'Password'">
           <TInput
             v-model="manual.password"
             type="password"
             :placeholder="passwordPlaceholder"
             full-width
           />
-        </TFormGroup>
+        </TFormField>
       </div>
 
       <p class="text-[0.65rem] text-ink-subtle">
@@ -82,7 +82,7 @@
 import { ref, reactive, computed, watch } from 'vue'
 import TInput from './TInput.vue'
 import TSelect, { type TSelectOption } from './TSelect.vue'
-import TFormGroup from './TFormGroup.vue'
+import TFormField from './TFormField.vue'
 import TModal from '../TModal.vue'
 import TButton from '../TButton.vue'
 import TIcon from '../TIcon.vue'
