@@ -1,11 +1,3 @@
-export interface SubnavItem {
-  label: string
-  icon?: string
-  to?: string
-  action?: () => void
-  active?: boolean
-}
-
 export interface NavigationRoute {
   label: string
   icon: string

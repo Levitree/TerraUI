@@ -86,8 +86,7 @@ const LAYOUT = new Set([
   'TNavLink',
   'TNavbar',
   'TNavigationMenu',
-  'TSubNavbar',
-  'TTabSelector',
+  'TTabs',
 ])
 const DATA_DISPLAY = new Set([
   'TAccordion',

@@ -19,9 +19,8 @@ export { default as TFilterLabel } from './TFilterLabel.vue'
 export { default as TNavLink } from './TNavLink.vue'
 export { default as TNavbar } from './TNavbar.vue'
 export { default as TNavigationMenu } from './TNavigationMenu.vue'
-export { default as TSubNavbar } from './TSubNavbar.vue'
-export { default as TTabSelector } from './TTabSelector.vue'
-export type { Tab } from './TTabSelector.vue'
+export { default as TTabs } from './TTabs.vue'
+export type { Tab } from './TTabs.vue'
 export type { NavItem } from './TNavigationMenu.vue'
 
 // Dashboard shell

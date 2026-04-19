@@ -4,7 +4,7 @@
   >
     <div class="flex items-center gap-5 max-md:flex-wrap">
       <!-- Logo Section -->
-      <TLogo size="lg" responsive-wordmark />
+      <TLogo size="lg" responsive-wordmark to="/" />
 
       <!-- Navigation Links -->
       <nav class="flex-1 flex items-center gap-1 max-md:order-3 max-md:w-full">

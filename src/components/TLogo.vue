@@ -1,8 +1,23 @@
 <template>
-  <RouterLink to="/" :class="wrapperClasses" aria-label="Terranova" title="Terranova">
+  <RouterLink
+    v-if="to"
+    :to="to"
+    :class="[wrapperClasses, 'cursor-pointer hover:opacity-80 transition-opacity']"
+    aria-label="Terranova"
+    title="Terranova"
+  >
     <span :class="iconClasses" v-html="IconSvg" />
     <span v-if="wordmark" :class="wordmarkClasses" v-html="WordmarkSvg" />
   </RouterLink>
+  <span
+    v-else
+    :class="wrapperClasses"
+    aria-label="Terranova"
+    title="Terranova"
+  >
+    <span :class="iconClasses" v-html="IconSvg" />
+    <span v-if="wordmark" :class="wordmarkClasses" v-html="WordmarkSvg" />
+  </span>
 </template>
 
 <script setup lang="ts">
@@ -18,6 +33,8 @@ const props = withDefaults(
     size?: LogoSize
     wordmark?: boolean
     responsiveWordmark?: boolean
+    /** When set, the logo renders as a RouterLink to this path. Otherwise it renders as a non-interactive span. */
+    to?: string
   }>(),
   {
     size: 'md',
@@ -28,7 +45,7 @@ const props = withDefaults(
 
 const wrapperClasses = computed(() =>
   [
-    'inline-flex items-center text-ink rounded-sm cursor-pointer hover:opacity-80 transition-opacity',
+    'inline-flex items-center text-ink rounded-sm',
     props.size === 'md' ? 'gap-2 3xl:gap-3' : 'gap-3',
   ].join(' '),
 )

@@ -2,10 +2,10 @@
   <div :class="wrapperClasses">
     <button
       v-for="(tab, index) in tabs"
-      :key="tab.value"
+      :key="keyFor(tab, index)"
       type="button"
       :class="buttonClasses(tab, index)"
-      @click="emit('update:modelValue', tab.value)"
+      @click="handleClick(tab)"
     >
       <TIcon v-if="tab.icon" :name="tab.icon" size="xs" />
       <span>{{ tab.label }}</span>
@@ -21,22 +21,28 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import TIcon from './TIcon.vue'
 
 export interface Tab {
   /** Shown text — styling auto-applies uppercase tracking. */
   label: string
-  /** Value written to `v-model` when clicked. */
-  value: string
+  /** Value written to `v-model` when clicked. Required for v-model-driven tabs. */
+  value?: string
   /** Optional Lucide icon rendered left of the label. */
   icon?: string
   /** Optional count shown after the label in a muted mono style. */
   count?: number
+  /** Route path to navigate to on click. Active state matches `route.path`. */
+  to?: string
+  /** Callback invoked on click. Takes precedence over `to` and `value`. */
+  action?: () => void
 }
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string
+    /** Current value for v-model-driven tabs. Ignored for `to`/`action` tabs. */
+    modelValue?: string
     tabs: Tab[]
     /**
      * Visual density.
@@ -47,11 +53,44 @@ const props = withDefaults(
      *   "filter this list."
      */
     separated?: boolean
+    /**
+     * Optional transform applied to a tab's `to` before navigating and
+     * matching against the active route. Lets the host app namespace paths
+     * (e.g. prefix with a device UUID) without TerraUI knowing about routing.
+     */
+    pathBuilder?: (to: string) => string
   }>(),
   { separated: false },
 )
 
 const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
+
+const router = useRouter()
+const route = useRoute()
+
+const resolveTo = (to: string) => (props.pathBuilder ? props.pathBuilder(to) : to)
+
+const isActive = (tab: Tab) => {
+  if (tab.to) return route.path === resolveTo(tab.to)
+  if (tab.value !== undefined) return props.modelValue === tab.value
+  return false
+}
+
+const handleClick = (tab: Tab) => {
+  if (tab.action) {
+    tab.action()
+    return
+  }
+  if (tab.to) {
+    router.push(resolveTo(tab.to))
+    return
+  }
+  if (tab.value !== undefined) {
+    emit('update:modelValue', tab.value)
+  }
+}
+
+const keyFor = (tab: Tab, index: number) => tab.value ?? tab.to ?? `${tab.label}-${index}`
 
 const wrapperClasses = computed(() =>
   props.separated
@@ -62,7 +101,7 @@ const wrapperClasses = computed(() =>
 const buttonClasses = (tab: Tab, index: number) => {
   const base =
     'inline-flex items-center gap-1.5 px-3 py-1.5 font-bold tracking-wider uppercase transition-all'
-  const active = props.modelValue === tab.value
+  const active = isActive(tab)
 
   if (props.separated) {
     return [
@@ -74,7 +113,6 @@ const buttonClasses = (tab: Tab, index: number) => {
     ].join(' ')
   }
 
-  // Joined segmented: right-border between buttons, quieter active state.
   return [
     base,
     'text-xs',
