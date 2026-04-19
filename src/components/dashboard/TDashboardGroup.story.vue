@@ -20,9 +20,7 @@
             <template #header="{ collapsed }">
               <div class="flex items-center gap-2">
                 <TDashboardSidebarCollapse />
-                <span
-                  v-if="!collapsed"
-                  class="text-sm font-bold tracking-wider uppercase text-ink"
+                <span v-if="!collapsed" class="text-sm font-bold tracking-wider uppercase text-ink"
                   >TerraUI</span
                 >
               </div>
@@ -45,12 +43,12 @@
             </template>
             <div class="p-6 space-y-3">
               <p class="text-sm text-ink-muted">
-                The <code>TDashboardGroup</code> provides the layout shell and a shared
-                context used by the sidebar + collapse controls.
+                The <code>TDashboardGroup</code> provides the layout shell and a shared context used
+                by the sidebar + collapse controls.
               </p>
               <p class="text-sm text-ink-muted">
-                Drag the sidebar's right edge to resize; the collapse control toggles
-                the icon-rail state.
+                Drag the sidebar's right edge to resize; the collapse control toggles the icon-rail
+                state.
               </p>
             </div>
           </TDashboardPanel>
@@ -65,9 +63,7 @@
             <template #header="{ collapsed }">
               <div class="flex items-center gap-2 w-full">
                 <TDashboardSidebarCollapse />
-                <span
-                  v-if="!collapsed"
-                  class="text-sm font-bold tracking-wider uppercase text-ink"
+                <span v-if="!collapsed" class="text-sm font-bold tracking-wider uppercase text-ink"
                   >Fleet Ops</span
                 >
               </div>
@@ -103,9 +99,7 @@
                   >
                     Refresh
                   </button>
-                  <button
-                    class="px-2 py-1 text-xs text-ink bg-fill border border-line rounded-sm"
-                  >
+                  <button class="px-2 py-1 text-xs text-ink bg-fill border border-line rounded-sm">
                     + Add
                   </button>
                 </template>

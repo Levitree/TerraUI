@@ -218,12 +218,10 @@ const table = useVueTable({
     sorting.value = typeof updater === 'function' ? updater(sorting.value) : updater
   },
   onColumnFiltersChange: (updater) => {
-    columnFilters.value =
-      typeof updater === 'function' ? updater(columnFilters.value) : updater
+    columnFilters.value = typeof updater === 'function' ? updater(columnFilters.value) : updater
   },
   onGlobalFilterChange: (updater) => {
-    globalFilter.value =
-      typeof updater === 'function' ? updater(globalFilter.value) : updater
+    globalFilter.value = typeof updater === 'function' ? updater(globalFilter.value) : updater
   },
   globalFilterFn: (row, columnId, filterValue) => {
     const fn = props.globalFilterFn ?? defaultGlobalFilter

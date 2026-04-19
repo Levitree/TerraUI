@@ -314,8 +314,7 @@ const cells = computed<Cell[]>(() => {
   return out
 })
 
-const stripTime = (date: Date) =>
-  new Date(date.getFullYear(), date.getMonth(), date.getDate())
+const stripTime = (date: Date) => new Date(date.getFullYear(), date.getMonth(), date.getDate())
 
 const showFooter = computed(() => props.clearable || true)
 

@@ -2,11 +2,7 @@
   <Story title="TControlBar" group="layout">
     <Variant title="Playground">
       <template #controls>
-        <HstSelect
-          v-model="state.position"
-          title="Position"
-          :options="['top', 'bottom']"
-        />
+        <HstSelect v-model="state.position" title="Position" :options="['top', 'bottom']" />
         <HstCheckbox v-model="state.blur" title="Backdrop blur" />
       </template>
 

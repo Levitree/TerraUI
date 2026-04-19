@@ -50,13 +50,7 @@
 
     <Variant title="Without summary or selector">
       <div class="p-6 bg-bg">
-        <TPagination
-          :page="5"
-          :total="200"
-          :per-page="10"
-          :show-summary="false"
-          :page-sizes="[]"
-        />
+        <TPagination :page="5" :total="200" :per-page="10" :show-summary="false" :page-sizes="[]" />
       </div>
     </Variant>
   </Story>

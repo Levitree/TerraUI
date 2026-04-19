@@ -1,10 +1,6 @@
 <template>
   <div :class="wrapperClasses">
-    <div
-      v-for="(item, idx) in items"
-      :key="item.slot"
-      :class="panelClasses"
-    >
+    <div v-for="(item, idx) in items" :key="item.slot" :class="panelClasses">
       <!-- Optional header overlay — sits behind the header content, used for
            edit-mode chrome, drag handles, etc. Same pattern as the original
            TCollapsibleSection. -->
@@ -35,12 +31,7 @@
             :class="{ 'rotate-90': isOpen(idx) }"
           />
 
-          <TIcon
-            v-if="item.icon"
-            :name="item.icon"
-            size="sm"
-            class="shrink-0 text-ink-muted"
-          />
+          <TIcon v-if="item.icon" :name="item.icon" size="sm" class="shrink-0 text-ink-muted" />
 
           <div class="flex flex-col gap-0.5 text-left">
             <div class="flex items-center gap-2">
@@ -49,9 +40,7 @@
                 v-if="item.count !== undefined"
                 class="px-2 py-0.5 text-[0.65rem] font-bold tracking-wider rounded-sm"
                 :class="
-                  item.count > 0
-                    ? 'bg-fill text-ink-secondary'
-                    : 'bg-fill-subtle text-ink-subtle'
+                  item.count > 0 ? 'bg-fill text-ink-secondary' : 'bg-fill-subtle text-ink-subtle'
                 "
               >
                 {{ item.count }}
@@ -95,11 +84,7 @@
         </div>
       </div>
 
-      <div
-        v-show="isOpen(idx)"
-        :id="`accordion-panel-${uid}-${idx}`"
-        :class="contentClasses"
-      >
+      <div v-show="isOpen(idx)" :id="`accordion-panel-${uid}-${idx}`" :class="contentClasses">
         <slot :name="item.slot" :item="item" />
       </div>
     </div>

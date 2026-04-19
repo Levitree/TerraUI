@@ -63,7 +63,11 @@
       <div class="p-6 bg-bg max-w-xl">
         <form class="flex flex-col gap-3" @submit.prevent="submit">
           <label class="text-xs uppercase tracking-wider text-ink-muted">Bio</label>
-          <TTextarea v-bind="form.getFieldProps('bio')" :rows="4" placeholder="Tell us about yourself" />
+          <TTextarea
+            v-bind="form.getFieldProps('bio')"
+            :rows="4"
+            placeholder="Tell us about yourself"
+          />
           <p v-if="form.errors.value.bio" class="text-xs text-danger">
             {{ form.errors.value.bio }}
           </p>

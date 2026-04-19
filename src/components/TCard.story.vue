@@ -7,14 +7,10 @@
       </template>
 
       <div class="p-6 bg-bg min-h-40 flex items-center justify-center">
-        <TCard
-          :title="state.title || undefined"
-          :no-padding="state.noPadding"
-          class="w-80"
-        >
+        <TCard :title="state.title || undefined" :no-padding="state.noPadding" class="w-80">
           <p class="text-sm text-ink-secondary">
-            Cards group related content and actions. They support optional
-            header and footer slots alongside a default body slot.
+            Cards group related content and actions. They support optional header and footer slots
+            alongside a default body slot.
           </p>
         </TCard>
       </div>
@@ -37,9 +33,7 @@
               <span class="text-xs text-ink-muted">just now</span>
             </div>
           </template>
-          <p class="text-sm text-ink-secondary">
-            Composed header with a title and a timestamp.
-          </p>
+          <p class="text-sm text-ink-secondary">Composed header with a title and a timestamp.</p>
         </TCard>
       </div>
     </Variant>

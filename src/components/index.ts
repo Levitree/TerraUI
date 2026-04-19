@@ -48,11 +48,7 @@ export { default as TPopover } from './TPopover.vue'
 export { default as TToast } from './TToast.vue'
 export { default as TToastContainer } from './TToastContainer.vue'
 export { default as TWindowsContainer } from './TWindowsContainer.vue'
-export type {
-  TDropdownItem,
-  TDropdownItemColor,
-  TDropdownContent,
-} from './TDropdown.vue'
+export type { TDropdownItem, TDropdownItemColor, TDropdownContent } from './TDropdown.vue'
 export type { TPopoverContent, TPopoverMode } from './TPopover.vue'
 
 // Window renderers (importing this module registers built-in window types)

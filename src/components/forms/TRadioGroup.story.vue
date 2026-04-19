@@ -29,11 +29,7 @@
 
     <Variant title="Horizontal layout">
       <div class="p-6 bg-bg max-w-xl">
-        <TRadioGroup
-          :model-value="'standard'"
-          :items="simpleItems"
-          orientation="horizontal"
-        />
+        <TRadioGroup :model-value="'standard'" :items="simpleItems" orientation="horizontal" />
       </div>
     </Variant>
 

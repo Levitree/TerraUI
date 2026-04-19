@@ -29,7 +29,11 @@
 
     <Variant title="Sizes">
       <div class="p-6 bg-bg flex items-center gap-4">
-        <div v-for="size in ['sm', 'md', 'lg'] as const" :key="size" class="flex items-center gap-2">
+        <div
+          v-for="size in ['sm', 'md', 'lg'] as const"
+          :key="size"
+          class="flex items-center gap-2"
+        >
           <TStatusIndicator status="success" :size="size" />
           <span class="text-xs text-ink-muted uppercase tracking-wider">{{ size }}</span>
         </div>

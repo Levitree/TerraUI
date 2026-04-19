@@ -97,15 +97,7 @@ import { reactive } from 'vue'
 import TButton from './TButton.vue'
 import type { ButtonColor, ButtonSize } from './TButton.vue'
 
-const colors: ButtonColor[] = [
-  'neutral',
-  'success',
-  'error',
-  'warn',
-  'ghost',
-  'icon',
-  'white',
-]
+const colors: ButtonColor[] = ['neutral', 'success', 'error', 'warn', 'ghost', 'icon', 'white']
 
 const state = reactive<{
   label: string

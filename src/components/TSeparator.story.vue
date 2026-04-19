@@ -52,9 +52,7 @@
       <!-- Replaces the previous TFilterDivider — always pair vertical orientation
            with a height class that matches the surrounding row. -->
       <div class="p-6 bg-bg">
-        <div
-          class="flex items-center gap-3 px-3 py-2 border border-line rounded-sm bg-surface"
-        >
+        <div class="flex items-center gap-3 px-3 py-2 border border-line rounded-sm bg-surface">
           <span class="text-xs uppercase tracking-wider text-ink-muted">Mode</span>
           <span class="text-xs font-medium text-ink">Live</span>
           <TSeparator orientation="vertical" class="h-5" />

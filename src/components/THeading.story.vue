@@ -30,9 +30,7 @@
       <div class="p-6 bg-bg flex flex-col gap-6">
         <THeading>
           <span class="text-ink">Custom <span class="text-success">slot</span> content</span>
-          <template #subheading>
-            Rich markup is supported inside both slots.
-          </template>
+          <template #subheading> Rich markup is supported inside both slots. </template>
         </THeading>
       </div>
     </Variant>

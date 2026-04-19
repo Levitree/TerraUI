@@ -27,8 +27,8 @@
     <Variant title="Sortable columns">
       <div class="p-6 bg-bg">
         <p class="mb-3 text-xs text-ink-subtle">
-          Click any column header to sort. Name and role sort alphabetically, status
-          sorts by its string value.
+          Click any column header to sort. Name and role sort alphabetically, status sorts by its
+          string value.
         </p>
         <TTable
           :data="users"
@@ -134,16 +134,63 @@ const users: User[] = [
   { id: 'u_01', name: 'Ada Lovelace', email: 'ada@terra.dev', role: 'admin', status: 'online' },
   { id: 'u_02', name: 'Alan Turing', email: 'alan@terra.dev', role: 'admin', status: 'active' },
   { id: 'u_03', name: 'Grace Hopper', email: 'grace@terra.dev', role: 'member', status: 'active' },
-  { id: 'u_04', name: 'Linus Torvalds', email: 'linus@terra.dev', role: 'member', status: 'offline' },
-  { id: 'u_05', name: 'Margaret Hamilton', email: 'maggie@terra.dev', role: 'viewer', status: 'inactive' },
+  {
+    id: 'u_04',
+    name: 'Linus Torvalds',
+    email: 'linus@terra.dev',
+    role: 'member',
+    status: 'offline',
+  },
+  {
+    id: 'u_05',
+    name: 'Margaret Hamilton',
+    email: 'maggie@terra.dev',
+    role: 'viewer',
+    status: 'inactive',
+  },
 ]
 
 const orders: Order[] = [
-  { id: 'ord_1001', customer: 'Acme Inc.', amount: 1249.0, currency: 'USD', status: 'paid', createdAt: '2026-04-15' },
-  { id: 'ord_1002', customer: 'Globex', amount: 89.5, currency: 'USD', status: 'pending', createdAt: '2026-04-16' },
-  { id: 'ord_1003', customer: 'Initech', amount: 4200.0, currency: 'USD', status: 'paid', createdAt: '2026-04-16' },
-  { id: 'ord_1004', customer: 'Soylent Corp', amount: 310.75, currency: 'USD', status: 'refunded', createdAt: '2026-04-17' },
-  { id: 'ord_1005', customer: 'Umbrella', amount: 58.0, currency: 'USD', status: 'paid', createdAt: '2026-04-18' },
+  {
+    id: 'ord_1001',
+    customer: 'Acme Inc.',
+    amount: 1249.0,
+    currency: 'USD',
+    status: 'paid',
+    createdAt: '2026-04-15',
+  },
+  {
+    id: 'ord_1002',
+    customer: 'Globex',
+    amount: 89.5,
+    currency: 'USD',
+    status: 'pending',
+    createdAt: '2026-04-16',
+  },
+  {
+    id: 'ord_1003',
+    customer: 'Initech',
+    amount: 4200.0,
+    currency: 'USD',
+    status: 'paid',
+    createdAt: '2026-04-16',
+  },
+  {
+    id: 'ord_1004',
+    customer: 'Soylent Corp',
+    amount: 310.75,
+    currency: 'USD',
+    status: 'refunded',
+    createdAt: '2026-04-17',
+  },
+  {
+    id: 'ord_1005',
+    customer: 'Umbrella',
+    amount: 58.0,
+    currency: 'USD',
+    status: 'paid',
+    createdAt: '2026-04-18',
+  },
 ]
 
 const userCol = createColumnHelper<User>()

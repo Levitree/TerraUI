@@ -3,9 +3,7 @@
     <Variant title="Playground">
       <div class="bg-bg min-h-60">
         <TNavbar :items="items" />
-        <div class="p-6 text-ink-muted text-sm">
-          Page content goes below the navbar.
-        </div>
+        <div class="p-6 text-ink-muted text-sm">Page content goes below the navbar.</div>
       </div>
     </Variant>
 

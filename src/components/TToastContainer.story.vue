@@ -14,9 +14,8 @@
 
       <div class="p-6 bg-bg min-h-96 relative flex flex-col items-center justify-center gap-3">
         <p class="text-sm text-ink-muted max-w-md text-center">
-          <code>TToastContainer</code> is mounted once at the root of your app. It
-          subscribes to the toast store and renders each queued toast in the
-          bottom-right corner.
+          <code>TToastContainer</code> is mounted once at the root of your app. It subscribes to the
+          toast store and renders each queued toast in the bottom-right corner.
         </p>
         <div class="flex flex-wrap gap-3 justify-center">
           <TButton label="Push toast" icon="send" @click="push" />
@@ -28,7 +27,11 @@
 
     <Variant title="One of each type">
       <div class="p-6 bg-bg min-h-96 relative flex items-center justify-center gap-3">
-        <TButton color="success" label="Success" @click="toast.success('Saved changes', 'Success')" />
+        <TButton
+          color="success"
+          label="Success"
+          @click="toast.success('Saved changes', 'Success')"
+        />
         <TButton color="error" label="Error" @click="toast.error('Something broke', 'Error')" />
         <TButton color="warn" label="Warning" @click="toast.warning('Heads up', 'Warning')" />
         <TButton color="neutral" label="Info" @click="toast.info('Just so you know', 'Info')" />

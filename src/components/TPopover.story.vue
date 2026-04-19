@@ -2,7 +2,11 @@
   <Story title="TPopover" group="overlays">
     <Variant title="Playground">
       <template #controls>
-        <HstSelect v-model="state.side" title="Side" :options="['top', 'right', 'bottom', 'left']" />
+        <HstSelect
+          v-model="state.side"
+          title="Side"
+          :options="['top', 'right', 'bottom', 'left']"
+        />
         <HstSelect v-model="state.align" title="Align" :options="['start', 'center', 'end']" />
         <HstSelect v-model="state.mode" title="Mode" :options="['click', 'hover']" />
         <HstNumber v-model="state.sideOffset" title="Side offset (px)" />
@@ -23,8 +27,8 @@
               <span class="font-bold tracking-wider uppercase text-[0.65rem]">Quick tip</span>
             </div>
             <p class="text-ink-secondary leading-relaxed">
-              Popovers teleport to body and stay viewport-anchored, so they clear overflow
-              ancestors without extra work.
+              Popovers teleport to body and stay viewport-anchored, so they clear overflow ancestors
+              without extra work.
             </p>
           </div>
         </TPopover>
@@ -37,9 +41,7 @@
           <template #trigger>
             <TButton color="ghost" label="Hover me" icon="info" />
           </template>
-          <div class="px-3 py-2 text-xs text-ink">
-            Showing details on hover.
-          </div>
+          <div class="px-3 py-2 text-xs text-ink">Showing details on hover.</div>
         </TPopover>
 
         <TPopover mode="hover" :content="{ side: 'right' }">

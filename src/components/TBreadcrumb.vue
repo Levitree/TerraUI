@@ -1,7 +1,11 @@
 <template>
   <nav aria-label="Breadcrumb" class="flex items-center">
     <ol class="flex items-center gap-1.5 flex-wrap text-xs">
-      <li v-for="(item, index) in items" :key="keyFor(item, index)" class="flex items-center gap-1.5">
+      <li
+        v-for="(item, index) in items"
+        :key="keyFor(item, index)"
+        class="flex items-center gap-1.5"
+      >
         <component
           :is="linkTag(item)"
           :href="item.to && !isCurrent(index) ? item.to : undefined"
@@ -82,7 +86,9 @@ const handleClick = (item: TBreadcrumbItem, index: number, event: Event) => {
 }
 
 const linkClasses = computed(() => (index: number) => {
-  const base = ['inline-flex items-center gap-1.5 rounded-sm font-bold tracking-wider uppercase transition-colors']
+  const base = [
+    'inline-flex items-center gap-1.5 rounded-sm font-bold tracking-wider uppercase transition-colors',
+  ]
   if (isCurrent(index)) {
     base.push('text-ink cursor-default')
   } else {

@@ -34,10 +34,7 @@
 
     <Variant title="Title + description">
       <div class="p-6 bg-bg min-h-40">
-        <TDashboardNavbar
-          title="Devices"
-          description="12 online / 3 offline"
-        />
+        <TDashboardNavbar title="Devices" description="12 online / 3 offline" />
       </div>
     </Variant>
 

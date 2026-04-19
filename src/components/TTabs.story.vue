@@ -18,14 +18,18 @@
     <Variant title="Three tabs">
       <div class="p-6 bg-bg flex flex-col items-start gap-4">
         <TTabs v-model="view" :tabs="viewTabs" />
-        <div class="text-sm text-ink">Viewing as <strong>{{ view }}</strong></div>
+        <div class="text-sm text-ink">
+          Viewing as <strong>{{ view }}</strong>
+        </div>
       </div>
     </Variant>
 
     <Variant title="Five tabs">
       <div class="p-6 bg-bg flex flex-col items-start gap-4">
         <TTabs v-model="range" :tabs="rangeTabs" />
-        <div class="text-sm text-ink">Range: <strong>{{ range }}</strong></div>
+        <div class="text-sm text-ink">
+          Range: <strong>{{ range }}</strong>
+        </div>
       </div>
     </Variant>
 
@@ -44,14 +48,18 @@
     <Variant title="Separated (filter chips)">
       <div class="p-6 bg-bg flex flex-col items-start gap-4">
         <TTabs v-model="status" separated :tabs="statusTabs" />
-        <div class="text-sm text-ink">Status: <strong>{{ status }}</strong></div>
+        <div class="text-sm text-ink">
+          Status: <strong>{{ status }}</strong>
+        </div>
       </div>
     </Variant>
 
     <Variant title="Separated with icons and counts">
       <div class="p-6 bg-bg flex flex-col items-start gap-4">
         <TTabs v-model="priority" separated :tabs="priorityTabs" />
-        <div class="text-sm text-ink">Priority: <strong>{{ priority }}</strong></div>
+        <div class="text-sm text-ink">
+          Priority: <strong>{{ priority }}</strong>
+        </div>
       </div>
     </Variant>
 

@@ -42,12 +42,7 @@
           message="You've used 80% of your monthly budget."
           :duration="0"
         />
-        <TToast
-          type="info"
-          title="Heads up"
-          message="A new version is available."
-          :duration="0"
-        />
+        <TToast type="info" title="Heads up" message="A new version is available." :duration="0" />
       </div>
     </Variant>
 

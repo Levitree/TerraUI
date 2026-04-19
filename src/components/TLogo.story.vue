@@ -36,8 +36,8 @@
       <div class="p-6 bg-bg flex flex-col items-start gap-3">
         <TLogo size="lg" />
         <span class="text-xs text-ink-muted">
-          Without a `to` prop, TLogo renders as a plain, non-interactive span — useful on
-          screens that don't have a router or shouldn't navigate on click.
+          Without a `to` prop, TLogo renders as a plain, non-interactive span — useful on screens
+          that don't have a router or shouldn't navigate on click.
         </span>
       </div>
     </Variant>

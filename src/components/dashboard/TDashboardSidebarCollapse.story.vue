@@ -7,9 +7,7 @@
             <template #header="{ collapsed }">
               <div class="flex items-center gap-2">
                 <TDashboardSidebarCollapse />
-                <span
-                  v-if="!collapsed"
-                  class="text-sm font-bold tracking-wider uppercase text-ink"
+                <span v-if="!collapsed" class="text-sm font-bold tracking-wider uppercase text-ink"
                   >TerraUI</span
                 >
               </div>
@@ -36,8 +34,8 @@
               </TDashboardNavbar>
             </template>
             <div class="p-6 text-sm text-ink-muted">
-              Click the collapse control (in either the sidebar header or the navbar
-              leading slot) to toggle the icon-rail state.
+              Click the collapse control (in either the sidebar header or the navbar leading slot)
+              to toggle the icon-rail state.
             </div>
           </TDashboardPanel>
         </TDashboardGroup>
@@ -51,9 +49,7 @@
             <template #header="{ collapsed }">
               <div class="flex items-center gap-2">
                 <TDashboardSidebarCollapse />
-                <span
-                  v-if="!collapsed"
-                  class="text-sm font-bold tracking-wider uppercase text-ink"
+                <span v-if="!collapsed" class="text-sm font-bold tracking-wider uppercase text-ink"
                   >Expanded</span
                 >
               </div>
@@ -142,8 +138,8 @@
               </TDashboardNavbar>
             </template>
             <div class="p-6 text-sm text-ink-muted">
-              The collapse button is also commonly placed in the navbar leading slot
-              so users can always reach it — regardless of the sidebar's width.
+              The collapse button is also commonly placed in the navbar leading slot so users can
+              always reach it — regardless of the sidebar's width.
             </div>
           </TDashboardPanel>
         </TDashboardGroup>

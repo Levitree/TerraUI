@@ -12,9 +12,7 @@
 
     <Variant title="Via slot">
       <div class="p-6 bg-bg flex items-center justify-center">
-        <TFilterLabel>
-          Custom Slot Content
-        </TFilterLabel>
+        <TFilterLabel> Custom Slot Content </TFilterLabel>
       </div>
     </Variant>
 

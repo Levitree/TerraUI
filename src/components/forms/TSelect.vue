@@ -339,7 +339,9 @@ const optionClasses = (option: TSelectOption, index: number) => {
   // Match TDropdown menu items: px-3 h-9 text-sm, text-ink-secondary with
   // hover:bg-fill hover:text-ink. Single-select uses bg-fill-strong for the
   // current selection; multi-select shows selection via the square-check icon.
-  const classes = ['group w-full flex items-center gap-2 px-3 h-9 text-sm text-left transition-colors']
+  const classes = [
+    'group w-full flex items-center gap-2 px-3 h-9 text-sm text-left transition-colors',
+  ]
 
   if (option.disabled) {
     classes.push('text-ink-disabled cursor-not-allowed opacity-40')

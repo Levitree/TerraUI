@@ -56,11 +56,7 @@ function walk(dir: string): string[] {
     const s = statSync(full)
     if (s.isDirectory()) {
       out.push(...walk(full))
-    } else if (
-      entry.endsWith('.vue') &&
-      !entry.endsWith('.story.vue') &&
-      /^[A-Z]/.test(entry)
-    ) {
+    } else if (entry.endsWith('.vue') && !entry.endsWith('.story.vue') && /^[A-Z]/.test(entry)) {
       out.push(full)
     }
   }
@@ -226,7 +222,10 @@ const files = walk(componentsDir).sort()
 const docs: ComponentDoc[] = []
 
 for (const file of files) {
-  const name = file.split('/').pop()!.replace(/\.vue$/, '')
+  const name = file
+    .split('/')
+    .pop()!
+    .replace(/\.vue$/, '')
   const category = categoryFor(file, name)
   if (category === 'Internal') continue
 
@@ -244,8 +243,7 @@ for (const file of files) {
       name: p.name,
       type: p.type,
       required: Boolean(p.required),
-      default:
-        p.default !== undefined && p.default !== null ? String(p.default) : undefined,
+      default: p.default !== undefined && p.default !== null ? String(p.default) : undefined,
       description: p.description || undefined,
     }))
 

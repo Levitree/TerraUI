@@ -34,7 +34,8 @@ const props = withDefaults(
   },
 )
 
-const cardClasses = 'flex flex-col border border-line bg-surface rounded-sm overflow-hidden transition-all'
+const cardClasses =
+  'flex flex-col border border-line bg-surface rounded-sm overflow-hidden transition-all'
 
 const bodyClasses = computed(() => {
   const classes = ['flex-1 min-h-0']

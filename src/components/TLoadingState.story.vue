@@ -50,7 +50,9 @@
 
     <Variant title="Page loader">
       <div class="p-6 bg-bg">
-        <div class="border border-line-subtle bg-surface rounded-sm min-h-64 flex items-center justify-center">
+        <div
+          class="border border-line-subtle bg-surface rounded-sm min-h-64 flex items-center justify-center"
+        >
           <TLoadingState size="lg" label="Loading workspace" />
         </div>
       </div>

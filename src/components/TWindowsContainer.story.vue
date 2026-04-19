@@ -7,16 +7,11 @@
 
       <div class="p-6 bg-bg min-h-96 relative flex flex-col items-center justify-center gap-3">
         <p class="text-sm text-ink-muted max-w-md text-center">
-          <code>TWindowsContainer</code> mounts one <code>TFloatingWindow</code> per
-          entry in the window manager. Open one with
-          <code>useWindowManager().openWindow(type)</code>.
+          <code>TWindowsContainer</code> mounts one <code>TFloatingWindow</code> per entry in the
+          window manager. Open one with <code>useWindowManager().openWindow(type)</code>.
         </p>
         <div class="flex flex-wrap gap-3 justify-center">
-          <TButton
-            label="Open Window"
-            icon="app-window"
-            @click="openDemo"
-          />
+          <TButton label="Open Window" icon="app-window" @click="openDemo" />
           <TButton
             color="neutral"
             label="Close all"
@@ -25,9 +20,7 @@
             @click="windowManager.closeAll()"
           />
         </div>
-        <span class="text-xs text-ink-muted">
-          Open: {{ windowManager.windows.length }}
-        </span>
+        <span class="text-xs text-ink-muted"> Open: {{ windowManager.windows.length }} </span>
 
         <TWindowsContainer />
       </div>
@@ -49,10 +42,7 @@
 import { defineComponent, h, reactive, onMounted } from 'vue'
 import TWindowsContainer from './TWindowsContainer.vue'
 import TButton from './TButton.vue'
-import {
-  registerWindowType,
-  useWindowManager,
-} from '../composables/useWindowManager'
+import { registerWindowType, useWindowManager } from '../composables/useWindowManager'
 
 const windowManager = useWindowManager()
 
@@ -83,7 +73,11 @@ const InspectorPanel = defineComponent({
   setup() {
     return () =>
       h('div', { class: 'p-4 text-sm text-ink-secondary' }, [
-        h('div', { class: 'font-bold uppercase tracking-wider text-xs text-ink mb-2' }, 'Inspector'),
+        h(
+          'div',
+          { class: 'font-bold uppercase tracking-wider text-xs text-ink mb-2' },
+          'Inspector',
+        ),
         h('p', null, 'Inspect the selected entity here.'),
       ])
   },

@@ -9,11 +9,7 @@
           title="Color"
           :options="['success', 'error', 'warn', 'neutral']"
         />
-        <HstSelect
-          v-model="state.variant"
-          title="Variant"
-          :options="['solid', 'subtle']"
-        />
+        <HstSelect v-model="state.variant" title="Variant" :options="['solid', 'subtle']" />
         <HstText v-model="state.icon" title="Icon (lucide name, optional)" />
         <HstCheckbox v-model="state.closable" title="Closable" />
       </template>
@@ -65,18 +61,17 @@
 
     <Variant title="Closable">
       <div class="p-6 bg-bg flex flex-col gap-3">
-        <TAlert
-          color="warn"
-          title="Heads up"
-          description="This alert can be dismissed."
-          closable
-        />
+        <TAlert color="warn" title="Heads up" description="This alert can be dismissed." closable />
       </div>
     </Variant>
 
     <Variant title="With actions slot">
       <div class="p-6 bg-bg flex flex-col gap-3">
-        <TAlert color="neutral" title="Update available" description="Version 0.4.0 is ready to install.">
+        <TAlert
+          color="neutral"
+          title="Update available"
+          description="Version 0.4.0 is ready to install."
+        >
           <template #actions>
             <button class="text-xs font-medium text-ink underline">Install</button>
             <button class="text-xs font-medium text-ink-muted">Later</button>
@@ -87,8 +82,18 @@
 
     <Variant title="Custom icon">
       <div class="p-6 bg-bg flex flex-col gap-3">
-        <TAlert color="neutral" icon="sparkles" title="New feature" description="Try the redesigned inspector." />
-        <TAlert color="neutral" icon="bell" title="Reminder" description="You have 3 unread notifications." />
+        <TAlert
+          color="neutral"
+          icon="sparkles"
+          title="New feature"
+          description="Try the redesigned inspector."
+        />
+        <TAlert
+          color="neutral"
+          icon="bell"
+          title="Reminder"
+          description="You have 3 unread notifications."
+        />
       </div>
     </Variant>
   </Story>

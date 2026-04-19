@@ -28,9 +28,7 @@
             <template v-if="state.withHeader" #header="{ collapsed }">
               <div class="flex items-center gap-2 w-full">
                 <TDashboardSidebarCollapse />
-                <span
-                  v-if="!collapsed"
-                  class="text-sm font-bold tracking-wider uppercase text-ink"
+                <span v-if="!collapsed" class="text-sm font-bold tracking-wider uppercase text-ink"
                   >Sidebar</span
                 >
               </div>
@@ -74,9 +72,7 @@
             <template #header="{ collapsed }">
               <div class="flex items-center gap-2">
                 <TDashboardSidebarCollapse />
-                <span
-                  v-if="!collapsed"
-                  class="text-sm font-bold tracking-wider uppercase text-ink"
+                <span v-if="!collapsed" class="text-sm font-bold tracking-wider uppercase text-ink"
                   >Fleet</span
                 >
               </div>
@@ -115,9 +111,7 @@
             <template #header="{ collapsed }">
               <div class="flex items-center gap-2">
                 <TDashboardSidebarCollapse />
-                <span
-                  v-if="!collapsed"
-                  class="text-sm font-bold tracking-wider uppercase text-ink"
+                <span v-if="!collapsed" class="text-sm font-bold tracking-wider uppercase text-ink"
                   >Fleet</span
                 >
               </div>
@@ -139,8 +133,8 @@
 
           <TDashboardPanel id="panel">
             <div class="p-6 text-sm text-ink-muted">
-              Sidebar boots into its collapsed, icon-rail state. Use the collapse
-              control in the header to expand.
+              Sidebar boots into its collapsed, icon-rail state. Use the collapse control in the
+              header to expand.
             </div>
           </TDashboardPanel>
         </TDashboardGroup>

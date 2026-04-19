@@ -80,7 +80,12 @@
               class="mr-1 shrink-0"
               :class="isOptionSelected(option) ? 'text-success' : 'text-ink-subtle'"
             />
-            <TIcon v-else-if="option.icon" :name="option.icon" size="sm" class="mr-1 shrink-0 text-ink-muted" />
+            <TIcon
+              v-else-if="option.icon"
+              :name="option.icon"
+              size="sm"
+              class="mr-1 shrink-0 text-ink-muted"
+            />
             <span class="flex-1 text-left truncate">{{ option.label }}</span>
             <TIcon
               v-if="!multiple && isOptionSelected(option)"
@@ -89,10 +94,7 @@
               class="shrink-0 text-success"
             />
           </button>
-          <div
-            v-if="!filteredOptions.length"
-            class="px-3 py-3 text-center text-xs text-ink-muted"
-          >
+          <div v-if="!filteredOptions.length" class="px-3 py-3 text-center text-xs text-ink-muted">
             {{ emptyLabel }}
           </div>
         </div>
@@ -303,7 +305,12 @@ const onSearchKeydown = (event: KeyboardEvent) => {
       close()
       break
     case 'Backspace':
-      if (props.multiple && !query.value && Array.isArray(modelValueRef.value) && modelValueRef.value.length) {
+      if (
+        props.multiple &&
+        !query.value &&
+        Array.isArray(modelValueRef.value) &&
+        modelValueRef.value.length
+      ) {
         const raw = [...modelValueRef.value]
         raw.pop()
         field.setValue(raw)

@@ -25,7 +25,9 @@
         <TDatePicker v-model="dateValue" />
         <p class="mt-3 text-xs text-ink-muted">
           Value:
-          <span class="font-mono">{{ dateValue ? (dateValue as Date).toISOString() : 'null' }}</span>
+          <span class="font-mono">{{
+            dateValue ? (dateValue as Date).toISOString() : 'null'
+          }}</span>
         </p>
       </div>
     </Variant>
@@ -56,7 +58,9 @@
       <div class="p-6 bg-bg max-w-xs">
         <form class="flex flex-col gap-3" @submit.prevent="submit">
           <label class="text-xs uppercase tracking-wider text-ink-muted">Start date</label>
-          <TDatePicker v-bind="form.getFieldProps('startDate') as unknown as Record<string, unknown>" />
+          <TDatePicker
+            v-bind="form.getFieldProps('startDate') as unknown as Record<string, unknown>"
+          />
           <p v-if="form.errors.value.startDate" class="text-xs text-danger">
             {{ form.errors.value.startDate }}
           </p>

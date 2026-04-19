@@ -4,7 +4,11 @@
       <template #controls>
         <HstText v-model="state.label" title="Label" />
         <HstSelect v-model="state.size" title="Size" :options="['sm', 'md', 'lg']" />
-        <HstSelect v-model="state.labelPosition" title="Label position" :options="['left', 'right']" />
+        <HstSelect
+          v-model="state.labelPosition"
+          title="Label position"
+          :options="['left', 'right']"
+        />
         <HstCheckbox v-model="state.disabled" title="Disabled" />
       </template>
 

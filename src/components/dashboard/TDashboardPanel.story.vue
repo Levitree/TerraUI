@@ -13,10 +13,12 @@
             <TDashboardNavbar title="Panel" description="with header slot" />
           </template>
           <div class="p-6 space-y-3">
-            <p class="text-sm text-ink">Panel id: <code>{{ state.id }}</code></p>
+            <p class="text-sm text-ink">
+              Panel id: <code>{{ state.id }}</code>
+            </p>
             <p class="text-sm text-ink-muted">
-              The panel is the primary content region. The header slot stays pinned
-              while the body scrolls.
+              The panel is the primary content region. The header slot stays pinned while the body
+              scrolls.
             </p>
             <template v-if="state.longContent">
               <div
@@ -53,9 +55,7 @@
           </template>
           <template #body>
             <div class="p-6 bg-fill-subtle h-full">
-              <p class="text-sm text-ink">
-                Rendered via the explicit <code>#body</code> slot.
-              </p>
+              <p class="text-sm text-ink">Rendered via the explicit <code>#body</code> slot.</p>
             </div>
           </template>
         </TDashboardPanel>

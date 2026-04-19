@@ -83,13 +83,21 @@
       <div class="p-6 bg-bg max-w-md">
         <form class="flex flex-col gap-3" @submit.prevent="submit">
           <div>
-            <TInput v-bind="form.getFieldProps('email') as unknown as Record<string, unknown>" type="email" placeholder="Email" />
+            <TInput
+              v-bind="form.getFieldProps('email') as unknown as Record<string, unknown>"
+              type="email"
+              placeholder="Email"
+            />
             <p v-if="form.errors.value.email" class="mt-1 text-xs text-danger">
               {{ form.errors.value.email }}
             </p>
           </div>
           <div>
-            <TInput v-bind="form.getFieldProps('password') as unknown as Record<string, unknown>" type="password" placeholder="Password" />
+            <TInput
+              v-bind="form.getFieldProps('password') as unknown as Record<string, unknown>"
+              type="password"
+              placeholder="Password"
+            />
             <p v-if="form.errors.value.password" class="mt-1 text-xs text-danger">
               {{ form.errors.value.password }}
             </p>

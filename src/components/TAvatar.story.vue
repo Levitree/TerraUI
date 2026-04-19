@@ -63,7 +63,9 @@
     <Variant title="Broken image falls back">
       <div class="p-6 bg-bg flex items-center gap-3">
         <TAvatar src="https://example.invalid/broken.png" text="Aiden Bai" />
-        <span class="text-xs text-ink-muted">Falls back to initials when the image fails to load.</span>
+        <span class="text-xs text-ink-muted"
+          >Falls back to initials when the image fails to load.</span
+        >
       </div>
     </Variant>
   </Story>

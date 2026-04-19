@@ -20,9 +20,9 @@
           :fullscreen="state.fullscreen"
         >
           <p class="text-sm text-ink-secondary leading-relaxed">
-            This is the modal body. You can place any content here — forms, text,
-            images, or custom widgets. The backdrop blurs the page behind and
-            clicking outside (when dismissible) closes the modal.
+            This is the modal body. You can place any content here — forms, text, images, or custom
+            widgets. The backdrop blurs the page behind and clicking outside (when dismissible)
+            closes the modal.
           </p>
           <p class="text-sm text-ink-muted mt-3">
             Press <kbd class="px-1.5 py-0.5 bg-fill border border-line rounded-sm text-xs">Esc</kbd>
@@ -47,11 +47,7 @@
           :label="`Open ${s}`"
           @click="openSize(s)"
         />
-        <TModal
-          v-model:open="sizeOpen"
-          :title="`Size: ${currentSize}`"
-          :size="currentSize"
-        >
+        <TModal v-model:open="sizeOpen" :title="`Size: ${currentSize}`" :size="currentSize">
           <p class="text-sm text-ink-secondary">
             This modal is rendered at the <strong>{{ currentSize }}</strong> size.
           </p>

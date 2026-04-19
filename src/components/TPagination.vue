@@ -4,10 +4,7 @@
     class="flex flex-wrap items-center justify-between gap-3"
     :class="containerClass"
   >
-    <div
-      v-if="showSummary"
-      class="text-ink-muted text-[0.7rem] font-mono uppercase tracking-wider"
-    >
+    <div v-if="showSummary" class="text-ink-muted text-[0.7rem] font-mono uppercase tracking-wider">
       {{ summaryText }}
     </div>
 
@@ -152,9 +149,7 @@ const emit = defineEmits<{
   change: [value: number]
 }>()
 
-const pageCount = computed(() =>
-  Math.max(1, Math.ceil(props.total / Math.max(1, props.perPage))),
-)
+const pageCount = computed(() => Math.max(1, Math.ceil(props.total / Math.max(1, props.perPage))))
 
 const isFirst = computed(() => props.page <= 1)
 const isLast = computed(() => props.page >= pageCount.value)

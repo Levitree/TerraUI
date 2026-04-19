@@ -5,11 +5,7 @@
     role="group"
     :aria-disabled="disabled ? 'true' : undefined"
   >
-    <div
-      ref="trackRef"
-      :class="trackClasses"
-      @pointerdown="onTrackPointerDown"
-    >
+    <div ref="trackRef" :class="trackClasses" @pointerdown="onTrackPointerDown">
       <div :class="rangeClasses" :style="rangeStyle" />
       <button
         v-for="(thumb, index) in thumbs"
@@ -231,8 +227,7 @@ const onThumbKeydown = (event: KeyboardEvent, index: number) => {
   updateThumb(index, next)
 }
 
-const formatValue = (value: number) =>
-  props.formatter ? props.formatter(value) : String(value)
+const formatValue = (value: number) => (props.formatter ? props.formatter(value) : String(value))
 
 const formattedValue = computed(() => {
   if (isRange.value) {

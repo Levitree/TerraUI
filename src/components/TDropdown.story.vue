@@ -2,11 +2,7 @@
   <Story title="TDropdown" group="overlays">
     <Variant title="Playground">
       <template #controls>
-        <HstSelect
-          v-model="state.align"
-          title="Align"
-          :options="['start', 'center', 'end']"
-        />
+        <HstSelect v-model="state.align" title="Align" :options="['start', 'center', 'end']" />
         <HstText v-model="state.lastAction" title="Last action" readonly />
       </template>
 
@@ -53,12 +49,7 @@
       <div class="p-6 bg-bg min-h-96 relative flex items-start justify-center">
         <TDropdown>
           <template #trigger="{ open }">
-            <TButton
-              label="Workspace"
-              icon="layers"
-              icon-right
-              :active="open"
-            />
+            <TButton label="Workspace" icon="layers" icon-right :active="open" />
           </template>
           <template #default="{ close }">
             <div class="w-64 p-3">

@@ -128,12 +128,8 @@ const handleInput = (value: string | number) => {
   }
 }
 
-const atMin = computed(
-  () => props.min !== undefined && displayValue.value <= props.min,
-)
-const atMax = computed(
-  () => props.max !== undefined && displayValue.value >= props.max,
-)
+const atMin = computed(() => props.min !== undefined && displayValue.value <= props.min)
+const atMax = computed(() => props.max !== undefined && displayValue.value >= props.max)
 
 const adjust = (direction: -1 | 1) => {
   if (props.disabled) return

@@ -1,6 +1,11 @@
 <template>
   <div ref="rootRef" class="relative inline-block">
-    <div ref="triggerRef" @click="onTriggerClick" @mouseenter="onTriggerEnter" @mouseleave="onTriggerLeave">
+    <div
+      ref="triggerRef"
+      @click="onTriggerClick"
+      @mouseenter="onTriggerEnter"
+      @mouseleave="onTriggerLeave"
+    >
       <slot name="trigger" :open="isOpen" :close="close" />
     </div>
 

@@ -32,10 +32,7 @@
     <Variant title="Two-level">
       <div class="p-6 bg-bg">
         <TBreadcrumb
-          :items="[
-            { label: 'Home', icon: 'house', onSelect: () => {} },
-            { label: 'Overview' },
-          ]"
+          :items="[{ label: 'Home', icon: 'house', onSelect: () => {} }, { label: 'Overview' }]"
         />
       </div>
     </Variant>

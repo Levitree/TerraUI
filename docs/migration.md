@@ -50,7 +50,7 @@ pattern `useWindowManager` already used.
 - `<TToastContainer />` is still the host. Mount it once in your root layout
   exactly as before.
 - The `useToast()` signature — `useToast().add({ color, title, description,
-  duration })` and the convenience helpers — is unchanged.
+duration })` and the convenience helpers — is unchanged.
 - Toast state is still a single app-wide singleton; stacking, auto-dismiss,
   and `clear()` work identically.
 
@@ -63,10 +63,10 @@ const toast = useToast()
 
 // Structured (Nuxt-UI-shaped)
 toast.add({
-  color: 'success',          // 'success' | 'error' | 'warning' | 'info' | 'neutral' | 'primary'
+  color: 'success', // 'success' | 'error' | 'warning' | 'info' | 'neutral' | 'primary'
   title: 'Deployed',
   description: 'Live in production.',
-  duration: 4000,            // 0 disables auto-dismiss
+  duration: 4000, // 0 disables auto-dismiss
 })
 
 // Convenience helpers

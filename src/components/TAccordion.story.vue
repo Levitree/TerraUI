@@ -9,8 +9,8 @@
         <TAccordion :items="playgroundItems" :multiple="state.multiple">
           <template #overview>
             <p class="text-sm text-ink-secondary">
-              High-level summary of the service. This panel opens by default and shows
-              metadata you'd want at a glance.
+              High-level summary of the service. This panel opens by default and shows metadata
+              you'd want at a glance.
             </p>
           </template>
           <template #config>
@@ -29,14 +29,14 @@
           <template #logs>
             <pre
               class="text-xs font-mono text-ink-secondary bg-fill-subtle p-3 rounded-sm overflow-auto"
-            >[12:04:22] server listening on :8080
+            >
+[12:04:22] server listening on :8080
 [12:04:23] db pool ready
-[12:04:24] ready to serve requests</pre>
+[12:04:24] ready to serve requests</pre
+            >
           </template>
           <template #danger>
-            <p class="text-sm text-ink-secondary">
-              Irreversible actions. Proceed with caution.
-            </p>
+            <p class="text-sm text-ink-secondary">Irreversible actions. Proceed with caution.</p>
           </template>
         </TAccordion>
       </div>
@@ -64,8 +64,9 @@
       <div class="p-6 bg-bg">
         <TAccordion :items="basicItems" multiple>
           <template #overview>
-            <p class="text-sm text-ink-secondary">With multiple enabled, users can expand
-              several sections at once.</p>
+            <p class="text-sm text-ink-secondary">
+              With multiple enabled, users can expand several sections at once.
+            </p>
           </template>
           <template #details>
             <p class="text-sm text-ink-secondary">Stays open alongside siblings.</p>
@@ -101,8 +102,8 @@
         <TAccordion variant="expanded" :items="expandedItems" multiple>
           <template #deployments>
             <p class="text-sm text-ink-secondary">
-              Roomier padding, title-cased label, divider between header and body — for
-              standalone sections where the panel is the focal point.
+              Roomier padding, title-cased label, divider between header and body — for standalone
+              sections where the panel is the focal point.
             </p>
           </template>
           <template #activity>
@@ -141,8 +142,8 @@
           </template>
           <template #live>
             <p class="text-sm text-ink-secondary">
-              Status "success" replaces the chevron with a pulsing dot. An explicit
-              expand/collapse button appears in the actions row.
+              Status "success" replaces the chevron with a pulsing dot. An explicit expand/collapse
+              button appears in the actions row.
             </p>
           </template>
 
@@ -161,8 +162,7 @@
         <TAccordion variant="expanded" :items="describedItems">
           <template #overview>
             <p class="text-sm text-ink-secondary">
-              Descriptions render under the label with relaxed casing, regardless of
-              variant.
+              Descriptions render under the label with relaxed casing, regardless of variant.
             </p>
           </template>
           <template #config>

@@ -1,7 +1,7 @@
 # useModal
 
-Lightweight promise-based modal orchestration. Decouples *should the modal be
-mounted* from *which component, with which props, resolving which promise* —
+Lightweight promise-based modal orchestration. Decouples _should the modal be
+mounted_ from _which component, with which props, resolving which promise_ —
 useful for `await`-style confirmation flows and ad-hoc dialogs.
 
 ## Import
@@ -17,18 +17,18 @@ function useModal<TResult = void>(component: Component): ModalHandle<TResult>
 ```
 
 `useModal` returns a handle **scoped to the component that calls it** — each
-call produces an independent modal instance. It does *not* share state the way
+call produces an independent modal instance. It does _not_ share state the way
 `useToast` does; this keeps multiple concurrent modals isolated.
 
 ## Return value
 
-| Name | Type | Description |
-| --- | --- | --- |
-| `isOpen` | `Ref<boolean>` | Bind to `v-model:open` on `TModal` (or your own wrapper). |
-| `open` | `(props?: Record<string, unknown>) => Promise<TResult \| undefined>` | Opens the modal with optional props. Resolves with whatever `close(result)` is called with, or `undefined` if dismissed via `v-model:open="false"`. |
-| `close` | `(result?: TResult) => void` | Dismisses the modal and resolves the outstanding `open()` promise with `result`. |
-| `component` | `Component` | The component to render inside the modal slot (marked `markRaw`). |
-| `props` | `Ref<Record<string, unknown>>` | The props bag passed to the rendered component. Updated each time `open(props)` is called. |
+| Name        | Type                                                                 | Description                                                                                                                                         |
+| ----------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `isOpen`    | `Ref<boolean>`                                                       | Bind to `v-model:open` on `TModal` (or your own wrapper).                                                                                           |
+| `open`      | `(props?: Record<string, unknown>) => Promise<TResult \| undefined>` | Opens the modal with optional props. Resolves with whatever `close(result)` is called with, or `undefined` if dismissed via `v-model:open="false"`. |
+| `close`     | `(result?: TResult) => void`                                         | Dismisses the modal and resolves the outstanding `open()` promise with `result`.                                                                    |
+| `component` | `Component`                                                          | The component to render inside the modal slot (marked `markRaw`).                                                                                   |
+| `props`     | `Ref<Record<string, unknown>>`                                       | The props bag passed to the rendered component. Updated each time `open(props)` is called.                                                          |
 
 ## Usage
 

@@ -13,11 +13,7 @@
       </template>
 
       <div class="p-6 bg-bg min-h-96 relative flex items-center justify-center">
-        <TButton
-          label="Open Floating Window"
-          icon="app-window"
-          @click="state.open = true"
-        />
+        <TButton label="Open Floating Window" icon="app-window" @click="state.open = true" />
 
         <TFloatingWindow
           v-model:open="state.open"
@@ -31,12 +27,10 @@
         >
           <div class="p-4 text-sm text-ink-secondary">
             <p>
-              Drag the header to move. Drag the bottom-right handle to resize.
-              Click anywhere to bring the window to the front.
+              Drag the header to move. Drag the bottom-right handle to resize. Click anywhere to
+              bring the window to the front.
             </p>
-            <p class="mt-2 text-ink-muted">
-              Content scrolls if it overflows the window bounds.
-            </p>
+            <p class="mt-2 text-ink-muted">Content scrolls if it overflows the window bounds.</p>
           </div>
 
           <template v-if="state.withFooter" #footer>
@@ -74,9 +68,7 @@
           :initial-width="320"
           :initial-height="200"
         >
-          <div class="p-4 text-sm text-ink-secondary">
-            I am window B. We share a z-index stack.
-          </div>
+          <div class="p-4 text-sm text-ink-secondary">I am window B. We share a z-index stack.</div>
         </TFloatingWindow>
       </div>
     </Variant>

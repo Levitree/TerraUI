@@ -49,7 +49,11 @@
         <TFormField label="Required" required>
           <TInput placeholder="required" />
         </TFormField>
-        <TFormField label="With error (overrides hint)" hint="This hint is hidden" error="Something went wrong">
+        <TFormField
+          label="With error (overrides hint)"
+          hint="This hint is hidden"
+          error="Something went wrong"
+        >
           <TInput placeholder="error" error />
         </TFormField>
       </div>

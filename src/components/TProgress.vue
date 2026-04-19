@@ -1,5 +1,10 @@
 <template>
-  <div :class="['w-full', orientation === 'vertical' ? 'h-full flex flex-col gap-2' : 'flex flex-col gap-2']">
+  <div
+    :class="[
+      'w-full',
+      orientation === 'vertical' ? 'h-full flex flex-col gap-2' : 'flex flex-col gap-2',
+    ]"
+  >
     <div
       v-if="hasHeader"
       class="flex items-center justify-between gap-2 text-[0.65rem] font-bold tracking-wider uppercase text-ink-muted"

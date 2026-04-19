@@ -20,11 +20,7 @@
 
     <Variant title="No data">
       <div class="p-6 bg-bg">
-        <TEmptyState
-          icon="inbox"
-          title="No items yet"
-          hint="Items you create will appear here."
-        />
+        <TEmptyState icon="inbox" title="No items yet" hint="Items you create will appear here." />
       </div>
     </Variant>
 
