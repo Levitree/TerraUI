@@ -45,8 +45,14 @@ const initials = computed(() => {
   if (!props.text) return ''
   const cleaned = props.text.trim()
   if (!cleaned) return ''
-  const parts = cleaned.split(/\s+/).slice(0, 2)
-  return parts.map((p) => p[0]?.toUpperCase() ?? '').join('')
+  const parts = cleaned.split(/\s+/)
+  if (parts.length === 1) {
+    return (parts[0] ?? '').slice(0, 2).toUpperCase()
+  }
+  return parts
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase() ?? '')
+    .join('')
 })
 
 const containerClasses = computed(() => {

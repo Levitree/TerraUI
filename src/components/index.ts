@@ -14,14 +14,18 @@ export { default as TSkeleton } from './TSkeleton.vue'
 export { default as TStatusIndicator } from './TStatusIndicator.vue'
 
 // Layout / navigation
+export { default as TBreadcrumb } from './TBreadcrumb.vue'
 export { default as TControlBar } from './TControlBar.vue'
 export { default as TFilterLabel } from './TFilterLabel.vue'
 export { default as TNavLink } from './TNavLink.vue'
 export { default as TNavbar } from './TNavbar.vue'
 export { default as TNavigationMenu } from './TNavigationMenu.vue'
+export { default as TPagination } from './TPagination.vue'
 export { default as TTabs } from './TTabs.vue'
 export type { Tab } from './TTabs.vue'
 export type { NavItem } from './TNavigationMenu.vue'
+export type { TBreadcrumbItem } from './TBreadcrumb.vue'
+export type { TPaginationSize } from './TPagination.vue'
 
 // Dashboard shell
 export * from './dashboard'
@@ -30,14 +34,17 @@ export * from './dashboard'
 export { default as TAccordion } from './TAccordion.vue'
 export { default as TEmptyState } from './TEmptyState.vue'
 export { default as TLoadingState } from './TLoadingState.vue'
+export { default as TProgress } from './TProgress.vue'
 export { default as TStatTile } from './TStatTile.vue'
 export { default as TTable } from './TTable.vue'
 export type { TAccordionItem } from './TAccordion.vue'
+export type { ProgressColor, ProgressSize, ProgressOrientation } from './TProgress.vue'
 
 // Overlays
 export { default as TDropdown } from './TDropdown.vue'
 export { default as TFloatingWindow } from './TFloatingWindow.vue'
 export { default as TModal } from './TModal.vue'
+export { default as TPopover } from './TPopover.vue'
 export { default as TToast } from './TToast.vue'
 export { default as TToastContainer } from './TToastContainer.vue'
 export { default as TWindowsContainer } from './TWindowsContainer.vue'
@@ -46,6 +53,7 @@ export type {
   TDropdownItemColor,
   TDropdownContent,
 } from './TDropdown.vue'
+export type { TPopoverContent, TPopoverMode } from './TPopover.vue'
 
 // Window renderers (importing this module registers built-in window types)
 export * from './windows'

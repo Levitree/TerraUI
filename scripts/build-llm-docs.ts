@@ -81,17 +81,20 @@ const PRIMITIVES = new Set([
   'TStatusIndicator',
 ])
 const LAYOUT = new Set([
+  'TBreadcrumb',
   'TControlBar',
   'TFilterLabel',
   'TNavLink',
   'TNavbar',
   'TNavigationMenu',
+  'TPagination',
   'TTabs',
 ])
 const DATA_DISPLAY = new Set([
   'TAccordion',
   'TEmptyState',
   'TLoadingState',
+  'TProgress',
   'TStatTile',
   'TTable',
 ])
@@ -99,6 +102,7 @@ const OVERLAYS = new Set([
   'TDropdown',
   'TFloatingWindow',
   'TModal',
+  'TPopover',
   'TToast',
   'TToastContainer',
   'TWindowsContainer',
