@@ -136,21 +136,21 @@
             <div class="absolute inset-x-0 top-0 h-0.5 bg-success" />
           </template>
           <template #live-actions>
-            <TButton variant="ghost" icon="plus" size="sm" />
-            <TButton variant="ghost" icon="refresh-cw" size="sm" />
+            <TButton color="ghost" icon="plus" size="sm" />
+            <TButton color="ghost" icon="refresh-cw" size="sm" />
           </template>
           <template #live>
             <p class="text-sm text-ink-secondary">
-              Status "online" replaces the chevron with a pulsing dot. An explicit
+              Status "success" replaces the chevron with a pulsing dot. An explicit
               expand/collapse button appears in the actions row.
             </p>
           </template>
 
           <template #offline-actions>
-            <TButton variant="ghost" icon="power" size="sm" />
+            <TButton color="ghost" icon="power" size="sm" />
           </template>
           <template #offline>
-            <p class="text-sm text-ink-secondary">Offline status — static dot, no pulse.</p>
+            <p class="text-sm text-ink-secondary">Error status — static dot, no pulse.</p>
           </template>
         </TAccordion>
       </div>
@@ -229,7 +229,7 @@ const statusItems: TAccordionItem[] = [
     slot: 'live',
     label: 'Production',
     description: 'Active now',
-    status: 'online',
+    status: 'success',
     count: 4,
     defaultOpen: true,
   },
@@ -237,7 +237,7 @@ const statusItems: TAccordionItem[] = [
     slot: 'offline',
     label: 'Staging',
     description: 'Paused',
-    status: 'offline',
+    status: 'error',
   },
 ]
 

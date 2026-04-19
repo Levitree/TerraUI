@@ -24,7 +24,7 @@
           <TStatusIndicator
             v-if="item.status"
             :status="item.status"
-            :pulse="item.status === 'online'"
+            :pulse="item.status === 'success'"
             class="shrink-0"
           />
           <TIcon
@@ -130,7 +130,7 @@ export interface TAccordionItem {
    * Status indicator. When set, replaces the chevron with a live dot and
    * surfaces an explicit expand/collapse button in the actions area.
    */
-  status?: 'online' | 'offline'
+  status?: 'success' | 'error' | 'warn' | 'neutral'
   defaultOpen?: boolean
   disabled?: boolean
 }

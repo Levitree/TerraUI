@@ -111,6 +111,7 @@ import { h, reactive, ref } from 'vue'
 import { createColumnHelper, type ColumnDef } from '@tanstack/vue-table'
 import TTable from './TTable.vue'
 import TBadge from './TBadge.vue'
+import type { BadgeColor } from './TBadge.vue'
 
 type User = {
   id: string
@@ -159,23 +160,19 @@ const userColumns: ColumnDef<User, unknown>[] = [
   }),
   userCol.accessor('role', {
     header: 'Role',
-    cell: (ctx) => h(TBadge, { variant: 'type' }, () => ctx.getValue() as string),
+    cell: (ctx) => h(TBadge, { color: 'neutral' }, () => ctx.getValue() as string),
   }),
   userCol.accessor('status', {
     header: 'Status',
     cell: (ctx) => {
       const value = ctx.getValue() as User['status']
-      const badgeStatus =
+      const color: BadgeColor =
         value === 'online' || value === 'active'
-          ? value
+          ? 'success'
           : value === 'inactive'
-            ? 'inactive'
-            : 'offline'
-      return h(
-        TBadge,
-        { variant: 'status', status: badgeStatus },
-        () => value,
-      )
+            ? 'neutral'
+            : 'error'
+      return h(TBadge, { color, variant: 'ghost' }, () => value)
     },
   }),
 ] as ColumnDef<User, unknown>[]
@@ -234,8 +231,9 @@ const orderColumns: ColumnDef<Order, unknown>[] = [
     header: 'Status',
     cell: (ctx) => {
       const value = ctx.getValue() as Order['status']
-      const status = value === 'paid' ? 'online' : value === 'refunded' ? 'offline' : 'inactive'
-      return h(TBadge, { variant: 'status', status }, () => value)
+      const color: BadgeColor =
+        value === 'paid' ? 'success' : value === 'refunded' ? 'error' : 'neutral'
+      return h(TBadge, { color, variant: 'ghost' }, () => value)
     },
   }),
   orderCol.accessor('createdAt', {

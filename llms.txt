@@ -61,7 +61,6 @@ import { TButton } from '@terranovasystems/terraui/components'
 ### Overlays
 
 - [TDropdown](dist/llms/components/TDropdown.md)
-- [TDropdownMenu](dist/llms/components/TDropdownMenu.md)
 - [TFloatingWindow](dist/llms/components/TFloatingWindow.md)
 - [TModal](dist/llms/components/TModal.md)
 - [TToast](dist/llms/components/TToast.md)

@@ -18,7 +18,7 @@
             @click="openDemo"
           />
           <TButton
-            variant="secondary"
+            color="neutral"
             label="Close all"
             icon="x"
             :disabled="!windowManager.hasWindows"
@@ -36,7 +36,7 @@
     <Variant title="Multiple types">
       <div class="p-6 bg-bg min-h-96 relative flex items-center justify-center gap-3">
         <TButton label="Open Inspector" icon="search" @click="openInspector" />
-        <TButton variant="secondary" label="Open Notes" icon="notebook" @click="openNotes" />
+        <TButton color="neutral" label="Open Notes" icon="notebook" @click="openNotes" />
 
         <TWindowsContainer />
       </div>

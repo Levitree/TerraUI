@@ -98,7 +98,6 @@ const DATA_DISPLAY = new Set([
 ])
 const OVERLAYS = new Set([
   'TDropdown',
-  'TDropdownMenu',
   'TFloatingWindow',
   'TModal',
   'TToast',

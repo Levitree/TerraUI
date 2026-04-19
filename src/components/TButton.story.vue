@@ -4,18 +4,9 @@
       <template #controls>
         <HstText v-model="state.label" title="Label" />
         <HstSelect
-          v-model="state.variant"
-          title="Variant"
-          :options="[
-            'primary',
-            'secondary',
-            'ghost',
-            'icon',
-            'success',
-            'error',
-            'warning',
-            'white',
-          ]"
+          v-model="state.color"
+          title="Color"
+          :options="['neutral', 'success', 'error', 'warn', 'ghost', 'icon', 'white']"
         />
         <HstSelect v-model="state.size" title="Size" :options="['sm', 'md', 'lg']" />
         <HstText v-model="state.icon" title="Icon (lucide name)" />
@@ -29,7 +20,7 @@
       <div class="p-6 bg-bg min-h-40 flex items-center justify-center">
         <TButton
           :label="state.label"
-          :variant="state.variant"
+          :color="state.color"
           :size="state.size"
           :icon="state.icon || undefined"
           :icon-right="state.iconRight"
@@ -41,14 +32,14 @@
       </div>
     </Variant>
 
-    <Variant title="Variants">
+    <Variant title="Colors">
       <div class="p-6 bg-bg flex flex-wrap gap-3">
         <TButton
-          v-for="v in variants"
-          :key="v"
-          :variant="v"
-          :label="v"
-          :icon="v === 'icon' ? 'settings' : undefined"
+          v-for="c in colors"
+          :key="c"
+          :color="c"
+          :label="c"
+          :icon="c === 'icon' ? 'settings' : undefined"
         />
       </div>
     </Variant>
@@ -63,10 +54,10 @@
 
     <Variant title="Icon buttons">
       <div class="p-6 bg-bg flex items-center gap-3">
-        <TButton variant="icon" size="sm" icon="plus" />
-        <TButton variant="icon" size="md" icon="plus" />
-        <TButton variant="icon" size="lg" icon="plus" />
-        <TButton variant="icon" icon="settings" active />
+        <TButton color="icon" size="sm" icon="plus" />
+        <TButton color="icon" size="md" icon="plus" />
+        <TButton color="icon" size="lg" icon="plus" />
+        <TButton color="icon" icon="settings" active />
       </div>
     </Variant>
 
@@ -104,22 +95,21 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import TButton from './TButton.vue'
-import type { ButtonVariant, ButtonSize } from './TButton.vue'
+import type { ButtonColor, ButtonSize } from './TButton.vue'
 
-const variants: ButtonVariant[] = [
-  'primary',
-  'secondary',
-  'ghost',
-  'icon',
+const colors: ButtonColor[] = [
+  'neutral',
   'success',
   'error',
-  'warning',
+  'warn',
+  'ghost',
+  'icon',
   'white',
 ]
 
 const state = reactive<{
   label: string
-  variant: ButtonVariant
+  color: ButtonColor
   size: ButtonSize
   icon: string
   iconRight: boolean
@@ -129,7 +119,7 @@ const state = reactive<{
   fullWidth: boolean
 }>({
   label: 'Button',
-  variant: 'primary',
+  color: 'neutral',
   size: 'md',
   icon: '',
   iconRight: false,

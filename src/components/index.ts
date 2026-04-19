@@ -37,17 +37,16 @@ export type { TAccordionItem } from './TAccordion.vue'
 
 // Overlays
 export { default as TDropdown } from './TDropdown.vue'
-export { default as TDropdownMenu } from './TDropdownMenu.vue'
 export { default as TFloatingWindow } from './TFloatingWindow.vue'
 export { default as TModal } from './TModal.vue'
 export { default as TToast } from './TToast.vue'
 export { default as TToastContainer } from './TToastContainer.vue'
 export { default as TWindowsContainer } from './TWindowsContainer.vue'
 export type {
-  TDropdownMenuItem,
-  TDropdownMenuItemColor,
-  TDropdownMenuContent,
-} from './TDropdownMenu.vue'
+  TDropdownItem,
+  TDropdownItemColor,
+  TDropdownContent,
+} from './TDropdown.vue'
 
 // Window renderers (importing this module registers built-in window types)
 export * from './windows'
@@ -56,10 +55,10 @@ export * from './windows'
 export * from './forms'
 
 // Component-level types
-export type { ButtonVariant, ButtonSize } from './TButton.vue'
-export type { BadgeVariant } from './TBadge.vue'
+export type { ButtonColor, ButtonSize } from './TButton.vue'
+export type { BadgeVariant, BadgeColor, BadgeSize } from './TBadge.vue'
 export type { IndicatorSize, IndicatorStatus } from './TStatusIndicator.vue'
 export type { LogoSize } from './TLogo.vue'
-export type { IconSize } from './TIcon.vue'
+export type { IconSize, IconColor } from './TIcon.vue'
 export type { AlertColor, AlertVariant } from './TAlert.vue'
 export type { AvatarSize, AvatarColor } from './TAvatar.vue'

@@ -31,7 +31,7 @@
 
           <template v-if="state.withFooter" #footer>
             <div class="flex-1" />
-            <TButton variant="ghost" label="Cancel" @click="state.open = false" />
+            <TButton color="ghost" label="Cancel" @click="state.open = false" />
             <TButton label="Confirm" @click="state.open = false" />
           </template>
         </TModal>
@@ -43,7 +43,7 @@
         <TButton
           v-for="s in sizes"
           :key="s"
-          variant="secondary"
+          color="neutral"
           :label="`Open ${s}`"
           @click="openSize(s)"
         />
@@ -70,7 +70,7 @@
           </p>
           <template #footer>
             <div class="flex-1" />
-            <TButton variant="ghost" label="Cancel" @click="confirmModal.close(false)" />
+            <TButton color="ghost" label="Cancel" @click="confirmModal.close(false)" />
             <TButton label="Confirm" @click="confirmModal.close(true)" />
           </template>
         </TModal>
@@ -79,7 +79,7 @@
 
     <Variant title="Without title/footer">
       <div class="p-6 bg-bg min-h-96 flex items-center justify-center">
-        <TButton variant="ghost" label="Open minimal" @click="minimalOpen = true" />
+        <TButton color="ghost" label="Open minimal" @click="minimalOpen = true" />
         <TModal v-model:open="minimalOpen" :dismissible="true">
           <template #header>
             <div class="flex items-center gap-2">

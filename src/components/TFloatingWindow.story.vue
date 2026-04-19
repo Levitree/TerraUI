@@ -41,7 +41,7 @@
 
           <template v-if="state.withFooter" #footer>
             <div class="flex-1 text-xs text-ink-muted">Footer</div>
-            <TButton size="sm" variant="ghost" label="Cancel" @click="state.open = false" />
+            <TButton size="sm" color="ghost" label="Cancel" @click="state.open = false" />
             <TButton size="sm" label="OK" @click="state.open = false" />
           </template>
         </TFloatingWindow>
@@ -51,7 +51,7 @@
     <Variant title="Multiple windows">
       <div class="p-6 bg-bg min-h-96 relative flex items-center justify-center gap-3">
         <TButton label="Open A" @click="openA = true" />
-        <TButton label="Open B" variant="secondary" @click="openB = true" />
+        <TButton label="Open B" color="neutral" @click="openB = true" />
 
         <TFloatingWindow
           v-model:open="openA"

@@ -34,11 +34,11 @@
     <Variant title="With buttons">
       <div class="p-6 bg-bg flex items-center gap-3">
         <TFilterLabel label="View as" />
-        <TButton size="sm" variant="secondary" label="Grid" active />
-        <TButton size="sm" variant="secondary" label="List" />
+        <TButton size="sm" color="neutral" label="Grid" active />
+        <TButton size="sm" color="neutral" label="List" />
         <TSeparator orientation="vertical" class="h-5" />
         <TFilterLabel label="Group by" />
-        <TButton size="sm" variant="ghost" label="Owner" icon-right icon="chevron-down" />
+        <TButton size="sm" color="ghost" label="Owner" icon-right icon="chevron-down" />
       </div>
     </Variant>
   </Story>

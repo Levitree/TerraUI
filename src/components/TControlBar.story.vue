@@ -13,12 +13,12 @@
       <div class="p-6 bg-bg min-h-40">
         <TControlBar :position="state.position" :blur="state.blur">
           <TButton size="sm" icon="plus" label="New" />
-          <TButton size="sm" variant="secondary" icon="filter" label="Filter" />
+          <TButton size="sm" color="neutral" icon="filter" label="Filter" />
           <TSeparator orientation="vertical" class="h-5" />
           <TFilterLabel label="Sort" />
-          <TButton size="sm" variant="ghost" label="Newest" icon-right icon="chevron-down" />
+          <TButton size="sm" color="ghost" label="Newest" icon-right icon="chevron-down" />
           <TSeparator orientation="vertical" class="h-5" />
-          <TButton size="sm" variant="ghost" icon="refresh-cw" />
+          <TButton size="sm" color="ghost" icon="refresh-cw" />
         </TControlBar>
       </div>
     </Variant>
@@ -26,11 +26,11 @@
     <Variant title="Top position">
       <div class="p-6 bg-bg">
         <TControlBar position="top">
-          <TButton size="sm" icon="arrow-left" variant="ghost" label="Back" />
+          <TButton size="sm" icon="arrow-left" color="ghost" label="Back" />
           <TSeparator orientation="vertical" class="h-5" />
           <TFilterLabel label="View" />
-          <TButton size="sm" variant="secondary" label="Grid" active />
-          <TButton size="sm" variant="secondary" label="List" />
+          <TButton size="sm" color="neutral" label="Grid" active />
+          <TButton size="sm" color="neutral" label="List" />
         </TControlBar>
       </div>
     </Variant>
@@ -40,9 +40,9 @@
         <TControlBar position="bottom">
           <span class="text-xs text-ink-muted">42 items</span>
           <TSeparator orientation="vertical" class="h-5" />
-          <TButton size="sm" variant="ghost" icon="chevron-left" />
+          <TButton size="sm" color="ghost" icon="chevron-left" />
           <span class="text-xs text-ink">Page 1 of 5</span>
-          <TButton size="sm" variant="ghost" icon="chevron-right" />
+          <TButton size="sm" color="ghost" icon="chevron-right" />
         </TControlBar>
       </div>
     </Variant>
@@ -51,7 +51,7 @@
       <div class="p-6 bg-bg">
         <TControlBar :blur="false">
           <TButton size="sm" icon="save" label="Save" />
-          <TButton size="sm" variant="secondary" label="Cancel" />
+          <TButton size="sm" color="neutral" label="Cancel" />
         </TControlBar>
       </div>
     </Variant>
@@ -60,11 +60,11 @@
       <div class="p-6 bg-bg">
         <TControlBar>
           <TFilterLabel label="Filters" />
-          <TButton size="sm" variant="secondary" label="Status" icon-right icon="chevron-down" />
-          <TButton size="sm" variant="secondary" label="Owner" icon-right icon="chevron-down" />
-          <TButton size="sm" variant="secondary" label="Tags" icon-right icon="chevron-down" />
+          <TButton size="sm" color="neutral" label="Status" icon-right icon="chevron-down" />
+          <TButton size="sm" color="neutral" label="Owner" icon-right icon="chevron-down" />
+          <TButton size="sm" color="neutral" label="Tags" icon-right icon="chevron-down" />
           <TSeparator orientation="vertical" class="h-5" />
-          <TButton size="sm" variant="ghost" icon="x" label="Clear" />
+          <TButton size="sm" color="ghost" icon="x" label="Clear" />
         </TControlBar>
       </div>
     </Variant>

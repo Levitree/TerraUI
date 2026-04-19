@@ -30,7 +30,7 @@
     <Variant title="Sizes">
       <div class="p-6 bg-bg flex items-center gap-4">
         <div v-for="size in ['sm', 'md', 'lg'] as const" :key="size" class="flex items-center gap-2">
-          <TStatusIndicator status="online" :size="size" />
+          <TStatusIndicator status="success" :size="size" />
           <span class="text-xs text-ink-muted uppercase tracking-wider">{{ size }}</span>
         </div>
       </div>
@@ -38,11 +38,10 @@
 
     <Variant title="Pulse animation">
       <div class="p-6 bg-bg flex items-center gap-4">
-        <TStatusIndicator status="online" pulse />
-        <TStatusIndicator status="warning" pulse />
+        <TStatusIndicator status="success" pulse />
+        <TStatusIndicator status="warn" pulse />
         <TStatusIndicator status="error" pulse />
-        <TStatusIndicator status="connecting" />
-        <span class="text-xs text-ink-muted">connecting pulses automatically</span>
+        <span class="text-xs text-ink-muted">pulse dims and brightens on a loop</span>
       </div>
     </Variant>
 
@@ -50,15 +49,15 @@
       <div class="p-6 bg-bg flex flex-col gap-2 w-64">
         <div class="flex items-center justify-between">
           <span class="text-sm text-ink">api.terranova.dev</span>
-          <TStatusIndicator status="online" />
+          <TStatusIndicator status="success" />
         </div>
         <div class="flex items-center justify-between">
           <span class="text-sm text-ink">edge-worker-eu</span>
-          <TStatusIndicator status="connecting" />
+          <TStatusIndicator status="warn" pulse />
         </div>
         <div class="flex items-center justify-between">
           <span class="text-sm text-ink">db-replica-02</span>
-          <TStatusIndicator status="warning" />
+          <TStatusIndicator status="warn" />
         </div>
         <div class="flex items-center justify-between">
           <span class="text-sm text-ink">cache-node-07</span>
@@ -66,7 +65,7 @@
         </div>
         <div class="flex items-center justify-between">
           <span class="text-sm text-ink-muted">legacy-staging</span>
-          <TStatusIndicator status="inactive" />
+          <TStatusIndicator status="neutral" />
         </div>
       </div>
     </Variant>
@@ -78,17 +77,7 @@ import { reactive } from 'vue'
 import TStatusIndicator from './TStatusIndicator.vue'
 import type { IndicatorStatus, IndicatorSize } from './TStatusIndicator.vue'
 
-const statuses: IndicatorStatus[] = [
-  'online',
-  'offline',
-  'connecting',
-  'active',
-  'inactive',
-  'warning',
-  'error',
-  'unknown',
-  'unconfigured',
-]
+const statuses: IndicatorStatus[] = ['success', 'error', 'warn', 'neutral']
 
 const state = reactive<{
   status: IndicatorStatus
@@ -96,7 +85,7 @@ const state = reactive<{
   pulse: boolean
   title: string
 }>({
-  status: 'online',
+  status: 'success',
   size: 'md',
   pulse: false,
   title: '',

@@ -6,7 +6,7 @@
         :key="item.label"
         :label="item.label"
         :icon="item.icon"
-        variant="secondary"
+        color="neutral"
         :active="item.active"
         size="sm"
         class="max-md:flex-1"

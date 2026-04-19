@@ -20,7 +20,7 @@
         </p>
         <div class="flex flex-wrap gap-3 justify-center">
           <TButton label="Push toast" icon="send" @click="push" />
-          <TButton variant="ghost" label="Clear" icon="trash-2" @click="toast.clear()" />
+          <TButton color="ghost" label="Clear" icon="trash-2" @click="toast.clear()" />
         </div>
         <TToastContainer />
       </div>
@@ -28,10 +28,10 @@
 
     <Variant title="One of each type">
       <div class="p-6 bg-bg min-h-96 relative flex items-center justify-center gap-3">
-        <TButton variant="success" label="Success" @click="toast.success('Saved changes', 'Success')" />
-        <TButton variant="error" label="Error" @click="toast.error('Something broke', 'Error')" />
-        <TButton variant="warning" label="Warning" @click="toast.warning('Heads up', 'Warning')" />
-        <TButton variant="secondary" label="Info" @click="toast.info('Just so you know', 'Info')" />
+        <TButton color="success" label="Success" @click="toast.success('Saved changes', 'Success')" />
+        <TButton color="error" label="Error" @click="toast.error('Something broke', 'Error')" />
+        <TButton color="warn" label="Warning" @click="toast.warning('Heads up', 'Warning')" />
+        <TButton color="neutral" label="Info" @click="toast.info('Just so you know', 'Info')" />
         <TToastContainer />
       </div>
     </Variant>

@@ -54,25 +54,25 @@
     <Variant title="Wired to toast store">
       <div class="p-6 bg-bg min-h-96 relative flex flex-wrap items-center justify-center gap-3">
         <TButton
-          variant="success"
+          color="success"
           label="Push success"
           icon="check"
           @click="toast.success('Deployed to production', 'Success')"
         />
         <TButton
-          variant="error"
+          color="error"
           label="Push error"
           icon="x"
           @click="toast.error('Could not reach the server', 'Error')"
         />
         <TButton
-          variant="warning"
+          color="warn"
           label="Push warning"
           icon="triangle-alert"
           @click="toast.warning('You are nearing your quota', 'Warning')"
         />
         <TButton
-          variant="secondary"
+          color="neutral"
           label="Push info"
           icon="info"
           @click="toast.info('A new version is available', 'Info')"

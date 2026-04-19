@@ -6,16 +6,7 @@
 import { computed } from 'vue'
 
 export type IndicatorSize = 'sm' | 'md' | 'lg'
-export type IndicatorStatus =
-  | 'online'
-  | 'offline'
-  | 'connecting'
-  | 'active'
-  | 'inactive'
-  | 'warning'
-  | 'error'
-  | 'unknown'
-  | 'unconfigured'
+export type IndicatorStatus = 'success' | 'error' | 'warn' | 'neutral'
 
 const props = withDefaults(
   defineProps<{
@@ -25,7 +16,7 @@ const props = withDefaults(
     title?: string
   }>(),
   {
-    status: 'offline',
+    status: 'neutral',
     size: 'md',
     pulse: false,
   },
@@ -44,32 +35,19 @@ const sizeClasses = computed(() => {
 
 const statusClasses = computed(() => {
   switch (props.status) {
-    case 'online':
-    case 'active':
+    case 'success':
       return 'bg-success shadow-[0_0_12px_var(--color-success)]'
-    case 'connecting':
-      return 'bg-warning shadow-[0_0_12px_var(--color-warning)] animate-pulse'
-    case 'warning':
-      return 'bg-warning-strong shadow-[0_0_12px_var(--color-warning-strong)]'
+    case 'warn':
+      return 'bg-warning shadow-[0_0_12px_var(--color-warning)]'
     case 'error':
       return 'bg-danger shadow-[0_0_12px_var(--color-danger)]'
-    case 'offline':
-      return 'bg-danger shadow-[0_0_12px_var(--color-danger)]'
-    case 'unknown':
-      return 'bg-fill-strong'
-    case 'unconfigured':
-      return 'bg-fill-strong'
-    case 'inactive':
+    case 'neutral':
     default:
       return 'bg-fill-strong'
   }
 })
 
-const pulseClass = computed(() => {
-  if (!props.pulse) return ''
-  if (props.status === 'connecting') return ''
-  return 'animate-pulse'
-})
+const pulseClass = computed(() => (props.pulse ? 'animate-pulse' : ''))
 
 const indicatorClasses = computed(() =>
   ['rounded-sm transition-all', sizeClasses.value, statusClasses.value, pulseClass.value]

@@ -27,26 +27,14 @@ import { computed } from 'vue'
 const props = withDefaults(
   defineProps<{
     title?: string
-    hoverable?: boolean
     noPadding?: boolean
   }>(),
   {
-    hoverable: true,
     noPadding: false,
   },
 )
 
-const cardClasses = computed(() => {
-  const classes = [
-    'flex flex-col border border-line bg-surface rounded-sm overflow-hidden transition-all',
-  ]
-
-  if (props.hoverable) {
-    classes.push('hover:border-line-strong')
-  }
-
-  return classes.join(' ')
-})
+const cardClasses = 'flex flex-col border border-line bg-surface rounded-sm overflow-hidden transition-all'
 
 const bodyClasses = computed(() => {
   const classes = ['flex-1 min-h-0']

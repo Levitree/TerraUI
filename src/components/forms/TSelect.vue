@@ -336,16 +336,19 @@ const optionClasses = (option: TSelectOption, index: number) => {
   const isSelected = isOptionSelected(option)
   const isHighlighted = index === highlightedIndex.value
 
-  const classes = ['w-full px-3 py-2 text-left text-sm transition-colors flex items-center']
+  // Match TDropdown menu items: px-3 h-9 text-sm, text-ink-secondary with
+  // hover:bg-fill hover:text-ink. Single-select uses bg-fill-strong for the
+  // current selection; multi-select shows selection via the square-check icon.
+  const classes = ['group w-full flex items-center gap-2 px-3 h-9 text-sm text-left transition-colors']
 
   if (option.disabled) {
-    classes.push('text-ink-disabled cursor-not-allowed')
+    classes.push('text-ink-disabled cursor-not-allowed opacity-40')
   } else if (isSelected && !props.multiple) {
-    classes.push('bg-fill-strong text-ink')
+    classes.push('bg-fill-strong text-ink cursor-pointer')
   } else if (isHighlighted) {
     classes.push('bg-fill text-ink cursor-pointer')
   } else {
-    classes.push('text-ink-secondary hover:bg-fill cursor-pointer')
+    classes.push('text-ink-secondary hover:bg-fill hover:text-ink cursor-pointer')
   }
 
   return classes.join(' ')

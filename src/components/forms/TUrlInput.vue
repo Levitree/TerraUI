@@ -66,9 +66,9 @@
     </div>
 
     <template #footer>
-      <TButton variant="ghost" class="flex-1" label="Cancel" @click="isManualOpen = false" />
+      <TButton color="ghost" class="flex-1" label="Cancel" @click="isManualOpen = false" />
       <TButton
-        variant="success"
+        color="success"
         class="flex-1"
         label="Apply"
         :disabled="!manual.host.trim()"
