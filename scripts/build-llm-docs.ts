@@ -82,7 +82,6 @@ const PRIMITIVES = new Set([
 ])
 const LAYOUT = new Set([
   'TControlBar',
-  'TFilterDivider',
   'TFilterLabel',
   'TNavLink',
   'TNavbar',
@@ -92,7 +91,6 @@ const LAYOUT = new Set([
 ])
 const DATA_DISPLAY = new Set([
   'TAccordion',
-  'TCollapsibleSection',
   'TEmptyState',
   'TLoadingState',
   'TStatTile',

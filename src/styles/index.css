@@ -1,11 +1,11 @@
-@source '../components/**/*.{vue,ts}';
-@source '../composables/**/*.ts';
-@source '../stores/**/*.ts';
+@import 'tailwindcss';
 
 @import './tokens/colors.css';
-
 @import './base/reset.css';
 @import './base/typography.css';
 @import './base/scrollbars.css';
-
 @import './animations/keyframes.css';
+
+@source '../components/**/*.{vue,ts}';
+@source '../composables/**/*.ts';
+@source '../stores/**/*.ts';

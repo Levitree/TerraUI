@@ -48,6 +48,25 @@
       </div>
     </Variant>
 
+    <Variant title="Filter-bar divider (h-5)">
+      <!-- Replaces the previous TFilterDivider — always pair vertical orientation
+           with a height class that matches the surrounding row. -->
+      <div class="p-6 bg-bg">
+        <div
+          class="flex items-center gap-3 px-3 py-2 border border-line rounded-sm bg-surface"
+        >
+          <span class="text-xs uppercase tracking-wider text-ink-muted">Mode</span>
+          <span class="text-xs font-medium text-ink">Live</span>
+          <TSeparator orientation="vertical" class="h-5" />
+          <span class="text-xs uppercase tracking-wider text-ink-muted">Range</span>
+          <span class="text-xs font-medium text-ink">24h</span>
+          <TSeparator orientation="vertical" class="h-5" />
+          <span class="text-xs uppercase tracking-wider text-ink-muted">Region</span>
+          <span class="text-xs font-medium text-ink">us-east-1</span>
+        </div>
+      </div>
+    </Variant>
+
     <Variant title="In a card-like block">
       <div class="p-6 bg-bg flex justify-center">
         <div class="w-80 border border-line rounded-sm bg-surface p-4 flex flex-col gap-3">

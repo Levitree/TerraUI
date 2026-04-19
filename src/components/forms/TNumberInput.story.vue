@@ -59,6 +59,31 @@
       </div>
     </Variant>
 
+    <Variant title="Stepper (± buttons)">
+      <div class="p-6 bg-bg flex flex-col gap-4 max-w-md">
+        <div>
+          <p class="text-xs text-ink-muted mb-1">Default stepper, bounded 0–99</p>
+          <TNumberInput v-model="stepper.qty" stepper :min="0" :max="99" suffix="pcs" />
+          <p class="mt-1 text-xs text-ink-muted">Value: {{ stepper.qty }}</p>
+        </div>
+        <div>
+          <p class="text-xs text-ink-muted mb-1">Stepper sizes</p>
+          <div class="flex flex-col gap-2">
+            <TNumberInput :model-value="1" stepper size="sm" />
+            <TNumberInput :model-value="2" stepper size="md" />
+            <TNumberInput :model-value="3" stepper size="lg" />
+          </div>
+        </div>
+        <div>
+          <p class="text-xs text-ink-muted mb-1">Disabled / readonly</p>
+          <div class="flex flex-col gap-2">
+            <TNumberInput :model-value="5" stepper disabled />
+            <TNumberInput :model-value="5" stepper readonly />
+          </div>
+        </div>
+      </div>
+    </Variant>
+
     <Variant title="States">
       <div class="p-6 bg-bg flex flex-col gap-3 max-w-md">
         <TNumberInput :model-value="10" />
@@ -124,6 +149,8 @@ const state = reactive<{
   mono: false,
   error: false,
 })
+
+const stepper = reactive<{ qty: number }>({ qty: 1 })
 
 const schema = z.object({
   age: z.number().int().min(18, 'Must be at least 18').max(120, 'Too high'),

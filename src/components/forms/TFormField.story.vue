@@ -79,6 +79,20 @@
       </div>
     </Variant>
 
+    <Variant title="Inline (label on same row)">
+      <div class="p-6 bg-bg max-w-md flex flex-col gap-3">
+        <TFormField label="Host" inline>
+          <TInput placeholder="example.com" />
+        </TFormField>
+        <TFormField label="Port" inline hint="Usually 443">
+          <TInput placeholder="443" />
+        </TFormField>
+        <TFormField label="TLS" inline error="Required" required>
+          <TInput placeholder="cert.pem" error />
+        </TFormField>
+      </div>
+    </Variant>
+
     <Variant title="Slots">
       <div class="p-6 bg-bg max-w-md flex flex-col gap-4">
         <TFormField>

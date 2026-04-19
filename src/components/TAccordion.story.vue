@@ -95,12 +95,89 @@
         </TAccordion>
       </div>
     </Variant>
+
+    <Variant title="Variant: expanded (feature panels)">
+      <div class="p-6 bg-bg">
+        <TAccordion variant="expanded" :items="expandedItems" multiple>
+          <template #deployments>
+            <p class="text-sm text-ink-secondary">
+              Roomier padding, title-cased label, divider between header and body — for
+              standalone sections where the panel is the focal point.
+            </p>
+          </template>
+          <template #activity>
+            <p class="text-sm text-ink-secondary">Activity feed would render here.</p>
+          </template>
+        </TAccordion>
+      </div>
+    </Variant>
+
+    <Variant title="Count pill (zero vs non-zero)">
+      <div class="p-6 bg-bg">
+        <TAccordion variant="expanded" :items="countItems" multiple>
+          <template #active>
+            <p class="text-sm text-ink-secondary">Three active services.</p>
+          </template>
+          <template #pending>
+            <p class="text-sm text-ink-secondary">Nothing pending — count pill renders quieter.</p>
+          </template>
+          <template #failed>
+            <p class="text-sm text-ink-secondary">One failed deploy.</p>
+          </template>
+        </TAccordion>
+      </div>
+    </Variant>
+
+    <Variant title="Status + actions + header overlay">
+      <div class="p-6 bg-bg">
+        <TAccordion variant="expanded" :items="statusItems" multiple>
+          <template #live-header-overlay>
+            <!-- Overlay sits behind the header; used here for a subtle accent strip. -->
+            <div class="absolute inset-x-0 top-0 h-0.5 bg-success" />
+          </template>
+          <template #live-actions>
+            <TButton variant="ghost" icon="plus" size="sm" />
+            <TButton variant="ghost" icon="refresh-cw" size="sm" />
+          </template>
+          <template #live>
+            <p class="text-sm text-ink-secondary">
+              Status "online" replaces the chevron with a pulsing dot. An explicit
+              expand/collapse button appears in the actions row.
+            </p>
+          </template>
+
+          <template #offline-actions>
+            <TButton variant="ghost" icon="power" size="sm" />
+          </template>
+          <template #offline>
+            <p class="text-sm text-ink-secondary">Offline status — static dot, no pulse.</p>
+          </template>
+        </TAccordion>
+      </div>
+    </Variant>
+
+    <Variant title="Description under label">
+      <div class="p-6 bg-bg">
+        <TAccordion variant="expanded" :items="describedItems">
+          <template #overview>
+            <p class="text-sm text-ink-secondary">
+              Descriptions render under the label with relaxed casing, regardless of
+              variant.
+            </p>
+          </template>
+          <template #config>
+            <p class="text-sm text-ink-secondary">Configuration panel body.</p>
+          </template>
+        </TAccordion>
+      </div>
+    </Variant>
   </Story>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue'
 import TAccordion, { type TAccordionItem } from './TAccordion.vue'
+import TButton from './TButton.vue'
 
 const state = reactive<{ multiple: boolean }>({
   multiple: false,
@@ -124,5 +201,58 @@ const richItems: TAccordionItem[] = [
   { slot: 'alerts', label: 'Alerts', icon: 'bell', badge: 2 },
   { slot: 'members', label: 'Members', icon: 'users', badge: 12 },
   { slot: 'archive', label: 'Archive', icon: 'archive', disabled: true },
+]
+
+const expandedItems: TAccordionItem[] = [
+  {
+    slot: 'deployments',
+    label: 'Deployments',
+    description: 'Active now',
+    count: 3,
+    defaultOpen: true,
+  },
+  {
+    slot: 'activity',
+    label: 'Recent activity',
+    description: 'Past 24 hours',
+  },
+]
+
+const countItems: TAccordionItem[] = [
+  { slot: 'active', label: 'Active', count: 3, defaultOpen: true },
+  { slot: 'pending', label: 'Pending', count: 0 },
+  { slot: 'failed', label: 'Failed', count: 1 },
+]
+
+const statusItems: TAccordionItem[] = [
+  {
+    slot: 'live',
+    label: 'Production',
+    description: 'Active now',
+    status: 'online',
+    count: 4,
+    defaultOpen: true,
+  },
+  {
+    slot: 'offline',
+    label: 'Staging',
+    description: 'Paused',
+    status: 'offline',
+  },
+]
+
+const describedItems: TAccordionItem[] = [
+  {
+    slot: 'overview',
+    label: 'Overview',
+    description: 'High-level service summary',
+    defaultOpen: true,
+  },
+  {
+    slot: 'config',
+    label: 'Configuration',
+    description: 'Runtime, region, memory',
+    icon: 'settings',
+  },
 ]
 </script>
