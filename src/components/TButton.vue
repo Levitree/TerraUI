@@ -22,14 +22,7 @@ import { useRouter } from 'vue-router'
 import TIcon from './TIcon.vue'
 import type { IconSize } from './TIcon.vue'
 
-export type ButtonColor =
-  | 'neutral'
-  | 'success'
-  | 'error'
-  | 'warn'
-  | 'ghost'
-  | 'icon'
-  | 'white'
+export type ButtonColor = 'neutral' | 'success' | 'error' | 'warn' | 'ghost' | 'icon' | 'white'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 const props = withDefaults(
@@ -103,7 +96,7 @@ const baseClasses = computed(() => {
   const classes = [
     'flex items-center justify-center gap-2',
     'font-bold tracking-wider uppercase',
-    'rounded-sm transition-all',
+    'rounded-sm transition-all enabled:hover:cursor-pointer',
     // Covers both native <button :disabled> and the <a aria-disabled> branch
     // used when `to` is set, so anchor-style buttons also dim correctly.
     'disabled:opacity-30 disabled:cursor-not-allowed',
