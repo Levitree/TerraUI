@@ -18,7 +18,6 @@ export default defineConfig({
         index: resolve(rootDir, 'src/index.ts'),
         'components/index': resolve(rootDir, 'src/components/index.ts'),
         'composables/index': resolve(rootDir, 'src/composables/index.ts'),
-        'stores/index': resolve(rootDir, 'src/stores/index.ts'),
         'types/index': resolve(rootDir, 'src/types/index.ts'),
       },
       formats: ['es'],
@@ -26,7 +25,6 @@ export default defineConfig({
     rollupOptions: {
       external: [
         'vue',
-        'pinia',
         'vue-router',
         '@tanstack/vue-table',
         'zod',

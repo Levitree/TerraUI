@@ -6,7 +6,9 @@
     aria-label="Terranova"
     title="Terranova"
   >
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <span :class="iconClasses" v-html="IconSvg" />
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <span v-if="wordmark" :class="wordmarkClasses" v-html="WordmarkSvg" />
   </RouterLink>
   <span
@@ -15,7 +17,9 @@
     aria-label="Terranova"
     title="Terranova"
   >
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <span :class="iconClasses" v-html="IconSvg" />
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <span v-if="wordmark" :class="wordmarkClasses" v-html="WordmarkSvg" />
   </span>
 </template>

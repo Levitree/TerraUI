@@ -8,12 +8,20 @@ Vue 3 + Tailwind v4 component library. Import components from `@terranovasystems
 pnpm add @terranovasystems/terraui
 ```
 
-Peer deps: `vue ^3.5`, `pinia ^3`, `vue-router ^5`, `zod ^4`, `@tanstack/vue-table ^8`.
+Peer deps: `vue ^3.5`, `vue-router ^5`, `zod ^4`, `@tanstack/vue-table ^8`.
 
 ```ts
 import '@terranovasystems/terraui/styles'
 import { TButton } from '@terranovasystems/terraui/components'
 ```
+
+## Guides
+
+- [Migration guide](docs/migration.md) — upgrading between versions (currently covers the Pinia removal in the next release after `0.7.x`).
+
+## Composables
+
+- [useModal](docs/composables/useModal.md) — promise-based modal orchestration.
 
 ## Components
 

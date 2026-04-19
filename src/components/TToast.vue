@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { computed, ref, onUnmounted } from 'vue'
 import TIcon from './TIcon.vue'
-import type { ToastType } from '../stores/toast'
+import type { ToastType } from '../composables/useToast'
 
 const props = defineProps<{
   type: ToastType

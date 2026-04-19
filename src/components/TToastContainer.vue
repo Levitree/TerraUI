@@ -3,14 +3,14 @@
     <div class="fixed bottom-4 right-4 z-[9999] flex flex-col gap-3 pointer-events-none">
       <TransitionGroup name="toast">
         <TToast
-          v-for="toast in toasts"
-          :key="toast.id"
-          :type="toast.type"
-          :title="toast.title"
-          :message="toast.message"
-          :duration="toast.duration"
+          v-for="t in toast.toasts"
+          :key="t.id"
+          :type="t.type"
+          :title="t.title"
+          :message="t.message"
+          :duration="t.duration"
           class="pointer-events-auto"
-          @close="toastStore.remove(toast.id)"
+          @close="toast.remove(t.id)"
         />
       </TransitionGroup>
     </div>
@@ -18,11 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useToastStore } from '../stores/toast'
+import { useToast } from '../composables/useToast'
 import TToast from './TToast.vue'
 
-const toastStore = useToastStore()
-
-const toasts = computed(() => toastStore.toasts)
+const toast = useToast()
 </script>

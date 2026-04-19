@@ -95,8 +95,7 @@ import { reactive } from 'vue'
 import TToast from './TToast.vue'
 import TToastContainer from './TToastContainer.vue'
 import TButton from './TButton.vue'
-import { useToast } from '../composables/useToast'
-import type { ToastType } from '../stores/toast'
+import { useToast, type ToastType } from '../composables/useToast'
 
 const toast = useToast()
 

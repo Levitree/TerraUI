@@ -1,13 +1,22 @@
-import { useToastStore, type ToastType } from '../stores/toast'
+import { reactive, ref } from 'vue'
 
-/**
- * Nuxt-UI-style toast composable — thin ergonomic wrapper over the Pinia
- * toast store. Accepts `color` (which maps onto `ToastType`) plus an optional
- * `description`/`icon`/`actions`. Extra fields are kept on the returned toast
- * object for components that render them, even though the bundled `TToast`
- * currently only renders `title` + `message`.
- */
+export type ToastType = 'success' | 'error' | 'warning' | 'info'
 export type ToastColor = ToastType | 'neutral' | 'primary'
+
+export interface Toast {
+  id: string
+  type: ToastType
+  title?: string
+  message: string
+  duration: number
+}
+
+export interface ToastOptions {
+  type?: ToastType
+  title?: string
+  message: string
+  duration?: number
+}
 
 export interface UseToastOptions {
   title?: string
@@ -18,31 +27,92 @@ export interface UseToastOptions {
   actions?: Array<{ label: string; onSelect: () => void }>
 }
 
+const DEFAULT_DURATION = 5000
+
+// --- module-singleton state ------------------------------------------------
+
+const toasts = ref<Toast[]>([])
+
+function generateId(): string {
+  return `toast-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+}
+
+function add(options: ToastOptions): string {
+  const id = generateId()
+  const toast: Toast = {
+    id,
+    type: options.type ?? 'info',
+    title: options.title,
+    message: options.message,
+    duration: options.duration ?? DEFAULT_DURATION,
+  }
+
+  toasts.value.push(toast)
+
+  if (toast.duration > 0) {
+    setTimeout(() => {
+      remove(id)
+    }, toast.duration)
+  }
+
+  return id
+}
+
+function remove(id: string): void {
+  const index = toasts.value.findIndex((t) => t.id === id)
+  if (index !== -1) {
+    toasts.value.splice(index, 1)
+  }
+}
+
+function clear(): void {
+  toasts.value = []
+}
+
+function success(message: string, title?: string, duration?: number): string {
+  return add({ type: 'success', message, title, duration })
+}
+
+function error(message: string, title?: string, duration?: number): string {
+  return add({ type: 'error', message, title, duration })
+}
+
+function warning(message: string, title?: string, duration?: number): string {
+  return add({ type: 'warning', message, title, duration })
+}
+
+function info(message: string, title?: string, duration?: number): string {
+  return add({ type: 'info', message, title, duration })
+}
+
 const coerceType = (color: ToastColor | undefined): ToastType => {
   if (!color) return 'info'
   if (color === 'neutral' || color === 'primary') return 'info'
   return color
 }
 
-export function useToast() {
-  const store = useToastStore()
+function addFromUseToast(options: UseToastOptions): string {
+  return add({
+    type: coerceType(options.color),
+    title: options.title,
+    message: options.description ?? options.title ?? '',
+    duration: options.duration,
+  })
+}
 
-  function add(options: UseToastOptions): string {
-    return store.add({
-      type: coerceType(options.color),
-      title: options.title,
-      message: options.description ?? options.title ?? '',
-      duration: options.duration,
-    })
-  }
+const api = reactive({
+  toasts,
+  add: addFromUseToast,
+  remove,
+  clear,
+  success,
+  error,
+  warning,
+  info,
+})
 
-  return {
-    add,
-    remove: store.remove,
-    clear: store.clear,
-    success: store.success,
-    error: store.error,
-    warning: store.warning,
-    info: store.info,
-  }
+export type UseToastReturn = typeof api
+
+export function useToast(): UseToastReturn {
+  return api
 }

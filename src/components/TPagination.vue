@@ -1,66 +1,101 @@
 <template>
-  <nav v-if="pageCount > 1 || showSinglePage" aria-label="Pagination" class="flex items-center gap-1.5">
-    <button
-      v-if="showEdges"
-      type="button"
-      :disabled="isFirst"
-      :class="buttonClasses(false)"
-      aria-label="First page"
-      @click="setPage(1)"
+  <div
+    v-if="!isEmpty"
+    class="flex flex-wrap items-center justify-between gap-3"
+    :class="containerClass"
+  >
+    <div
+      v-if="showSummary"
+      class="text-ink-muted text-[0.7rem] font-mono uppercase tracking-wider"
     >
-      <TIcon name="chevrons-left" :size="iconSize" />
-    </button>
+      {{ summaryText }}
+    </div>
 
-    <button
-      type="button"
-      :disabled="isFirst"
-      :class="buttonClasses(false)"
-      aria-label="Previous page"
-      @click="setPage(page - 1)"
-    >
-      <TIcon name="chevron-left" :size="iconSize" />
-    </button>
+    <div v-else />
 
-    <template v-for="(entry, idx) in pages" :key="idx">
-      <span
-        v-if="entry === 'ellipsis'"
-        class="px-2 text-ink-muted font-mono select-none"
-        aria-hidden="true"
+    <div class="flex items-center gap-3">
+      <label v-if="renderPageSizes" class="flex items-center gap-2">
+        <span class="text-ink-muted text-[0.65rem] font-bold uppercase tracking-[0.2em]">
+          Rows
+        </span>
+        <select
+          :value="String(perPage)"
+          :class="selectClasses"
+          :aria-label="'Items per page'"
+          @change="onPageSizeChange(($event.target as HTMLSelectElement).value)"
+        >
+          <option v-for="size in pageSizes" :key="size" :value="size">{{ size }}</option>
+        </select>
+      </label>
+
+      <nav
+        v-if="pageCount > 1 || showSinglePage"
+        aria-label="Pagination"
+        class="flex items-center gap-1.5"
       >
-        …
-      </span>
-      <button
-        v-else
-        type="button"
-        :aria-current="entry === page ? 'page' : undefined"
-        :class="buttonClasses(entry === page)"
-        @click="setPage(entry)"
-      >
-        {{ entry }}
-      </button>
-    </template>
+        <button
+          v-if="showEdges"
+          type="button"
+          :disabled="isFirst"
+          :class="buttonClasses(false)"
+          aria-label="First page"
+          @click="setPage(1)"
+        >
+          <TIcon name="chevrons-left" :size="iconSize" />
+        </button>
 
-    <button
-      type="button"
-      :disabled="isLast"
-      :class="buttonClasses(false)"
-      aria-label="Next page"
-      @click="setPage(page + 1)"
-    >
-      <TIcon name="chevron-right" :size="iconSize" />
-    </button>
+        <button
+          type="button"
+          :disabled="isFirst"
+          :class="buttonClasses(false)"
+          aria-label="Previous page"
+          @click="setPage(page - 1)"
+        >
+          <TIcon name="chevron-left" :size="iconSize" />
+        </button>
 
-    <button
-      v-if="showEdges"
-      type="button"
-      :disabled="isLast"
-      :class="buttonClasses(false)"
-      aria-label="Last page"
-      @click="setPage(pageCount)"
-    >
-      <TIcon name="chevrons-right" :size="iconSize" />
-    </button>
-  </nav>
+        <template v-for="(entry, idx) in pages" :key="idx">
+          <span
+            v-if="entry === 'ellipsis'"
+            class="px-2 text-ink-muted font-mono select-none"
+            aria-hidden="true"
+          >
+            …
+          </span>
+          <button
+            v-else
+            type="button"
+            :aria-current="entry === page ? 'page' : undefined"
+            :class="buttonClasses(entry === page)"
+            @click="setPage(entry)"
+          >
+            {{ entry }}
+          </button>
+        </template>
+
+        <button
+          type="button"
+          :disabled="isLast"
+          :class="buttonClasses(false)"
+          aria-label="Next page"
+          @click="setPage(page + 1)"
+        >
+          <TIcon name="chevron-right" :size="iconSize" />
+        </button>
+
+        <button
+          v-if="showEdges"
+          type="button"
+          :disabled="isLast"
+          :class="buttonClasses(false)"
+          aria-label="Last page"
+          @click="setPage(pageCount)"
+        >
+          <TIcon name="chevrons-right" :size="iconSize" />
+        </button>
+      </nav>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -74,10 +109,19 @@ const props = withDefaults(
   defineProps<{
     /** Current page (1-indexed). Use with `v-model:page`. */
     page?: number
-    /** Total item count. */
+    /** Total item count across all pages. */
     total: number
-    /** Items per page. Default 10. */
-    itemsPerPage?: number
+    /** Items per page. Use with `v-model:per-page` when a selector is desired. */
+    perPage?: number
+    /** Selectable page sizes. Pass `[]` to hide the selector entirely. */
+    pageSizes?: number[]
+    /**
+     * Item noun used in the summary string.
+     * Pass a string for auto-plural (`item` → `items`), or a tuple for custom plural.
+     */
+    itemLabel?: string | [singular: string, plural: string]
+    /** Show the "Showing X–Y of Z" summary. Default true. */
+    showSummary?: boolean
     /** Number of pages to show on each side of the current page. Default 1. */
     siblingCount?: number
     /** Show first/last arrow buttons. Default true. */
@@ -85,32 +129,54 @@ const props = withDefaults(
     /** Render even when there is only one page. Default false. */
     showSinglePage?: boolean
     size?: TPaginationSize
+    /** Extra classes on the outer wrapper. */
+    containerClass?: string
   }>(),
   {
     page: 1,
-    itemsPerPage: 10,
+    perPage: 25,
+    pageSizes: () => [25, 50, 100],
+    itemLabel: 'item',
+    showSummary: true,
     siblingCount: 1,
     showEdges: true,
     showSinglePage: false,
     size: 'md',
+    containerClass: '',
   },
 )
 
 const emit = defineEmits<{
   'update:page': [value: number]
+  'update:perPage': [value: number]
   change: [value: number]
 }>()
 
-const pageCount = computed(() => Math.max(1, Math.ceil(props.total / Math.max(1, props.itemsPerPage))))
+const pageCount = computed(() =>
+  Math.max(1, Math.ceil(props.total / Math.max(1, props.perPage))),
+)
 
 const isFirst = computed(() => props.page <= 1)
 const isLast = computed(() => props.page >= pageCount.value)
+const isEmpty = computed(() => props.total <= 0)
+
+const renderPageSizes = computed(() => props.pageSizes.length > 1)
 
 const setPage = (next: number) => {
   const clamped = Math.max(1, Math.min(next, pageCount.value))
   if (clamped === props.page) return
   emit('update:page', clamped)
   emit('change', clamped)
+}
+
+const onPageSizeChange = (raw: string) => {
+  const next = Number(raw)
+  if (!Number.isFinite(next) || next <= 0 || next === props.perPage) return
+  emit('update:perPage', next)
+  // When the page size grows, the current page may now be out of range.
+  // Clamp back into bounds so consumers don't have to.
+  const newPageCount = Math.max(1, Math.ceil(props.total / next))
+  if (props.page > newPageCount) emit('update:page', newPageCount)
 }
 
 type PageEntry = number | 'ellipsis'
@@ -153,6 +219,23 @@ const range = (start: number, end: number): number[] => {
   return result
 }
 
+const formatNumber = (n: number): string => n.toLocaleString('en-US')
+
+const labels = computed(() => {
+  if (Array.isArray(props.itemLabel)) {
+    return { singular: props.itemLabel[0], plural: props.itemLabel[1] }
+  }
+  return { singular: props.itemLabel, plural: `${props.itemLabel}s` }
+})
+
+const summaryText = computed(() => {
+  if (props.total <= 0) return `0 ${labels.value.plural}`
+  const from = Math.min(props.total, (props.page - 1) * props.perPage + 1)
+  const to = Math.min(props.total, props.page * props.perPage)
+  const noun = props.total === 1 ? labels.value.singular : labels.value.plural
+  return `Showing ${formatNumber(from)}–${formatNumber(to)} of ${formatNumber(props.total)} ${noun}`
+})
+
 const iconSize = computed<IconSize>(() => (props.size === 'lg' ? 'md' : 'sm'))
 
 const sizeClasses: Record<TPaginationSize, string> = {
@@ -160,6 +243,22 @@ const sizeClasses: Record<TPaginationSize, string> = {
   md: 'min-w-8 h-8 px-2.5 text-xs',
   lg: 'min-w-10 h-10 px-3 text-sm',
 }
+
+const selectSizeClasses: Record<TPaginationSize, string> = {
+  sm: 'h-7 px-2 text-[0.65rem]',
+  md: 'h-8 px-2 text-xs',
+  lg: 'h-10 px-2.5 text-sm',
+}
+
+const selectClasses = computed(() =>
+  [
+    'appearance-none rounded-sm border bg-fill-subtle border-line text-ink-secondary',
+    'font-bold tracking-wider uppercase cursor-pointer',
+    'hover:bg-fill hover:text-ink hover:border-line-strong transition-colors',
+    'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-line-strong',
+    selectSizeClasses[props.size],
+  ].join(' '),
+)
 
 const buttonClasses = (active: boolean) => {
   const base = [

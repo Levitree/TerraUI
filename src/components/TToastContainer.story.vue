@@ -49,11 +49,9 @@
 import { reactive } from 'vue'
 import TToastContainer from './TToastContainer.vue'
 import TButton from './TButton.vue'
-import { useToast } from '../composables/useToast'
-import { useToastStore, type ToastType } from '../stores/toast'
+import { useToast, type ToastType } from '../composables/useToast'
 
 const toast = useToast()
-const toastStore = useToastStore()
 
 const state = reactive<{
   type: ToastType
@@ -63,15 +61,15 @@ const state = reactive<{
 }>({
   type: 'info',
   title: 'Heads up',
-  message: 'This toast was pushed via the store.',
+  message: 'This toast was pushed via the composable.',
   duration: 4000,
 })
 
 const push = () => {
-  toastStore.add({
-    type: state.type,
+  toast.add({
+    color: state.type,
     title: state.title || undefined,
-    message: state.message,
+    description: state.message,
     duration: state.duration,
   })
 }
@@ -80,10 +78,10 @@ const burst = () => {
   const types: ToastType[] = ['success', 'info', 'warning', 'error', 'info']
   types.forEach((type, i) => {
     setTimeout(() => {
-      toastStore.add({
-        type,
+      toast.add({
+        color: type,
         title: type[0].toUpperCase() + type.slice(1),
-        message: `Toast #${i + 1}`,
+        description: `Toast #${i + 1}`,
         duration: 4000,
       })
     }, i * 150)

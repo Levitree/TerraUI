@@ -45,6 +45,7 @@
 </template>
 
 <script setup lang="ts">
+/* eslint-disable vue/one-component-per-file -- story file defines demo components inline */
 import { defineComponent, h, reactive, onMounted } from 'vue'
 import TWindowsContainer from './TWindowsContainer.vue'
 import TButton from './TButton.vue'

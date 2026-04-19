@@ -163,8 +163,6 @@ const props = withDefaults(
     hoverable?: boolean
     rowClickable?: boolean
     initialSorting?: SortingState
-    /** Free-text filter applied across all filterable columns. Two-way via `v-model:global-filter`. */
-    globalFilter?: string
     /** Custom matcher. Defaults to case-insensitive `includes` on the stringified cell value. */
     globalFilterFn?: (row: TData, columnId: string, filterValue: string) => boolean
   }>(),
@@ -189,12 +187,6 @@ const globalFilter = defineModel<string>('globalFilter', { default: '' })
 
 if (props.initialSorting.length && !sorting.value.length) {
   sorting.value = props.initialSorting
-}
-
-// Mirror non-model `globalFilter` prop into the model so callers can pass it
-// as a plain prop without wiring `v-model:global-filter`.
-if (props.globalFilter !== undefined && props.globalFilter !== globalFilter.value) {
-  globalFilter.value = props.globalFilter
 }
 
 const defaultGlobalFilter = (row: TData, columnId: string, filterValue: string) => {
