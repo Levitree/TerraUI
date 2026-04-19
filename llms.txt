@@ -55,8 +55,7 @@ import { TButton } from '@terranovasystems/terraui/components'
 - [TNavbar](dist/llms/components/TNavbar.md)
 - [TNavigationMenu](dist/llms/components/TNavigationMenu.md)
 - [TNavLink](dist/llms/components/TNavLink.md)
-- [TSubNavbar](dist/llms/components/TSubNavbar.md)
-- [TTabSelector](dist/llms/components/TTabSelector.md)
+- [TTabs](dist/llms/components/TTabs.md)
 
 ### Overlays
 
