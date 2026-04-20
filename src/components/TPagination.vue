@@ -259,14 +259,14 @@ const buttonClasses = (active: boolean) => {
   const base = [
     'inline-flex items-center justify-center gap-1 rounded-sm font-bold tracking-wider uppercase transition-colors',
     'border',
-    'disabled:opacity-30 disabled:cursor-not-allowed enabled:cursor-pointer',
+    'disabled:opacity-30 disabled:cursor-not-allowed not-disabled:cursor-pointer',
     sizeClasses[props.size],
   ]
   if (active) {
     base.push('bg-fill-strong border-line-strong text-ink')
   } else {
     base.push(
-      'bg-fill-subtle border-line text-ink-secondary enabled:hover:bg-fill enabled:hover:text-ink enabled:hover:border-line-strong',
+      'bg-fill-subtle border-line text-ink-secondary not-disabled:hover:bg-fill not-disabled:hover:text-ink not-disabled:hover:border-line-strong',
     )
   }
   return base.join(' ')

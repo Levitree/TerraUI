@@ -96,7 +96,7 @@ const baseClasses = computed(() => {
   const classes = [
     'flex items-center justify-center gap-2 whitespace-nowrap',
     'font-bold tracking-wider uppercase',
-    'rounded-sm transition-all enabled:hover:cursor-pointer',
+    'rounded-sm transition-all not-disabled:hover:cursor-pointer',
     // Covers both native <button :disabled> and the <a aria-disabled> branch
     // used when `to` is set, so anchor-style buttons also dim correctly.
     'disabled:opacity-30 disabled:cursor-not-allowed',
@@ -114,37 +114,37 @@ const colorClasses = computed(() => {
   if (props.color === 'icon') {
     return props.active
       ? 'bg-fill-strong border border-line-strong text-ink'
-      : 'bg-fill-subtle border border-line text-ink-secondary enabled:hover:bg-fill enabled:hover:border-line-strong enabled:hover:text-ink'
+      : 'bg-fill-subtle border border-line text-ink-secondary not-disabled:hover:bg-fill not-disabled:hover:border-line-strong not-disabled:hover:text-ink'
   }
 
   if (props.color === 'ghost') {
     return props.active
       ? 'bg-fill-strong text-ink'
-      : 'bg-transparent text-ink-muted enabled:hover:bg-fill enabled:hover:text-ink'
+      : 'bg-transparent text-ink-muted not-disabled:hover:bg-fill not-disabled:hover:text-ink'
   }
 
   if (props.color === 'success') {
-    return 'bg-success border border-success text-ink enabled:hover:bg-success-strong enabled:hover:border-success'
+    return 'bg-success border border-success text-ink not-disabled:hover:bg-success-strong not-disabled:hover:border-success'
   }
 
   if (props.color === 'error') {
-    return 'bg-danger border border-danger text-ink enabled:hover:bg-danger-strong enabled:hover:border-danger'
+    return 'bg-danger border border-danger text-ink not-disabled:hover:bg-danger-strong not-disabled:hover:border-danger'
   }
 
   if (props.color === 'warn') {
-    return 'bg-warning border border-warning text-ink enabled:hover:bg-warning-strong enabled:hover:border-warning'
+    return 'bg-warning border border-warning text-ink not-disabled:hover:bg-warning-strong not-disabled:hover:border-warning'
   }
 
   if (props.color === 'white') {
     return props.active
-      ? 'bg-ink border border-ink text-ink-inverse enabled:hover:bg-ink-secondary'
-      : 'bg-ink/90 border border-ink/80 text-ink-inverse enabled:hover:bg-ink enabled:hover:border-ink'
+      ? 'bg-ink border border-ink text-ink-inverse not-disabled:hover:bg-ink-secondary'
+      : 'bg-ink/90 border border-ink/80 text-ink-inverse not-disabled:hover:bg-ink not-disabled:hover:border-ink'
   }
 
   // neutral (default) — replaces the old primary/secondary styles.
   return props.active
     ? 'bg-fill-strong border border-line-strong text-ink shadow-[inset_0_0_12px_color-mix(in_srgb,var(--color-ink)_20%,transparent)]'
-    : 'bg-fill-subtle border border-line text-ink-secondary enabled:hover:bg-fill-strong enabled:hover:border-line-strong enabled:hover:shadow-[inset_0_0_12px_color-mix(in_srgb,var(--color-ink)_20%,transparent)]'
+    : 'bg-fill-subtle border border-line text-ink-secondary not-disabled:hover:bg-fill-strong not-disabled:hover:border-line-strong not-disabled:hover:shadow-[inset_0_0_12px_color-mix(in_srgb,var(--color-ink)_20%,transparent)]'
 })
 
 const sizeClasses = computed(() => {

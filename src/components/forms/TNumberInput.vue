@@ -213,7 +213,7 @@ const stepperButtonClasses = computed(() => {
   const base = [
     'flex items-center justify-center rounded-sm border border-line',
     'bg-fill-subtle text-ink-secondary transition-all',
-    'enabled:hover:bg-fill enabled:hover:border-line-strong enabled:hover:text-ink',
+    'not-disabled:hover:bg-fill not-disabled:hover:border-line-strong not-disabled:hover:text-ink',
     'disabled:opacity-30 disabled:cursor-not-allowed',
   ]
   // Heights match TInput: font line-height + vertical padding + 2px border.
