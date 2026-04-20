@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, provide, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { DASHBOARD_CONTEXT_KEY } from './context'
 
 const props = withDefaults(
@@ -60,6 +61,19 @@ const isMobile = computed(() => viewportWidth.value < props.mobileBreakpoint)
 watch(isMobile, (mobile) => {
   if (!mobile) sidebarOpen.value = false
 })
+
+// Close on navigation so tapping a nav link doesn't leave the drawer covering
+// the page the user just loaded. Watch `path` (not `fullPath`) so query/hash
+// changes don't dismiss the drawer mid-interaction.
+const route = useRoute()
+if (route) {
+  watch(
+    () => route.path,
+    () => {
+      if (sidebarOpen.value) sidebarOpen.value = false
+    },
+  )
+}
 
 const syncViewport = () => {
   viewportWidth.value = window.innerWidth

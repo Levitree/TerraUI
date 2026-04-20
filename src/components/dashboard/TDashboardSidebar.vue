@@ -13,11 +13,11 @@
       class="flex items-center gap-2 h-14 px-4 border-b border-line-subtle shrink-0"
       :class="ui?.header"
     >
-      <slot name="header" :collapsed="collapsed" />
+      <slot name="header" :collapsed="collapsed" :mobile="false" />
     </div>
 
     <div class="flex-1 min-h-0 overflow-y-auto overscroll-contain" :class="ui?.body">
-      <slot :collapsed="collapsed" />
+      <slot :collapsed="collapsed" :mobile="false" />
     </div>
 
     <div
@@ -25,7 +25,7 @@
       class="border-t border-line-subtle shrink-0 px-2 py-2"
       :class="ui?.footer"
     >
-      <slot name="footer" :collapsed="collapsed" />
+      <slot name="footer" :collapsed="collapsed" :mobile="false" />
     </div>
 
     <div
@@ -50,12 +50,12 @@
       class="flex items-center gap-2 h-14 px-4 border-b border-line-subtle shrink-0"
       :class="ui?.header"
     >
-      <TDashboardSidebarCollapse />
-      <slot name="header" :collapsed="false" />
+      <TDashboardSidebarCollapse size="sm" />
+      <slot name="header" :collapsed="false" :mobile="true" />
     </div>
 
     <div class="flex-1 min-h-0 overflow-y-auto overscroll-contain" :class="ui?.body">
-      <slot :collapsed="false" />
+      <slot :collapsed="false" :mobile="true" />
     </div>
 
     <div
@@ -63,7 +63,7 @@
       class="border-t border-line-subtle shrink-0 px-2 py-2"
       :class="ui?.footer"
     >
-      <slot name="footer" :collapsed="false" />
+      <slot name="footer" :collapsed="false" :mobile="true" />
     </div>
   </TSlideover>
 </template>

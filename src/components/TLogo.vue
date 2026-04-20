@@ -7,15 +7,15 @@
     title="Terranova"
   >
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span :class="iconClasses" :style="iconStyle" v-html="IconSvg" />
+    <span v-if="showIcon" :class="iconClasses" :style="iconStyle" v-html="IconSvg" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span v-if="wordmark" :class="wordmarkClasses" :style="wordmarkStyle" v-html="WordmarkSvg" />
+    <span v-if="showWordmark" :class="wordmarkClasses" :style="wordmarkStyle" v-html="WordmarkSvg" />
   </RouterLink>
   <span v-else :class="wrapperClasses" aria-label="Terranova" title="Terranova">
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span :class="iconClasses" :style="iconStyle" v-html="IconSvg" />
+    <span v-if="showIcon" :class="iconClasses" :style="iconStyle" v-html="IconSvg" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span v-if="wordmark" :class="wordmarkClasses" :style="wordmarkStyle" v-html="WordmarkSvg" />
+    <span v-if="showWordmark" :class="wordmarkClasses" :style="wordmarkStyle" v-html="WordmarkSvg" />
   </span>
 </template>
 
@@ -26,21 +26,27 @@ import IconSvg from '../assets/Icon.svg?raw'
 import WordmarkSvg from '../assets/Wordmark.svg?raw'
 
 export type LogoSize = 'sm' | 'md' | 'lg'
+export type LogoVariant = 'icon' | 'wordmark' | 'both'
 
 const props = withDefaults(
   defineProps<{
     size?: LogoSize
-    wordmark?: boolean
+    /** Which parts of the logo to render. */
+    variant?: LogoVariant
+    /** Hide the wordmark below the `md` breakpoint. Only applies when the wordmark is rendered. */
     responsiveWordmark?: boolean
     /** When set, the logo renders as a RouterLink to this path. Otherwise it renders as a non-interactive span. */
     to?: string
   }>(),
   {
     size: 'md',
-    wordmark: true,
+    variant: 'both',
     responsiveWordmark: false,
   },
 )
+
+const showIcon = computed(() => props.variant !== 'wordmark')
+const showWordmark = computed(() => props.variant !== 'icon')
 
 const wrapperClasses = computed(() =>
   [
@@ -64,7 +70,7 @@ const wordmarkClasses = computed(() =>
   [
     'inline-flex items-center w-auto',
     props.size === 'sm' ? 'h-4' : props.size === 'md' ? 'h-5 3xl:h-7' : 'h-7',
-    props.responsiveWordmark ? 'max-md:hidden' : '',
+    props.responsiveWordmark && showIcon.value ? 'max-md:hidden' : '',
   ]
     .filter(Boolean)
     .join(' '),
