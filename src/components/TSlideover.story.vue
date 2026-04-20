@@ -35,8 +35,8 @@
           <div class="flex-1 overflow-y-auto p-6 space-y-3">
             <p class="text-sm text-ink-secondary leading-relaxed">
               A side panel that slides in from the {{ state.side }}. Tap the backdrop, press
-              <kbd class="px-1.5 py-0.5 bg-fill border border-line rounded-sm text-xs">Esc</kbd>,
-              or use the close button to dismiss.
+              <kbd class="px-1.5 py-0.5 bg-fill border border-line rounded-sm text-xs">Esc</kbd>, or
+              use the close button to dismiss.
             </p>
             <p class="text-sm text-ink-muted">
               Use this as a foundation for mobile menus, settings sheets, form drafts, or any
@@ -66,10 +66,14 @@
               aria-label="Close"
               @click="sideOpen = false"
             />
-            <h2 class="text-sm font-bold tracking-wider uppercase text-ink">From {{ currentSide }}</h2>
+            <h2 class="text-sm font-bold tracking-wider uppercase text-ink">
+              From {{ currentSide }}
+            </h2>
           </div>
           <div class="flex-1 overflow-y-auto p-6 text-sm text-ink-secondary">
-            <p>Anchored to the <strong>{{ currentSide }}</strong> edge.</p>
+            <p>
+              Anchored to the <strong>{{ currentSide }}</strong> edge.
+            </p>
           </div>
         </TSlideover>
       </div>

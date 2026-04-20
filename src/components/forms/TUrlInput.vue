@@ -144,8 +144,7 @@ const field = useFormField<string | UrlValue | null>({
   modelValue: () => props.modelValue,
   error: () => props.error,
   emit: (value) => {
-    const str =
-      typeof value === 'string' ? value : value == null ? '' : urlValueToString(value)
+    const str = typeof value === 'string' ? value : value == null ? '' : urlValueToString(value)
     emit('update:modelValue', str)
   },
 })
