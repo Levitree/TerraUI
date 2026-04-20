@@ -20,7 +20,7 @@ if (!ctx) {
 }
 
 const iconName = computed(() => {
-  if (ctx.isMobile.value) return 'menu'
+  if (ctx.isMobile.value) return ctx.sidebarOpen.value ? 'x' : 'menu'
   return ctx.sidebarCollapsed.value ? 'panel-left-open' : 'panel-left-close'
 })
 

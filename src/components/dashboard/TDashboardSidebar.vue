@@ -14,10 +14,14 @@
     aria-label="Sidebar"
   >
     <div
-      v-if="$slots.header"
-      class="flex items-center h-14 px-4 border-b border-line-subtle shrink-0"
+      v-if="$slots.header || ctx.isMobile.value"
+      class="flex items-center gap-2 h-14 px-4 border-b border-line-subtle shrink-0"
       :class="ui?.header"
     >
+      <!-- Mobile slideover gets an auto-injected close button so the user can
+           dismiss the overlay without relying on the backdrop tap or the
+           navbar hamburger that the slideover now covers. -->
+      <TDashboardSidebarCollapse v-if="ctx.isMobile.value" />
       <slot name="header" :collapsed="collapsed" />
     </div>
 
@@ -47,6 +51,7 @@
 <script setup lang="ts">
 import { computed, inject, onBeforeUnmount } from 'vue'
 import { DASHBOARD_CONTEXT_KEY } from './context'
+import TDashboardSidebarCollapse from './TDashboardSidebarCollapse.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -80,14 +85,20 @@ const asideStyle = computed(() => {
 })
 
 const asideClasses = computed(() => {
+  // `relative` and `fixed` both emit `position: *` single-class rules at
+  // identical specificity, so cascade order decides the winner. In Tailwind
+  // v4's generated CSS `.relative` comes AFTER `.fixed`, which means putting
+  // `relative` in the shared base would override the mobile `fixed`, keep the
+  // aside in the flex flow, and leave a stuck empty rail on mobile. Scope
+  // `relative` to the desktop branch so `fixed` wins on mobile.
   const base = [
-    'relative flex flex-col shrink-0 bg-chrome border-r border-line-subtle transition-[transform,width] duration-200',
+    'flex flex-col shrink-0 bg-chrome border-r border-line-subtle transition-[transform,width] duration-200',
   ]
   if (ctx.isMobile.value) {
     base.push('fixed inset-y-0 left-0 z-50 w-64')
     base.push(ctx.sidebarOpen.value ? 'translate-x-0' : '-translate-x-full')
   } else {
-    base.push('h-full')
+    base.push('relative h-full')
   }
   return base.join(' ')
 })

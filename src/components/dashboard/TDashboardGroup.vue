@@ -40,29 +40,39 @@ const readPersisted = (): PersistedState => {
   }
 }
 
-const persisted = readPersisted()
-
+// Initialize with deterministic defaults so server-render and initial client
+// render agree. Real persisted values + viewport width are applied in
+// onMounted to avoid hydration mismatches.
+const hydrated = ref(false)
 const sidebarOpen = ref(true)
-const sidebarCollapsed = ref(persisted.collapsed ?? props.defaultCollapsed)
-const sidebarWidth = ref(persisted.width ?? props.defaultWidth)
-const viewportWidth = ref(typeof window === 'undefined' ? 1920 : window.innerWidth)
+const sidebarCollapsed = ref(props.defaultCollapsed)
+const sidebarWidth = ref(props.defaultWidth)
+const viewportWidth = ref(props.mobileBreakpoint)
 
 const isMobile = computed(() => viewportWidth.value < props.mobileBreakpoint)
 
 // On mobile, the sidebar starts closed. On desktop, always open.
-watch(
-  isMobile,
-  (mobile) => {
-    sidebarOpen.value = !mobile
-  },
-  { immediate: true },
-)
+// Not `immediate` — initial state is set in onMounted after hydration so the
+// server's DOM (which assumes desktop) matches the client's first paint.
+watch(isMobile, (mobile) => {
+  sidebarOpen.value = !mobile
+})
 
 const syncViewport = () => {
   viewportWidth.value = window.innerWidth
 }
 
 onMounted(() => {
+  const persisted = readPersisted()
+  if (typeof persisted.collapsed === 'boolean') {
+    sidebarCollapsed.value = persisted.collapsed
+  }
+  if (typeof persisted.width === 'number') {
+    sidebarWidth.value = persisted.width
+  }
+  viewportWidth.value = window.innerWidth
+  sidebarOpen.value = !isMobile.value
+  hydrated.value = true
   window.addEventListener('resize', syncViewport)
 })
 
@@ -72,6 +82,7 @@ onBeforeUnmount(() => {
 
 watch([sidebarWidth, sidebarCollapsed], ([width, collapsed]) => {
   if (typeof window === 'undefined') return
+  if (!hydrated.value) return
   try {
     window.localStorage.setItem(
       props.storageKey,
