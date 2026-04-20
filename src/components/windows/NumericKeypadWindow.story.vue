@@ -36,6 +36,7 @@
               initialValue: 42,
               min: 0,
               max: 100,
+              allowDecimal: false,
               onConfirm: (v) => (lastResult = `int ${v}`),
             }"
           />
@@ -124,8 +125,6 @@ import { reactive, ref } from 'vue'
 import NumericKeypadWindow from './NumericKeypadWindow.vue'
 import TWindowsContainer from '../TWindowsContainer.vue'
 import { useWindowManager } from '../../composables/useWindowManager'
-// Side-effect import: registers the 'numeric-keypad' window type.
-import './index'
 
 const state = reactive<{
   initialValue: number
@@ -155,7 +154,7 @@ type Preset = 'integer' | 'decimal' | 'percent'
 const presets: Record<Preset, { title: string; props: Record<string, unknown> }> = {
   integer: {
     title: 'Enter integer',
-    props: { initialValue: 10, min: 0, max: 999 },
+    props: { initialValue: 10, min: 0, max: 999, allowDecimal: false },
   },
   decimal: {
     title: 'Set temperature',

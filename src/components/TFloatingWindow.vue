@@ -145,6 +145,10 @@ const toggleMinimize = () => {
 // Drag handlers
 const startDrag = (event: PointerEvent) => {
   if (!windowEl.value) return
+  // Ignore pointerdowns that bubbled up from the header's buttons (minimize,
+  // close). Otherwise `setPointerCapture` on the header swallows the pending
+  // click and the buttons appear dead.
+  if ((event.target as HTMLElement | null)?.closest('button')) return
 
   isDragging.value = true
   dragOffset.value = {

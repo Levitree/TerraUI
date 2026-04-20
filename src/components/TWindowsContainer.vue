@@ -24,6 +24,21 @@
   </TFloatingWindow>
 </template>
 
+<script lang="ts">
+// Register built-in window types at module-load time. Lives here (not in
+// windows/index.ts) so the side effect survives library tree-shaking —
+// consumers always import this component to render any window, and .vue
+// files are preserved as side-effectful by the package's sideEffects config.
+import { registerWindowType } from '../composables/useWindowManager'
+import NumericKeypadWindow from './windows/NumericKeypadWindow.vue'
+
+registerWindowType('numeric-keypad', {
+  component: NumericKeypadWindow,
+  defaultSize: { width: 300, height: 420 },
+  defaultTitle: 'Enter Number',
+})
+</script>
+
 <script setup lang="ts">
 import TFloatingWindow from './TFloatingWindow.vue'
 import {

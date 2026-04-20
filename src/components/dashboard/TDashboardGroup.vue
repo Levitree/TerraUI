@@ -20,7 +20,7 @@ const props = withDefaults(
   {
     storageKey: 'terraui.dashboard',
     mobileBreakpoint: 1024,
-    defaultWidth: 260,
+    defaultWidth: 288,
     defaultCollapsed: false,
   },
 )
@@ -43,19 +43,22 @@ const readPersisted = (): PersistedState => {
 // Initialize with deterministic defaults so server-render and initial client
 // render agree. Real persisted values + viewport width are applied in
 // onMounted to avoid hydration mismatches.
+//
+// `sidebarOpen` means "mobile slideover is open" — on desktop it stays false
+// because the desktop aside is a separate, always-visible tree gated on the
+// `lg:` breakpoint. TDashboardSidebarCollapse only toggles this on mobile.
 const hydrated = ref(false)
-const sidebarOpen = ref(true)
+const sidebarOpen = ref(false)
 const sidebarCollapsed = ref(props.defaultCollapsed)
 const sidebarWidth = ref(props.defaultWidth)
 const viewportWidth = ref(props.mobileBreakpoint)
 
 const isMobile = computed(() => viewportWidth.value < props.mobileBreakpoint)
 
-// On mobile, the sidebar starts closed. On desktop, always open.
-// Not `immediate` — initial state is set in onMounted after hydration so the
-// server's DOM (which assumes desktop) matches the client's first paint.
+// Close the mobile slideover when the viewport grows past the breakpoint, so
+// a sidebar opened on mobile doesn't stay stuck over the desktop layout.
 watch(isMobile, (mobile) => {
-  sidebarOpen.value = !mobile
+  if (!mobile) sidebarOpen.value = false
 })
 
 const syncViewport = () => {
@@ -71,7 +74,6 @@ onMounted(() => {
     sidebarWidth.value = persisted.width
   }
   viewportWidth.value = window.innerWidth
-  sidebarOpen.value = !isMobile.value
   hydrated.value = true
   window.addEventListener('resize', syncViewport)
 })

@@ -25,6 +25,10 @@ import { TButton } from '@terranovasystems/terraui/components'
 
 ## Components
 
+### Components
+
+- [TSlideover](dist/llms/components/TSlideover.md)
+
 ### Dashboard Shell
 
 - [TDashboardGroup](dist/llms/components/TDashboardGroup.md)

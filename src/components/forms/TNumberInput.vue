@@ -135,6 +135,8 @@ const adjust = (direction: -1 | 1) => {
   if (props.disabled) return
   const next = clampValue(displayValue.value + direction * (props.step ?? 1))
   emit('update:modelValue', next)
+  // Mirror a tab-out so consumers that commit on `@blur` also commit on step.
+  emit('blur', new FocusEvent('blur'))
 }
 
 // Coarse-pointer (touch) keypad — on tap, swap the soft-keyboard out for our
@@ -170,6 +172,7 @@ const handleCoarseClick = (event: MouseEvent) => {
       min: props.min,
       max: props.max,
       suffix: props.suffix,
+      allowDecimal: !Number.isInteger(props.step),
       onConfirm: (value: number) => {
         emit('update:modelValue', clampValue(value))
       },
@@ -184,15 +187,16 @@ const stepperButtonClasses = computed(() => {
     'enabled:hover:bg-fill enabled:hover:border-line-strong enabled:hover:text-ink',
     'disabled:opacity-30 disabled:cursor-not-allowed',
   ]
+  // Heights match TInput: font line-height + vertical padding + 2px border.
   switch (props.size) {
     case 'sm':
       base.push('h-[26px] w-[26px]')
       break
     case 'lg':
-      base.push('h-[46px] w-[46px]')
+      base.push('h-[50px] w-[50px]')
       break
     default:
-      base.push('h-[34px] w-[34px]')
+      base.push('h-[38px] w-[38px]')
   }
   return base.join(' ')
 })

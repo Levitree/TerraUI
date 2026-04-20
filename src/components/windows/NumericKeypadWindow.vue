@@ -9,21 +9,35 @@
       <span v-if="suffix" class="text-sm text-ink-muted">{{ suffix }}</span>
     </div>
 
-    <div class="flex-1 grid grid-cols-4 grid-rows-4 gap-2">
-      <button v-for="k in digitKeys" :key="k" :class="keyClass" @click="pressDigit(k)">
+    <div class="flex-1 grid grid-cols-6 grid-rows-5 gap-2">
+      <button
+        v-for="k in digitKeys"
+        :key="k"
+        :class="[keyClass, 'col-span-2']"
+        @click="pressDigit(k)"
+      >
         {{ k }}
       </button>
-      <button :class="keyClass" @click="backspace"><TIcon name="arrow-left" size="sm" /></button>
 
-      <button :class="keyClass" @click="clearAll">
-        <span class="text-[0.65rem] font-bold tracking-wider">Clr</span>
+      <button :class="[cancelKeyClass, 'col-span-2']" @click="cancel">
+        <TIcon name="x" size="xl" />
+      </button>
+      <button :class="[keyClass, 'col-span-2']" @click="pressDigit('0')">0</button>
+      <button :class="[confirmKeyClass, 'col-span-2']" @click="confirm">
+        <TIcon name="check" size="xl" />
       </button>
 
-      <button :class="keyClass" :disabled="buffer.includes('.')" @click="pressDot">.</button>
-
-      <button :class="cancelKeyClass" @click="cancel"><TIcon name="x" size="sm" /></button>
-      <button :class="[keyClass, 'col-span-2']" @click="pressDigit('0')">0</button>
-      <button :class="confirmKeyClass" @click="confirm"><TIcon name="check" size="sm" /></button>
+      <button :class="[keyClass, allowDecimal ? 'col-span-3' : 'col-span-6']" @click="clearAll">
+        <span class="text-[0.65rem] font-bold tracking-wider">Clr</span>
+      </button>
+      <button
+        v-if="allowDecimal"
+        :class="[keyClass, 'col-span-3']"
+        :disabled="buffer.includes('.')"
+        @click="pressDot"
+      >
+        .
+      </button>
     </div>
   </div>
 </template>
@@ -39,6 +53,8 @@ export interface NumericKeypadInitialState {
   min?: number
   max?: number
   suffix?: string
+  /** When false, hides the decimal point key (integer-only). Defaults to true. */
+  allowDecimal?: boolean
   onConfirm?: (value: number) => void
   onCancel?: () => void
 }
@@ -54,6 +70,11 @@ const formatInitial = (v: number | undefined): string => {
 
 const buffer = ref(formatInitial(props.initialState?.initialValue))
 const suffix = computed(() => props.initialState?.suffix)
+const allowDecimal = computed(() => props.initialState?.allowDecimal !== false)
+
+// First digit/dot after opening replaces the seeded initial value instead of
+// appending to it — matches how most calculator keypads behave.
+const hasTyped = ref(false)
 
 const digitKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9'] as const
 
@@ -63,26 +84,32 @@ const keyClass =
   'flex items-center justify-center rounded-sm bg-fill-subtle border border-line text-ink font-mono text-xl hover:bg-fill hover:border-line-strong active:bg-fill-strong disabled:opacity-30 disabled:cursor-not-allowed transition-all'
 
 const cancelKeyClass =
-  'flex items-center justify-center rounded-sm bg-danger border border-danger text-danger text-lg hover:bg-danger active:bg-danger transition-all'
+  'flex items-center justify-center rounded-sm bg-danger border border-danger text-ink text-lg hover:bg-danger-strong active:bg-danger-strong transition-all'
 
 const confirmKeyClass =
-  'flex items-center justify-center rounded-sm bg-success border border-success text-success text-lg hover:bg-success active:bg-success transition-all'
+  'flex items-center justify-center rounded-sm bg-success border border-success text-ink text-lg hover:bg-success-strong active:bg-success-strong transition-all'
+
+function consumeInitial() {
+  if (!hasTyped.value) {
+    buffer.value = ''
+    hasTyped.value = true
+  }
+}
 
 function pressDigit(d: string) {
+  consumeInitial()
   if (buffer.value === '0') buffer.value = ''
   buffer.value += d
 }
 
 function pressDot() {
+  consumeInitial()
   if (buffer.value === '') buffer.value = '0'
   if (!buffer.value.includes('.')) buffer.value += '.'
 }
 
-function backspace() {
-  buffer.value = buffer.value.slice(0, -1)
-}
-
 function clearAll() {
+  hasTyped.value = true
   buffer.value = ''
 }
 
