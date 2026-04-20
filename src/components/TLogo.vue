@@ -7,15 +7,15 @@
     title="Terranova"
   >
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span :class="iconClasses" v-html="IconSvg" />
+    <span :class="iconClasses" :style="iconStyle" v-html="IconSvg" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span v-if="wordmark" :class="wordmarkClasses" v-html="WordmarkSvg" />
+    <span v-if="wordmark" :class="wordmarkClasses" :style="wordmarkStyle" v-html="WordmarkSvg" />
   </RouterLink>
   <span v-else :class="wrapperClasses" aria-label="Terranova" title="Terranova">
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span :class="iconClasses" v-html="IconSvg" />
+    <span :class="iconClasses" :style="iconStyle" v-html="IconSvg" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span v-if="wordmark" :class="wordmarkClasses" v-html="WordmarkSvg" />
+    <span v-if="wordmark" :class="wordmarkClasses" :style="wordmarkStyle" v-html="WordmarkSvg" />
   </span>
 </template>
 
@@ -65,6 +65,12 @@ const wordmarkClasses = computed(() =>
     .filter(Boolean)
     .join(' '),
 )
+
+// Explicit aspect-ratios derived from the SVG viewBoxes. Safari otherwise
+// falls back to the SVGs' intrinsic mm dimensions when the wrapper is
+// `w-auto`, blowing out the wordmark width.
+const iconStyle = { aspectRatio: '1 / 1' }
+const wordmarkStyle = { aspectRatio: '219.17659 / 21.110899' }
 </script>
 
 <style scoped>

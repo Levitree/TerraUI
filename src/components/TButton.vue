@@ -94,7 +94,7 @@ const handleClick = async (event: MouseEvent) => {
 
 const baseClasses = computed(() => {
   const classes = [
-    'flex items-center justify-center gap-2',
+    'flex items-center justify-center gap-2 whitespace-nowrap',
     'font-bold tracking-wider uppercase',
     'rounded-sm transition-all enabled:hover:cursor-pointer',
     // Covers both native <button :disabled> and the <a aria-disabled> branch
