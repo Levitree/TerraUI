@@ -9,13 +9,23 @@
     <!-- eslint-disable-next-line vue/no-v-html -->
     <span v-if="showIcon" :class="iconClasses" :style="iconStyle" v-html="IconSvg" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span v-if="showWordmark" :class="wordmarkClasses" :style="wordmarkStyle" v-html="WordmarkSvg" />
+    <span
+      v-if="showWordmark"
+      :class="wordmarkClasses"
+      :style="wordmarkStyle"
+      v-html="WordmarkSvg"
+    />
   </RouterLink>
   <span v-else :class="wrapperClasses" aria-label="Terranova" title="Terranova">
     <!-- eslint-disable-next-line vue/no-v-html -->
     <span v-if="showIcon" :class="iconClasses" :style="iconStyle" v-html="IconSvg" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span v-if="showWordmark" :class="wordmarkClasses" :style="wordmarkStyle" v-html="WordmarkSvg" />
+    <span
+      v-if="showWordmark"
+      :class="wordmarkClasses"
+      :style="wordmarkStyle"
+      v-html="WordmarkSvg"
+    />
   </span>
 </template>
 

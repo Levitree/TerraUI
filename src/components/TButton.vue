@@ -22,7 +22,15 @@ import { useRouter } from 'vue-router'
 import TIcon from './TIcon.vue'
 import type { IconSize } from './TIcon.vue'
 
-export type ButtonColor = 'neutral' | 'success' | 'error' | 'warn' | 'ghost' | 'icon' | 'white' | 'info'
+export type ButtonColor =
+  | 'neutral'
+  | 'success'
+  | 'error'
+  | 'warn'
+  | 'ghost'
+  | 'icon'
+  | 'white'
+  | 'info'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 const props = withDefaults(
