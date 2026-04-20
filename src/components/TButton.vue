@@ -22,7 +22,7 @@ import { useRouter } from 'vue-router'
 import TIcon from './TIcon.vue'
 import type { IconSize } from './TIcon.vue'
 
-export type ButtonColor = 'neutral' | 'success' | 'error' | 'warn' | 'ghost' | 'icon' | 'white'
+export type ButtonColor = 'neutral' | 'success' | 'error' | 'warn' | 'ghost' | 'icon' | 'white' | 'info'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 const props = withDefaults(
@@ -97,8 +97,6 @@ const baseClasses = computed(() => {
     'flex items-center justify-center gap-2 whitespace-nowrap',
     'font-bold tracking-wider uppercase',
     'rounded-sm transition-all not-disabled:hover:cursor-pointer',
-    // Covers both native <button :disabled> and the <a aria-disabled> branch
-    // used when `to` is set, so anchor-style buttons also dim correctly.
     'disabled:opacity-30 disabled:cursor-not-allowed',
     'aria-disabled:opacity-30 aria-disabled:cursor-not-allowed aria-disabled:pointer-events-none',
   ]
@@ -124,15 +122,19 @@ const colorClasses = computed(() => {
   }
 
   if (props.color === 'success') {
-    return 'bg-success border border-success text-ink not-disabled:hover:bg-success-strong not-disabled:hover:border-success'
+    return 'bg-success-soft border border-success text-success enabled:hover:bg-success enabled:hover:border-success'
   }
 
   if (props.color === 'error') {
-    return 'bg-danger border border-danger text-ink not-disabled:hover:bg-danger-strong not-disabled:hover:border-danger'
+    return 'bg-danger-soft border border-danger text-danger enabled:hover:bg-danger enabled:hover:border-danger'
   }
 
   if (props.color === 'warn') {
-    return 'bg-warning border border-warning text-ink not-disabled:hover:bg-warning-strong not-disabled:hover:border-warning'
+    return 'bg-warning-soft border border-warning text-warning enabled:hover:bg-warning enabled:hover:border-warning'
+  }
+
+  if (props.color === 'info') {
+    return 'bg-info-soft border border-info text-info enabled:hover:bg-info enabled:hover:border-success'
   }
 
   if (props.color === 'white') {
@@ -141,7 +143,6 @@ const colorClasses = computed(() => {
       : 'bg-ink/90 border border-ink/80 text-ink-inverse not-disabled:hover:bg-ink not-disabled:hover:border-ink'
   }
 
-  // neutral (default) — replaces the old primary/secondary styles.
   return props.active
     ? 'bg-fill-strong border border-line-strong text-ink shadow-[inset_0_0_12px_color-mix(in_srgb,var(--color-ink)_20%,transparent)]'
     : 'bg-fill-subtle border border-line text-ink-secondary not-disabled:hover:bg-fill-strong not-disabled:hover:border-line-strong not-disabled:hover:shadow-[inset_0_0_12px_color-mix(in_srgb,var(--color-ink)_20%,transparent)]'
