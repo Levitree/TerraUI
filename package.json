@@ -87,7 +87,7 @@
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.58.2",
-    "vite": "^7.3.0",
+    "vite": "^8.0.8",
     "vite-plugin-lib-inject-css": "^2.2.2",
     "vue": "^3.5.32",
     "vue-component-meta": "^3.2.6",
