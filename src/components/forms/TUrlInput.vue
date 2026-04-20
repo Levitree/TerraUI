@@ -5,7 +5,7 @@
       mono
       :placeholder="urlPlaceholder"
       :readonly="readonly"
-      :error="!!error || !!validationError"
+      :error="!!resolvedError || !!validationError"
       full-width
       @update:modelValue="onUrlTextChange($event as string)"
     />
@@ -79,13 +79,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, provide, watch } from 'vue'
 import TInput from './TInput.vue'
 import TSelect, { type TSelectOption } from './TSelect.vue'
 import TFormField from './TFormField.vue'
 import TModal from '../TModal.vue'
 import TButton from '../TButton.vue'
 import TIcon from '../TIcon.vue'
+import { useFormField } from '../../composables/useFormField'
+import { FIELD_CONTEXT_KEY, type TFieldContext } from './types'
 
 export interface UrlValue {
   protocol: string
@@ -138,15 +140,40 @@ function urlValueToString(v: UrlValue): string {
   return `${v.protocol}://${userInfo}${v.host}${portPart}${pathPart}`
 }
 
+const field = useFormField<string | UrlValue | null>({
+  modelValue: () => props.modelValue,
+  error: () => props.error,
+  emit: (value) => {
+    const str =
+      typeof value === 'string' ? value : value == null ? '' : urlValueToString(value)
+    emit('update:modelValue', str)
+  },
+})
+
+// Neutralize the field context for descendant TInput/TSelect/TFormField so
+// TUrlInput is the sole owner of the outer field binding. Inner inputs work
+// off their own v-model props/refs.
+const neutralField: TFieldContext = {
+  name: '',
+  value: computed(() => undefined),
+  setValue: () => {},
+  error: computed(() => undefined),
+  onBlur: () => {},
+  inputId: '',
+}
+provide(FIELD_CONTEXT_KEY, neutralField)
+
+const resolvedError = computed(() => field.error.value)
+
 const urlText = computed<string>(() => {
-  const v = props.modelValue
+  const v = field.modelValue.value
   if (v == null || v === '') return ''
   if (typeof v === 'string') return v
   return urlValueToString(v)
 })
 
 function onUrlTextChange(next: string) {
-  emit('update:modelValue', next)
+  field.setValue(next)
 }
 
 // === Validation ===
@@ -252,7 +279,7 @@ function parseUrlString(raw: string): Partial<UrlValue> {
 
 function openManualModal() {
   if (props.readonly) return
-  const source = props.modelValue
+  const source = field.modelValue.value
   const parsed =
     typeof source === 'object' && source !== null
       ? (source as Partial<UrlValue>)
@@ -302,7 +329,7 @@ function composeFromManual(): string {
 function applyManual() {
   if (!manual.host.trim()) return
   const composed = composeFromManual()
-  emit('update:modelValue', composed)
+  field.setValue(composed)
   isManualOpen.value = false
 }
 

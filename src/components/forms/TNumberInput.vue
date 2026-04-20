@@ -19,14 +19,14 @@
       :disabled="disabled"
       :readonly="readonly || isCoarsePointer"
       :placeholder="placeholder"
-      :error="error"
+      :error="resolvedError"
       :center="center"
       :mono="mono"
       :suffix="suffix"
       :inputmode="isCoarsePointer ? 'none' : undefined"
       :full-width="fullWidth"
       @update:model-value="handleInput"
-      @blur="emit('blur', $event)"
+      @blur="handleBlur"
       @focus="emit('focus', $event)"
       @click="handleCoarseClick"
     />
@@ -51,23 +51,25 @@
     :disabled="disabled"
     :readonly="readonly || isCoarsePointer"
     :placeholder="placeholder"
-    :error="error"
+    :error="resolvedError"
     :center="center"
     :mono="mono"
     :suffix="suffix"
     :inputmode="isCoarsePointer ? 'none' : undefined"
     :full-width="fullWidth"
     @update:model-value="handleInput"
-    @blur="emit('blur', $event)"
+    @blur="handleBlur"
     @focus="emit('focus', $event)"
     @click="handleCoarseClick"
   />
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, provide, ref } from 'vue'
 import TInput from './TInput.vue'
 import TIcon, { type IconSize } from '../TIcon.vue'
+import { useFormField } from '../../composables/useFormField'
+import { FIELD_CONTEXT_KEY, type TFieldContext } from './types'
 import { useWindowManager } from '../../composables/useWindowManager'
 
 export type TNumberInputSize = 'sm' | 'md' | 'lg'
@@ -112,7 +114,28 @@ const emit = defineEmits<{
   focus: [event: FocusEvent]
 }>()
 
-const displayValue = computed(() => props.modelValue ?? 0)
+const field = useFormField<number>({
+  modelValue: () => props.modelValue,
+  error: () => props.error,
+  emit: (value) => emit('update:modelValue', value),
+  emitBlur: (event) => event && emit('blur', event),
+})
+
+// Neutralize the field context for the inner TInput — TNumberInput owns the
+// binding, so the input's own useFormField must fall back to the v-model
+// props rather than double-writing to the form context.
+const neutralField: TFieldContext = {
+  name: '',
+  value: computed(() => undefined),
+  setValue: () => {},
+  error: computed(() => undefined),
+  onBlur: () => {},
+  inputId: '',
+}
+provide(FIELD_CONTEXT_KEY, neutralField)
+
+const displayValue = computed(() => field.modelValue.value ?? 0)
+const resolvedError = computed(() => field.error.value)
 
 const clampValue = (value: number): number => {
   let clamped = value
@@ -124,8 +147,13 @@ const clampValue = (value: number): number => {
 const handleInput = (value: string | number) => {
   const parsed = typeof value === 'number' ? value : parseFloat(value)
   if (!isNaN(parsed)) {
-    emit('update:modelValue', clampValue(parsed))
+    field.setValue(clampValue(parsed))
   }
+}
+
+const handleBlur = (event: FocusEvent) => {
+  emit('blur', event)
+  field.onBlur()
 }
 
 const atMin = computed(() => props.min !== undefined && displayValue.value <= props.min)
@@ -134,9 +162,10 @@ const atMax = computed(() => props.max !== undefined && displayValue.value >= pr
 const adjust = (direction: -1 | 1) => {
   if (props.disabled) return
   const next = clampValue(displayValue.value + direction * (props.step ?? 1))
-  emit('update:modelValue', next)
+  field.setValue(next)
   // Mirror a tab-out so consumers that commit on `@blur` also commit on step.
   emit('blur', new FocusEvent('blur'))
+  field.onBlur()
 }
 
 // Coarse-pointer (touch) keypad — on tap, swap the soft-keyboard out for our
@@ -174,7 +203,7 @@ const handleCoarseClick = (event: MouseEvent) => {
       suffix: props.suffix,
       allowDecimal: !Number.isInteger(props.step),
       onConfirm: (value: number) => {
-        emit('update:modelValue', clampValue(value))
+        field.setValue(clampValue(value))
       },
     },
   })
