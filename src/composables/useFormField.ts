@@ -1,10 +1,10 @@
-import { computed, getCurrentInstance, inject, type ComputedRef } from 'vue'
+import { computed, inject, type ComputedRef } from 'vue'
 import { FIELD_CONTEXT_KEY } from '../components/forms/types'
 
 export interface FieldBinding<V> {
-  /** Current value — from parent `v-model` if bound, else from injected field. */
+  /** Current value — from the injected field if wrapped, else from parent `v-model`. */
   modelValue: ComputedRef<V | undefined>
-  /** Commit a new value. Emits `update:modelValue` AND updates the field (if injected). */
+  /** Commit a new value. Emits `update:modelValue` AND syncs the field (if injected). */
   setValue: (value: V) => void
   /** Error string from the injected field, undefined if standalone. */
   error: ComputedRef<string | undefined>
@@ -12,14 +12,15 @@ export interface FieldBinding<V> {
   onBlur: () => void
   /** DOM id for `<input>`. Inherits from field if wrapped, else undefined. */
   inputId: ComputedRef<string | undefined>
-  /** True when rendering inside a `TFormField`. */
+  /** True when rendering inside a named `TFormField`. */
   isWrapped: ComputedRef<boolean>
 }
 
 export interface UseFormFieldOptions<V> {
-  /** Input's own `modelValue` prop. Takes precedence over the injected field. */
+  /** Input's own `modelValue` prop. Used when standalone, or as a fallback when
+   *  the wrapping `TFormField` has no `name`. */
   modelValue: () => V | undefined
-  /** Input's own `error` prop override. Takes precedence. */
+  /** Input's own `error` prop override. Takes precedence over field error. */
   error?: () => string | boolean | undefined
   /** Called when the input emits a new value. */
   emit: (value: V) => void
@@ -30,25 +31,25 @@ export interface UseFormFieldOptions<V> {
 /**
  * Bridge between standalone `v-model` usage and `TFormField` injection. Input
  * components call this and spread the returned bindings instead of reading
- * `props.modelValue` / emitting directly. When wrapped in a `TFormField`, the
- * field provides value + error + onBlur; when standalone, the input's own
- * props/emits take over transparently.
+ * `props.modelValue` / emitting directly.
+ *
+ * Resolution:
+ * - Inside a named `TFormField`: the field is the source of truth for
+ *   value/error. Input writes go through both the field (for validation) and
+ *   `update:modelValue` (so any parent `v-model` stays mirrored).
+ * - Otherwise: the input's own props/emits drive everything.
  */
 export function useFormField<V>(options: UseFormFieldOptions<V>): FieldBinding<V> {
   const field = inject(FIELD_CONTEXT_KEY, null)
-  const instance = getCurrentInstance()
 
-  // Check raw vnode props to detect whether the parent explicitly bound
-  // `v-model` / `modelValue`. This lets an input inside a TFormField still
-  // override the injected field if the author wants.
-  const hasExplicitModel = computed(() => {
-    const vnodeProps = instance?.vnode.props
-    return !!vnodeProps && ('modelValue' in vnodeProps || 'onUpdate:modelValue' in vnodeProps)
-  })
+  // A field is "active" only if it belongs to a named TFormField. A nameless
+  // TFormField is a pure label wrapper and shouldn't claim ownership of the
+  // input's value — fall through to the standalone v-model path.
+  const hasField = computed(() => !!field && !!field.name)
 
   const modelValue = computed<V | undefined>(() => {
-    if (hasExplicitModel.value || !field) return options.modelValue()
-    return field.value.value as V | undefined
+    if (hasField.value) return field!.value.value as V | undefined
+    return options.modelValue()
   })
 
   const error = computed<string | undefined>(() => {
@@ -58,13 +59,15 @@ export function useFormField<V>(options: UseFormFieldOptions<V>): FieldBinding<V
   })
 
   const inputId = computed<string | undefined>(() => field?.inputId)
-  const isWrapped = computed(() => !!field)
+  const isWrapped = computed(() => hasField.value)
 
   const setValue = (value: V) => {
+    // Always emit so a parent v-model (if any) stays mirrored. Always push
+    // into the field context (if active) so the form's internal state and
+    // validation stay aligned — regardless of whether the parent also bound
+    // v-model.
     options.emit(value)
-    if (field && !hasExplicitModel.value) {
-      field.setValue(value as unknown)
-    }
+    if (hasField.value) field!.setValue(value as unknown)
   }
 
   const onBlur = () => {

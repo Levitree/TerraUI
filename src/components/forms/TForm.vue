@@ -8,7 +8,7 @@
   </form>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="TData extends Record<string, unknown> = Record<string, unknown>">
 import { provide } from 'vue'
 import { useForm } from '../../composables/useForm'
 import { z, type ZodSchema } from 'zod'
@@ -16,14 +16,19 @@ import { FORM_CONTEXT_KEY } from './types'
 
 const props = withDefaults(
   defineProps<{
-    schema?: ZodSchema
-    initialValues?: Record<string, unknown>
     /**
-     * Alias for `initialValues`; mirrors Nuxt UI's `UForm :state` prop so
-     * existing auth-app forms keep working without template changes.
+     * Zod schema describing the form's values. Inferred into `TData`, which
+     * types the `@submit` payload, `:initial-values`, and `defineExpose`'d
+     * values.
      */
-    state?: Record<string, unknown>
+    schema?: ZodSchema<TData>
+    /** Initial values for the form's internal state. */
+    initialValues?: TData
+    /** Alias for `initialValues`. */
+    state?: TData
+    /** Re-run validation on every field change. Default: false. */
     validateOnChange?: boolean
+    /** Re-run validation on field blur. Default: true. */
     validateOnBlur?: boolean
   }>(),
   {
@@ -33,23 +38,24 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  submit: [data: Record<string, unknown>]
+  /** Fired after successful validation with the form's parsed values. */
+  submit: [data: TData]
+  /** Fired when submit is attempted but validation fails. */
   invalid: [errors: Record<string, string>]
 }>()
 
-// Use a permissive schema if none provided - z.record needs key and value types in Zod 4
+// Permissive schema if none is provided. z.record requires key+value in Zod 4.
 const defaultSchema = z.record(z.string(), z.unknown()) as ZodSchema<Record<string, unknown>>
 
-const form = useForm({
-  schema: (props.schema ?? defaultSchema) as ZodSchema<Record<string, unknown>>,
-  initialValues: props.initialValues ?? props.state,
+const form = useForm<TData>({
+  schema: (props.schema ?? defaultSchema) as ZodSchema<TData>,
+  initialValues: (props.initialValues ?? props.state) as Partial<TData> | undefined,
   validateOnChange: props.validateOnChange,
   validateOnBlur: props.validateOnBlur,
 })
 
 const { values, errors, hasErrors, isSubmitting, getFieldProps } = form
 
-// Provide form context for child components
 provide(FORM_CONTEXT_KEY, {
   getFieldProps: <V = unknown,>(name: string) => form.getNestedFieldProps<V>(name),
   getFieldError: (name: string) => errors.value[name],
@@ -61,14 +67,13 @@ const onSubmit = async () => {
   const isValid = form.validate()
 
   if (!isValid) {
-    emit('invalid', { ...errors.value } as Record<string, string>)
+    emit('invalid', { ...errors.value })
     return
   }
 
-  emit('submit', { ...values.value })
+  emit('submit', { ...values.value } as TData)
 }
 
-// Expose form methods for parent component access
 defineExpose({
   values,
   errors,
