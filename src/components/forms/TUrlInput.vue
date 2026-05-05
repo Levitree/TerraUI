@@ -96,6 +96,15 @@ export interface UrlValue {
   path?: string
   username?: string
   password?: string
+  /**
+   * Server-side hint: a credential is stored on the backend but is being
+   * redacted on the wire. TUrlInput renders an empty password field with a
+   * `••••••••` placeholder when this is true, signalling to the user that
+   * leaving the field blank preserves the stored credential. Never round-
+   * trips on emit — the emitted URL string can't carry it, and the server's
+   * update path treats a missing password as "preserve".
+   */
+  passwordSet?: boolean
 }
 
 const props = withDefaults(
@@ -291,7 +300,11 @@ function openManualModal() {
   manual.username = parsed.username ?? ''
   manual.password = ''
   manualPristinePassword = parsed.password
-  manualPasswordWasStored = !!parsed.password
+  // Two independent signals that a password is stored:
+  //   - parsed.password: the URL we received contains a password (legacy)
+  //   - parsed.passwordSet: the server redacted the password but flagged
+  //     that one exists (the round-trip-friendly form).
+  manualPasswordWasStored = !!parsed.password || !!parsed.passwordSet
   isManualOpen.value = true
 }
 
