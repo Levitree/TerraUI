@@ -5,11 +5,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0.015em;
-  text-transform: uppercase;
-}
-
-button {
-  text-transform: uppercase;
 }
 
 input,
