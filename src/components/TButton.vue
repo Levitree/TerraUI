@@ -130,19 +130,29 @@ const colorClasses = computed(() => {
   }
 
   if (props.color === 'success') {
-    return 'bg-success-soft border border-success text-success enabled:hover:bg-success enabled:hover:border-success'
+    // Soft idle, solid hover. Hover text flips to ink-inverse so it stays
+    // readable on the now-saturated background (the prior style left text
+    // at `text-success`, which on hover became green-on-green).
+    return 'bg-success-soft border border-success text-success enabled:hover:bg-success enabled:hover:border-success enabled:hover:text-ink-inverse'
   }
 
   if (props.color === 'error') {
-    return 'bg-danger-soft border border-danger text-danger enabled:hover:bg-danger enabled:hover:border-danger'
+    // E-stop / destructive actions are safety-critical — always solid +
+    // ink-inverse for maximum contrast at idle, with a `-strong` shade on
+    // hover. Soft styling reads as low-priority and is wrong for this
+    // variant; success/warn/info keep the soft style because they're
+    // informational rather than destructive.
+    return 'bg-danger border border-danger text-ink-inverse not-disabled:hover:bg-danger-strong not-disabled:hover:border-danger'
   }
 
   if (props.color === 'warn') {
-    return 'bg-warning-soft border border-warning text-warning enabled:hover:bg-warning enabled:hover:border-warning'
+    return 'bg-warning-soft border border-warning text-warning enabled:hover:bg-warning enabled:hover:border-warning enabled:hover:text-ink-inverse'
   }
 
   if (props.color === 'info') {
-    return 'bg-info-soft border border-info text-info enabled:hover:bg-info enabled:hover:border-success'
+    // Was `enabled:hover:border-success` — copy/paste typo from the success
+    // case; should be `border-info` to match the rest of the variant.
+    return 'bg-info-soft border border-info text-info enabled:hover:bg-info enabled:hover:border-info enabled:hover:text-ink-inverse'
   }
 
   if (props.color === 'white') {
