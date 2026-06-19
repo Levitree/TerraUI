@@ -132,102 +132,94 @@ const baseClasses = computed(() => {
   return classes.join(' ')
 })
 
+// Uniform state model. Hover and active never swap the surface — they layer a
+// single small, theme-aware tint (white on dark, slate on light) over whatever
+// base the button already has, via an inset shadow. So an opaque button STAYS
+// opaque, and every variant × color changes by the exact same modest amount on
+// hover (+~10%) and active (+~15%) instead of jumping to a brighter, see-through
+// surface. `inverse` is the one exception (opposite polarity — the fill tint
+// would push the wrong way), so it steps the ink shade instead.
+const HOVER_TINT = 'not-disabled:hover:shadow-[inset_0_0_0_9999px_var(--color-fill)]'
+const ACTIVE_TINT = 'shadow-[inset_0_0_0_9999px_var(--color-fill-strong)]'
+
+const stateTint = (base: string) => `${base} ${props.active ? ACTIVE_TINT : HOVER_TINT}`
+
 // Solid / opaque fill. Colored fills pair with `text-ink-inverse`, which flips
 // with the theme; success/warning use the `-strong` fill so the near-white/dark
-// label clears AA in both modes. `active` adds an inset "pressed/selected"
-// shadow so the state is always visible on the fill.
+// label clears AA in both modes.
 const solidClasses = computed(() => {
   switch (props.color) {
     case 'inverse':
       return props.active
-        ? 'bg-ink-secondary border border-ink-secondary text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.4)]'
+        ? 'bg-ink-secondary border border-ink-secondary text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.25)]'
         : 'bg-ink border border-ink text-ink-inverse not-disabled:hover:bg-ink-secondary not-disabled:hover:border-ink-secondary'
     case 'success':
-      return props.active
-        ? 'bg-success-strong border border-success-strong text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.4)]'
-        : 'bg-success-strong border border-success-strong text-ink-inverse not-disabled:hover:brightness-110'
+      return stateTint('bg-success-strong border border-success-strong text-ink-inverse')
     case 'warning':
-      return props.active
-        ? 'bg-warning-strong border border-warning-strong text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.4)]'
-        : 'bg-warning-strong border border-warning-strong text-ink-inverse not-disabled:hover:brightness-110'
+      return stateTint('bg-warning-strong border border-warning-strong text-ink-inverse')
     case 'error':
-      return props.active
-        ? 'bg-danger border border-danger text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.4)]'
-        : 'bg-danger border border-danger text-ink-inverse not-disabled:hover:brightness-110'
+      return stateTint('bg-danger border border-danger text-ink-inverse')
     case 'info':
-      return props.active
-        ? 'bg-info border border-info text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.4)]'
-        : 'bg-info border border-info text-ink-inverse not-disabled:hover:brightness-110'
+      return stateTint('bg-info border border-info text-ink-inverse')
     case 'neutral':
     default:
       return props.active
-        ? 'bg-fill-strong border border-line-strong text-ink shadow-[inset_0_0_12px_color-mix(in_srgb,var(--color-ink)_20%,transparent)]'
-        : 'bg-elevated border border-line text-ink not-disabled:hover:bg-fill-strong not-disabled:hover:border-line-strong'
+        ? `bg-elevated border border-line-strong text-ink ${ACTIVE_TINT}`
+        : `bg-elevated border border-line text-ink not-disabled:hover:border-line-strong ${HOVER_TINT}`
   }
 })
 
 // Transparent fill, colored border + text. Ideal for toggles / segmented
-// controls: `active` fills with the matching soft tint so the selected option
-// reads clearly. Colored text uses the `-strong` shade where the base fails AA.
+// controls: hover lays the same neutral tint over the transparent base; `active`
+// fills with the matching soft tint so the selected option reads in its color.
+// Colored text uses the `-strong` shade where the base fails AA.
 const outlineClasses = computed(() => {
   switch (props.color) {
     case 'inverse':
-      return props.active
-        ? 'bg-fill-strong border border-ink text-ink'
-        : 'bg-transparent border border-ink text-ink not-disabled:hover:bg-fill'
+      return stateTint('bg-transparent border border-ink text-ink')
     case 'success':
       return props.active
         ? 'bg-success-soft border border-success text-success-strong'
-        : 'bg-transparent border border-success text-success-strong not-disabled:hover:bg-success-soft'
+        : `bg-transparent border border-success text-success-strong ${HOVER_TINT}`
     case 'warning':
       return props.active
         ? 'bg-warning-soft border border-warning text-warning-strong'
-        : 'bg-transparent border border-warning text-warning-strong not-disabled:hover:bg-warning-soft'
+        : `bg-transparent border border-warning text-warning-strong ${HOVER_TINT}`
     case 'error':
       return props.active
         ? 'bg-danger-soft border border-danger text-danger'
-        : 'bg-transparent border border-danger text-danger not-disabled:hover:bg-danger-soft'
+        : `bg-transparent border border-danger text-danger ${HOVER_TINT}`
     case 'info':
       return props.active
         ? 'bg-info-soft border border-info text-info'
-        : 'bg-transparent border border-info text-info not-disabled:hover:bg-info-soft'
+        : `bg-transparent border border-info text-info ${HOVER_TINT}`
     case 'neutral':
     default:
       return props.active
-        ? 'bg-fill-strong border border-line-strong text-ink'
-        : 'bg-transparent border border-line text-ink not-disabled:hover:bg-fill not-disabled:hover:border-line-strong'
+        ? `bg-transparent border border-line-strong text-ink ${ACTIVE_TINT}`
+        : `bg-transparent border border-line text-ink not-disabled:hover:border-line-strong ${HOVER_TINT}`
   }
 })
 
-// Transparent, no border, hover-tinted. Resting foregrounds clear WCAG AA on the
-// page surface in both modes; `active` fills with the soft tint to show state.
+// Transparent, no border. Same uniform tint; resting foregrounds clear WCAG AA
+// on the page surface in both modes.
 const ghostClasses = computed(() => {
   switch (props.color) {
-    case 'inverse':
-      return props.active
-        ? 'bg-fill-strong text-ink'
-        : 'bg-transparent text-ink not-disabled:hover:bg-fill'
     case 'success':
-      return props.active
-        ? 'bg-success-soft text-success-strong'
-        : 'bg-transparent text-success-strong not-disabled:hover:bg-fill'
+      return stateTint('bg-transparent text-success-strong')
     case 'warning':
-      return props.active
-        ? 'bg-warning-soft text-warning-strong'
-        : 'bg-transparent text-warning-strong not-disabled:hover:bg-fill'
+      return stateTint('bg-transparent text-warning-strong')
     case 'error':
-      return props.active
-        ? 'bg-danger-soft text-danger'
-        : 'bg-transparent text-danger not-disabled:hover:bg-fill'
+      return stateTint('bg-transparent text-danger')
     case 'info':
-      return props.active
-        ? 'bg-info-soft text-info'
-        : 'bg-transparent text-info not-disabled:hover:bg-fill'
+      return stateTint('bg-transparent text-info')
+    case 'inverse':
+      return stateTint('bg-transparent text-ink')
     case 'neutral':
     default:
       return props.active
-        ? 'bg-fill-strong text-ink'
-        : 'bg-transparent text-ink-muted not-disabled:hover:bg-fill not-disabled:hover:text-ink'
+        ? `bg-transparent text-ink ${ACTIVE_TINT}`
+        : `bg-transparent text-ink-muted not-disabled:hover:text-ink ${HOVER_TINT}`
   }
 })
 
