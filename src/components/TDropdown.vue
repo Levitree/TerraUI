@@ -190,10 +190,10 @@ const itemClasses = (item: Exclude<TDropdownItem, { type: 'label' } | { type: 's
       base.push('text-danger hover:bg-danger-soft')
       break
     case 'success':
-      base.push('text-success hover:bg-success-soft')
+      base.push('text-success-strong hover:bg-success-soft')
       break
     case 'warn':
-      base.push('text-warning hover:bg-warning-soft')
+      base.push('text-warning-strong hover:bg-warning-soft')
       break
     default:
       base.push('text-ink-secondary hover:bg-fill hover:text-ink')

@@ -39,14 +39,14 @@
       <div class="p-12 bg-bg min-h-60 flex items-center justify-center gap-6">
         <TPopover mode="hover" :content="{ side: 'top' }">
           <template #trigger>
-            <TButton color="ghost" label="Hover me" icon="info" />
+            <TButton variant="ghost" label="Hover me" icon="info" />
           </template>
           <div class="px-3 py-2 text-xs text-ink">Showing details on hover.</div>
         </TPopover>
 
         <TPopover mode="hover" :content="{ side: 'right' }">
           <template #trigger>
-            <TButton color="icon" icon="help-circle" />
+            <TButton square variant="ghost" icon="help-circle" />
           </template>
           <div class="w-56 p-3 text-xs text-ink-secondary">
             Popover can render any content — tooltips, keyboard shortcuts, richer cards.
@@ -71,7 +71,7 @@
                 class="bg-fill-subtle border border-line rounded-sm px-3 py-2 text-sm text-ink focus:outline-none focus:border-line-strong"
               />
               <div class="flex items-center justify-end gap-2">
-                <TButton color="ghost" size="sm" label="Cancel" @click="close" />
+                <TButton variant="ghost" size="sm" label="Cancel" @click="close" />
                 <TButton color="success" size="sm" label="Save" @click="close" />
               </div>
             </div>

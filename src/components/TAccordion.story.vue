@@ -137,8 +137,8 @@
             <div class="absolute inset-x-0 top-0 h-0.5 bg-success" />
           </template>
           <template #live-actions>
-            <TButton color="ghost" icon="plus" size="sm" />
-            <TButton color="ghost" icon="refresh-cw" size="sm" />
+            <TButton variant="ghost" icon="plus" size="sm" />
+            <TButton variant="ghost" icon="refresh-cw" size="sm" />
           </template>
           <template #live>
             <p class="text-sm text-ink-secondary">
@@ -148,7 +148,7 @@
           </template>
 
           <template #offline-actions>
-            <TButton color="ghost" icon="power" size="sm" />
+            <TButton variant="ghost" icon="power" size="sm" />
           </template>
           <template #offline>
             <p class="text-sm text-ink-secondary">Error status — static dot, no pulse.</p>

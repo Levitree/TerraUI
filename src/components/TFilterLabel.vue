@@ -1,5 +1,5 @@
 <template>
-  <span class="text-[0.65rem] font-bold tracking-wider uppercase text-ink-subtle">
+  <span class="text-[0.65rem] font-bold tracking-wider uppercase text-ink-muted">
     <slot>{{ label }}</slot>
   </span>
 </template>

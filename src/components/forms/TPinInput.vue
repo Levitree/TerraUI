@@ -11,7 +11,7 @@
       :disabled="disabled"
       :placeholder="placeholder"
       :maxlength="1"
-      class="bg-fill-subtle border-line text-ink focus:border-line-strong h-11 w-10 rounded-sm border text-center text-lg font-semibold transition-colors focus:outline-none disabled:opacity-40"
+      class="bg-fill-subtle border-line-strong text-ink focus:border-line-strong h-11 w-10 rounded-sm border text-center text-lg font-semibold transition-colors focus:outline-none disabled:opacity-40"
       @input="onInput($event, i)"
       @keydown="onKeydown($event, i)"
       @paste="onPaste($event, i)"

@@ -8,7 +8,7 @@
     />
     <span
       v-else-if="prefix"
-      class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-subtle"
+      class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted"
       :class="prefixSizeClasses"
     >
       {{ prefix }}
@@ -31,7 +31,7 @@
     />
     <span
       v-if="suffix"
-      class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-subtle"
+      class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted"
       :class="suffixSizeClasses"
     >
       {{ suffix }}
@@ -111,7 +111,7 @@ const hasError = computed(() => !!field.error.value)
 
 const baseClasses = computed(() => {
   const classes = [
-    'bg-fill-subtle border rounded-sm text-ink placeholder-ink-placeholder',
+    'bg-fill-subtle border rounded-sm text-ink placeholder-ink-muted',
     'focus:outline-none transition-all w-full',
   ]
 

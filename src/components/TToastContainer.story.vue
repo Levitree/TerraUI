@@ -19,7 +19,7 @@
         </p>
         <div class="flex flex-wrap gap-3 justify-center">
           <TButton label="Push toast" icon="send" @click="push" />
-          <TButton color="ghost" label="Clear" icon="trash-2" @click="toast.clear()" />
+          <TButton variant="ghost" label="Clear" icon="trash-2" @click="toast.clear()" />
         </div>
         <TToastContainer />
       </div>
@@ -33,7 +33,7 @@
           @click="toast.success('Saved changes', 'Success')"
         />
         <TButton color="error" label="Error" @click="toast.error('Something broke', 'Error')" />
-        <TButton color="warn" label="Warning" @click="toast.warning('Heads up', 'Warning')" />
+        <TButton color="warning" label="Warning" @click="toast.warning('Heads up', 'Warning')" />
         <TButton color="neutral" label="Info" @click="toast.info('Just so you know', 'Info')" />
         <TToastContainer />
       </div>

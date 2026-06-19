@@ -36,7 +36,7 @@
         <TButton size="sm" color="neutral" label="List" />
         <TSeparator orientation="vertical" class="h-5" />
         <TFilterLabel label="Group by" />
-        <TButton size="sm" color="ghost" label="Owner" icon-right icon="chevron-down" />
+        <TButton size="sm" variant="ghost" label="Owner" icon-right icon="chevron-down" />
       </div>
     </Variant>
   </Story>

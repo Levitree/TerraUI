@@ -66,7 +66,7 @@
     </div>
 
     <template #footer>
-      <TButton color="ghost" class="flex-1" label="Cancel" @click="isManualOpen = false" />
+      <TButton variant="ghost" class="flex-1" label="Cancel" @click="isManualOpen = false" />
       <TButton
         color="success"
         class="flex-1"

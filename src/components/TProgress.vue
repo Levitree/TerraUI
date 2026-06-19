@@ -97,7 +97,7 @@ const fillColor: Record<ProgressColor, string> = {
   neutral: 'bg-ink',
   success: 'bg-success',
   error: 'bg-danger',
-  warn: 'bg-warning',
+  warn: 'bg-warning-strong',
 }
 
 const trackClasses = computed(() => {

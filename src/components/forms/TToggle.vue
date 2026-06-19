@@ -86,7 +86,13 @@ const toggleClasses = computed(() => {
 })
 
 const knobClasses = computed(() => {
-  const base = ['absolute rounded-sm bg-ink transition-all']
+  // The knob must contrast with whichever track is behind it. Off-track is a
+  // lifted surface (needs a light knob in dark mode), but the on-track is solid
+  // green (needs the opposite). `bg-ink` flips with the theme and only suits the
+  // off-track; on the green track it drops to ~2:1 in dark mode. So pick the
+  // knob fill per-state: `ink-inverse` reads on the green, `ink` on the surface.
+  const base = ['absolute rounded-sm transition-all']
+  base.push(field.modelValue.value ? 'bg-ink-inverse' : 'bg-ink')
 
   switch (props.size) {
     case 'sm':

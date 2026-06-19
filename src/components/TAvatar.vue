@@ -77,7 +77,7 @@ const containerClasses = computed(() => {
   }
 
   if (props.color === 'primary') {
-    base.push('bg-success-soft text-success')
+    base.push('bg-success-soft text-success-strong')
   } else {
     base.push('bg-fill text-ink')
   }

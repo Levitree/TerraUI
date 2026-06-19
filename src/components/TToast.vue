@@ -112,11 +112,11 @@ const iconName = computed(() => {
 const iconColorClass = computed(() => {
   switch (props.type) {
     case 'success':
-      return 'text-success'
+      return 'text-success-strong'
     case 'error':
       return 'text-danger'
     case 'warning':
-      return 'text-warning'
+      return 'text-warning-strong'
     case 'info':
     default:
       return 'text-ink-muted'

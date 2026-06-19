@@ -94,7 +94,7 @@ const linkClasses = computed(() => (index: number) => {
   } else {
     base.push(
       'text-ink-muted hover:text-ink',
-      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-line-strong',
+      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-info',
     )
     if (props.items[index].to || props.items[index].onSelect) base.push('cursor-pointer')
   }

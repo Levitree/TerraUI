@@ -84,11 +84,11 @@ const containerClasses = computed(() => {
   // subtle (default)
   switch (props.color) {
     case 'success':
-      return [...base, 'bg-success-soft border-success/20 text-ink'].join(' ')
+      return [...base, 'bg-success-soft border-success text-ink'].join(' ')
     case 'error':
-      return [...base, 'bg-danger-soft border-danger/20 text-ink'].join(' ')
+      return [...base, 'bg-danger-soft border-danger text-ink'].join(' ')
     case 'warn':
-      return [...base, 'bg-warning-soft border-warning/20 text-ink'].join(' ')
+      return [...base, 'bg-warning-soft border-warning text-ink'].join(' ')
     case 'neutral':
     default:
       return [...base, 'bg-fill-subtle border-line text-ink'].join(' ')
@@ -99,11 +99,11 @@ const iconColorClass = computed(() => {
   if (props.variant === 'solid') return 'text-ink-inverse'
   switch (props.color) {
     case 'success':
-      return 'text-success'
+      return 'text-success-strong'
     case 'error':
       return 'text-danger'
     case 'warn':
-      return 'text-warning'
+      return 'text-warning-strong'
     default:
       return 'text-ink-muted'
   }

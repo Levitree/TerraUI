@@ -67,7 +67,7 @@
             <div
               v-for="day in weekdayLabels"
               :key="day"
-              class="text-center text-[0.6rem] font-bold tracking-wider uppercase text-ink-subtle py-1"
+              class="text-center text-[0.6rem] font-bold tracking-wider uppercase text-ink-muted py-1"
             >
               {{ day }}
             </div>
@@ -484,13 +484,13 @@ const dayClasses = (cell: Cell) => {
   base.push('cursor-pointer')
 
   if (cell.isSelected) {
-    base.push('bg-success text-ink-inverse font-bold')
+    base.push('bg-success-strong text-ink-inverse font-bold')
   } else if (cell.isToday) {
     base.push('bg-fill-strong text-ink')
   } else if (cell.isCurrentMonth) {
     base.push('text-ink-secondary hover:bg-fill hover:text-ink')
   } else {
-    base.push('text-ink-subtle hover:bg-fill hover:text-ink-secondary')
+    base.push('text-ink-muted hover:bg-fill hover:text-ink-secondary')
   }
 
   return base.join(' ')

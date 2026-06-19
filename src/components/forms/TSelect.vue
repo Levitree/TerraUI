@@ -309,7 +309,7 @@ const triggerClasses = computed(() => {
   if (hasError.value) {
     classes.push('border-danger focus:border-danger')
   } else {
-    classes.push('border-line focus:border-line-strong')
+    classes.push('border-line focus:border-line-strong focus:ring-1 focus:ring-info')
   }
 
   if (props.disabled) {
@@ -344,7 +344,7 @@ const optionClasses = (option: TSelectOption, index: number) => {
   ]
 
   if (option.disabled) {
-    classes.push('text-ink-disabled cursor-not-allowed opacity-40')
+    classes.push('text-ink-disabled cursor-not-allowed')
   } else if (isSelected && !props.multiple) {
     classes.push('bg-fill-strong text-ink cursor-pointer')
   } else if (isHighlighted) {

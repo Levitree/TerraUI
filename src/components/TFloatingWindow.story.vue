@@ -35,7 +35,7 @@
 
           <template v-if="state.withFooter" #footer>
             <div class="flex-1 text-xs text-ink-muted">Footer</div>
-            <TButton size="sm" color="ghost" label="Cancel" @click="state.open = false" />
+            <TButton size="sm" variant="ghost" label="Cancel" @click="state.open = false" />
             <TButton size="sm" label="OK" @click="state.open = false" />
           </template>
         </TFloatingWindow>

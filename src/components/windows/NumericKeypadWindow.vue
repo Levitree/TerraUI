@@ -84,10 +84,10 @@ const keyClass =
   'flex items-center justify-center rounded-sm bg-fill-subtle border border-line text-ink font-mono text-xl hover:bg-fill hover:border-line-strong active:bg-fill-strong disabled:opacity-30 disabled:cursor-not-allowed transition-all'
 
 const cancelKeyClass =
-  'flex items-center justify-center rounded-sm bg-danger border border-danger text-ink text-lg hover:bg-danger-strong active:bg-danger-strong transition-all'
+  'flex items-center justify-center rounded-sm bg-danger border border-danger text-ink-inverse text-lg hover:bg-danger-strong active:bg-danger-strong transition-all'
 
 const confirmKeyClass =
-  'flex items-center justify-center rounded-sm bg-success border border-success text-ink text-lg hover:bg-success-strong active:bg-success-strong transition-all'
+  'flex items-center justify-center rounded-sm bg-success border border-success text-ink-inverse text-lg hover:bg-success-strong active:bg-success-strong transition-all'
 
 function consumeInitial() {
   if (!hasTyped.value) {

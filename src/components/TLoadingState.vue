@@ -1,7 +1,7 @@
 <template>
   <div :class="['flex flex-col items-center justify-center text-center', paddingClass]">
     <TIcon name="loader-2" :size="iconSize" :class="['animate-spin', iconColor]" />
-    <span v-if="label" class="mt-2 text-xs text-ink-subtle">{{ label }}</span>
+    <span v-if="label" class="mt-2 text-xs text-ink-muted">{{ label }}</span>
   </div>
 </template>
 
@@ -36,7 +36,7 @@ const iconColor = computed(() => {
     case 'lg':
       return 'text-ink-subtle'
     default:
-      return 'text-ink-disabled'
+      return 'text-ink-muted'
   }
 })
 </script>

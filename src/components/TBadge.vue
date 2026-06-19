@@ -28,15 +28,15 @@ const props = withDefaults(
 // string is present in source, so interpolation (`bg-${scale}-soft`) silently
 // drops at build time. Keep one branch per color × variant combo.
 const OUTLINE: Record<BadgeColor, string> = {
-  success: 'text-success border border-success/50',
-  warn: 'text-warning border border-warning/50',
-  error: 'text-danger border border-danger/50',
+  success: 'text-success-strong border border-success',
+  warn: 'text-warning-strong border border-warning',
+  error: 'text-danger border border-danger',
   neutral: 'text-ink-secondary border border-line',
 }
 
 const GHOST: Record<BadgeColor, string> = {
-  success: 'text-success',
-  warn: 'text-warning',
+  success: 'text-success-strong',
+  warn: 'text-warning-strong',
   error: 'text-danger',
   neutral: 'text-ink-secondary',
 }

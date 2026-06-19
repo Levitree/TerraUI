@@ -22,21 +22,35 @@ import { useRouter } from 'vue-router'
 import TIcon from './TIcon.vue'
 import type { IconSize } from './TIcon.vue'
 
-export type ButtonColor =
-  | 'neutral'
-  | 'success'
-  | 'error'
-  | 'warn'
-  | 'ghost'
-  | 'icon'
-  | 'white'
-  | 'info'
+/**
+ * Two monochrome colors with opposite polarity, plus the four semantics:
+ *  - `neutral`  — tracks the page: light surface in light mode, dark in dark.
+ *  - `inverse`  — opposite of the page: dark in light mode, light in dark.
+ *                 (This is the old `white` color, correctly named: it is a
+ *                 high-contrast *inverse* button, never literally white.)
+ *  - info / success / warning / error — semantic hues.
+ *
+ * Translucency is no longer baked into the color — it lives in `variant`:
+ *  - `default` — solid / opaque fill.
+ *  - `outline` — transparent fill, colored border + text (good for toggles /
+ *                selectable segmented controls; `active` fills with the tint).
+ *  - `ghost`   — transparent, no border, hover-tinted (the old `ghost`).
+ *
+ * Every color × variant has a distinct `active` (pressed / selected) state.
+ *
+ * Icon-only square buttons are `square` (the old `color="icon"`); they still
+ * take a color + variant like any other button.
+ */
+export type ButtonColor = 'neutral' | 'inverse' | 'info' | 'success' | 'warning' | 'error'
+export type ButtonVariant = 'default' | 'outline' | 'ghost'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 const props = withDefaults(
   defineProps<{
     color?: ButtonColor
+    variant?: ButtonVariant
     size?: ButtonSize
+    square?: boolean
     icon?: string
     iconRight?: boolean
     disabled?: boolean
@@ -50,8 +64,10 @@ const props = withDefaults(
   }>(),
   {
     color: 'neutral',
+    variant: 'default',
     size: 'md',
     type: 'button',
+    square: false,
     fullWidth: false,
     iconRight: false,
     active: false,
@@ -116,58 +132,113 @@ const baseClasses = computed(() => {
   return classes.join(' ')
 })
 
+// Solid / opaque fill. Colored fills pair with `text-ink-inverse`, which flips
+// with the theme; success/warning use the `-strong` fill so the near-white/dark
+// label clears AA in both modes. `active` adds an inset "pressed/selected"
+// shadow so the state is always visible on the fill.
+const solidClasses = computed(() => {
+  switch (props.color) {
+    case 'inverse':
+      return props.active
+        ? 'bg-ink-secondary border border-ink-secondary text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.4)]'
+        : 'bg-ink border border-ink text-ink-inverse not-disabled:hover:bg-ink-secondary not-disabled:hover:border-ink-secondary'
+    case 'success':
+      return props.active
+        ? 'bg-success-strong border border-success-strong text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.4)]'
+        : 'bg-success-strong border border-success-strong text-ink-inverse not-disabled:hover:brightness-110'
+    case 'warning':
+      return props.active
+        ? 'bg-warning-strong border border-warning-strong text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.4)]'
+        : 'bg-warning-strong border border-warning-strong text-ink-inverse not-disabled:hover:brightness-110'
+    case 'error':
+      return props.active
+        ? 'bg-danger border border-danger text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.4)]'
+        : 'bg-danger border border-danger text-ink-inverse not-disabled:hover:brightness-110'
+    case 'info':
+      return props.active
+        ? 'bg-info border border-info text-ink-inverse shadow-[inset_0_2px_5px_rgba(0,0,0,0.4)]'
+        : 'bg-info border border-info text-ink-inverse not-disabled:hover:brightness-110'
+    case 'neutral':
+    default:
+      return props.active
+        ? 'bg-fill-strong border border-line-strong text-ink shadow-[inset_0_0_12px_color-mix(in_srgb,var(--color-ink)_20%,transparent)]'
+        : 'bg-elevated border border-line text-ink not-disabled:hover:bg-fill-strong not-disabled:hover:border-line-strong'
+  }
+})
+
+// Transparent fill, colored border + text. Ideal for toggles / segmented
+// controls: `active` fills with the matching soft tint so the selected option
+// reads clearly. Colored text uses the `-strong` shade where the base fails AA.
+const outlineClasses = computed(() => {
+  switch (props.color) {
+    case 'inverse':
+      return props.active
+        ? 'bg-fill-strong border border-ink text-ink'
+        : 'bg-transparent border border-ink text-ink not-disabled:hover:bg-fill'
+    case 'success':
+      return props.active
+        ? 'bg-success-soft border border-success text-success-strong'
+        : 'bg-transparent border border-success text-success-strong not-disabled:hover:bg-success-soft'
+    case 'warning':
+      return props.active
+        ? 'bg-warning-soft border border-warning text-warning-strong'
+        : 'bg-transparent border border-warning text-warning-strong not-disabled:hover:bg-warning-soft'
+    case 'error':
+      return props.active
+        ? 'bg-danger-soft border border-danger text-danger'
+        : 'bg-transparent border border-danger text-danger not-disabled:hover:bg-danger-soft'
+    case 'info':
+      return props.active
+        ? 'bg-info-soft border border-info text-info'
+        : 'bg-transparent border border-info text-info not-disabled:hover:bg-info-soft'
+    case 'neutral':
+    default:
+      return props.active
+        ? 'bg-fill-strong border border-line-strong text-ink'
+        : 'bg-transparent border border-line text-ink not-disabled:hover:bg-fill not-disabled:hover:border-line-strong'
+  }
+})
+
+// Transparent, no border, hover-tinted. Resting foregrounds clear WCAG AA on the
+// page surface in both modes; `active` fills with the soft tint to show state.
+const ghostClasses = computed(() => {
+  switch (props.color) {
+    case 'inverse':
+      return props.active
+        ? 'bg-fill-strong text-ink'
+        : 'bg-transparent text-ink not-disabled:hover:bg-fill'
+    case 'success':
+      return props.active
+        ? 'bg-success-soft text-success-strong'
+        : 'bg-transparent text-success-strong not-disabled:hover:bg-fill'
+    case 'warning':
+      return props.active
+        ? 'bg-warning-soft text-warning-strong'
+        : 'bg-transparent text-warning-strong not-disabled:hover:bg-fill'
+    case 'error':
+      return props.active
+        ? 'bg-danger-soft text-danger'
+        : 'bg-transparent text-danger not-disabled:hover:bg-fill'
+    case 'info':
+      return props.active
+        ? 'bg-info-soft text-info'
+        : 'bg-transparent text-info not-disabled:hover:bg-fill'
+    case 'neutral':
+    default:
+      return props.active
+        ? 'bg-fill-strong text-ink'
+        : 'bg-transparent text-ink-muted not-disabled:hover:bg-fill not-disabled:hover:text-ink'
+  }
+})
+
 const colorClasses = computed(() => {
-  if (props.color === 'icon') {
-    return props.active
-      ? 'bg-fill-strong border border-line-strong text-ink'
-      : 'bg-fill-subtle border border-line text-ink-secondary not-disabled:hover:bg-fill not-disabled:hover:border-line-strong not-disabled:hover:text-ink'
-  }
-
-  if (props.color === 'ghost') {
-    return props.active
-      ? 'bg-fill-strong text-ink'
-      : 'bg-transparent text-ink-muted not-disabled:hover:bg-fill not-disabled:hover:text-ink'
-  }
-
-  if (props.color === 'success') {
-    // Soft idle, solid hover. Hover text flips to ink-inverse so it stays
-    // readable on the now-saturated background (the prior style left text
-    // at `text-success`, which on hover became green-on-green).
-    return 'bg-success-soft border border-success text-success enabled:hover:bg-success enabled:hover:border-success enabled:hover:text-ink-inverse'
-  }
-
-  if (props.color === 'error') {
-    // E-stop / destructive actions are safety-critical — always solid +
-    // ink-inverse for maximum contrast at idle, with a `-strong` shade on
-    // hover. Soft styling reads as low-priority and is wrong for this
-    // variant; success/warn/info keep the soft style because they're
-    // informational rather than destructive.
-    return 'bg-danger border border-danger text-ink-inverse not-disabled:hover:bg-danger-strong not-disabled:hover:border-danger'
-  }
-
-  if (props.color === 'warn') {
-    return 'bg-warning-soft border border-warning text-warning enabled:hover:bg-warning enabled:hover:border-warning enabled:hover:text-ink-inverse'
-  }
-
-  if (props.color === 'info') {
-    // Was `enabled:hover:border-success` — copy/paste typo from the success
-    // case; should be `border-info` to match the rest of the variant.
-    return 'bg-info-soft border border-info text-info enabled:hover:bg-info enabled:hover:border-info enabled:hover:text-ink-inverse'
-  }
-
-  if (props.color === 'white') {
-    return props.active
-      ? 'bg-ink border border-ink text-ink-inverse not-disabled:hover:bg-ink-secondary'
-      : 'bg-ink/90 border border-ink/80 text-ink-inverse not-disabled:hover:bg-ink not-disabled:hover:border-ink'
-  }
-
-  return props.active
-    ? 'bg-fill-strong border border-line-strong text-ink shadow-[inset_0_0_12px_color-mix(in_srgb,var(--color-ink)_20%,transparent)]'
-    : 'bg-fill-subtle border border-line text-ink-secondary not-disabled:hover:bg-fill-strong not-disabled:hover:border-line-strong not-disabled:hover:shadow-[inset_0_0_12px_color-mix(in_srgb,var(--color-ink)_20%,transparent)]'
+  if (props.variant === 'ghost') return ghostClasses.value
+  if (props.variant === 'outline') return outlineClasses.value
+  return solidClasses.value
 })
 
 const sizeClasses = computed(() => {
-  if (props.color === 'icon') {
+  if (props.square) {
     switch (props.size) {
       case 'sm':
         return 'w-6 h-6'
@@ -193,7 +264,7 @@ const buttonClasses = computed(
 )
 
 const iconSize = computed<IconSize>(() => {
-  if (props.color === 'icon') return 'sm'
+  if (props.square) return 'sm'
   switch (props.size) {
     case 'sm':
       return 'xs'

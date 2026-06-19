@@ -30,7 +30,7 @@
           isSelected(item) ? 'border-success bg-success' : 'border-line bg-fill-subtle',
         ]"
       >
-        <span v-if="isSelected(item)" class="w-1.5 h-1.5 rounded-full bg-ink" />
+        <span v-if="isSelected(item)" class="w-1.5 h-1.5 rounded-full bg-ink-inverse" />
       </span>
       <span class="flex flex-col min-w-0 flex-1">
         <span class="text-sm font-medium tracking-wide text-ink">{{ item.label }}</span>

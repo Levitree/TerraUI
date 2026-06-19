@@ -43,7 +43,7 @@ const statusClasses = computed(() => {
       return 'bg-danger shadow-[0_0_12px_var(--color-danger)]'
     case 'neutral':
     default:
-      return 'bg-fill-strong'
+      return 'bg-ink-muted'
   }
 })
 

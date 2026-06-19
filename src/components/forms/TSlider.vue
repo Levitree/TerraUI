@@ -268,7 +268,7 @@ const fillColor: Record<TSliderColor, string> = {
 }
 
 const thumbBorder: Record<TSliderColor, string> = {
-  neutral: 'border-line-strong',
+  neutral: 'border-ink-muted',
   success: 'border-success',
   error: 'border-danger',
   warn: 'border-warning',
@@ -292,7 +292,7 @@ const thumbClasses = computed(() => {
   const base = [
     'absolute top-1/2 -translate-x-1/2 -translate-y-1/2',
     'rounded-sm bg-elevated border-2 shadow-md transition-colors',
-    'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-line-strong',
+    'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-info',
     'hover:bg-fill',
     thumbSize[props.size],
     thumbBorder[props.color],

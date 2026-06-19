@@ -72,7 +72,7 @@ const hasError = computed(() => !!field.error.value)
 
 const baseClasses = computed(() => {
   const classes = [
-    'w-full bg-fill-subtle border rounded-sm text-ink placeholder-ink-placeholder',
+    'w-full bg-fill-subtle border rounded-sm text-ink placeholder-ink-muted',
     'focus:outline-none transition-all',
   ]
 

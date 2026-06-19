@@ -18,9 +18,9 @@
           v-if="field.modelValue.value && !indeterminate"
           name="check"
           :size="iconSize"
-          class="text-ink"
+          class="text-ink-inverse"
         />
-        <TIcon v-else-if="indeterminate" name="minus" :size="iconSize" class="text-ink" />
+        <TIcon v-else-if="indeterminate" name="minus" :size="iconSize" class="text-ink-inverse" />
       </div>
     </div>
     <div v-if="label || description" class="flex flex-col">

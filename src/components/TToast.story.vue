@@ -61,7 +61,7 @@
           @click="toast.error('Could not reach the server', 'Error')"
         />
         <TButton
-          color="warn"
+          color="warning"
           label="Push warning"
           icon="triangle-alert"
           @click="toast.warning('You are nearing your quota', 'Warning')"

@@ -12,9 +12,9 @@
           <TButton size="sm" color="neutral" icon="filter" label="Filter" />
           <TSeparator orientation="vertical" class="h-5" />
           <TFilterLabel label="Sort" />
-          <TButton size="sm" color="ghost" label="Newest" icon-right icon="chevron-down" />
+          <TButton size="sm" variant="ghost" label="Newest" icon-right icon="chevron-down" />
           <TSeparator orientation="vertical" class="h-5" />
-          <TButton size="sm" color="ghost" icon="refresh-cw" />
+          <TButton size="sm" variant="ghost" icon="refresh-cw" />
         </TControlBar>
       </div>
     </Variant>
@@ -22,7 +22,7 @@
     <Variant title="Top position">
       <div class="p-6 bg-bg">
         <TControlBar position="top">
-          <TButton size="sm" icon="arrow-left" color="ghost" label="Back" />
+          <TButton size="sm" icon="arrow-left" variant="ghost" label="Back" />
           <TSeparator orientation="vertical" class="h-5" />
           <TFilterLabel label="View" />
           <TButton size="sm" color="neutral" label="Grid" active />
@@ -36,9 +36,9 @@
         <TControlBar position="bottom">
           <span class="text-xs text-ink-muted">42 items</span>
           <TSeparator orientation="vertical" class="h-5" />
-          <TButton size="sm" color="ghost" icon="chevron-left" />
+          <TButton size="sm" variant="ghost" icon="chevron-left" />
           <span class="text-xs text-ink">Page 1 of 5</span>
-          <TButton size="sm" color="ghost" icon="chevron-right" />
+          <TButton size="sm" variant="ghost" icon="chevron-right" />
         </TControlBar>
       </div>
     </Variant>
@@ -60,7 +60,7 @@
           <TButton size="sm" color="neutral" label="Owner" icon-right icon="chevron-down" />
           <TButton size="sm" color="neutral" label="Tags" icon-right icon="chevron-down" />
           <TSeparator orientation="vertical" class="h-5" />
-          <TButton size="sm" color="ghost" icon="x" label="Clear" />
+          <TButton size="sm" variant="ghost" icon="x" label="Clear" />
         </TControlBar>
       </div>
     </Variant>

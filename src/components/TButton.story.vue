@@ -6,10 +6,16 @@
         <HstSelect
           v-model="state.color"
           title="Color"
-          :options="['neutral', 'success', 'error', 'warn', 'ghost', 'icon', 'white']"
+          :options="['neutral', 'inverse', 'info', 'success', 'warning', 'error']"
+        />
+        <HstSelect
+          v-model="state.variant"
+          title="Variant"
+          :options="['default', 'outline', 'ghost']"
         />
         <HstSelect v-model="state.size" title="Size" :options="['sm', 'md', 'lg']" />
         <HstText v-model="state.icon" title="Icon (lucide name)" />
+        <HstCheckbox v-model="state.square" title="Square (icon-only)" />
         <HstCheckbox v-model="state.iconRight" title="Icon right" />
         <HstCheckbox v-model="state.disabled" title="Disabled" />
         <HstCheckbox v-model="state.loading" title="Loading" />
@@ -19,9 +25,11 @@
 
       <div class="p-6 bg-bg min-h-40 flex items-center justify-center">
         <TButton
-          :label="state.label"
+          :label="state.square ? undefined : state.label"
           :color="state.color"
+          :variant="state.variant"
           :size="state.size"
+          :square="state.square"
           :icon="state.icon || undefined"
           :icon-right="state.iconRight"
           :disabled="state.disabled"
@@ -32,15 +40,33 @@
       </div>
     </Variant>
 
-    <Variant title="Colors">
+    <Variant title="Colors — solid (default)">
       <div class="p-6 bg-bg flex flex-wrap gap-3">
-        <TButton
-          v-for="c in colors"
-          :key="c"
-          :color="c"
-          :label="c"
-          :icon="c === 'icon' ? 'settings' : undefined"
-        />
+        <TButton v-for="c in colors" :key="c" :color="c" :label="c" />
+      </div>
+    </Variant>
+
+    <Variant title="Colors — outline">
+      <div class="p-6 bg-bg flex flex-wrap gap-3">
+        <TButton v-for="c in colors" :key="c" :color="c" variant="outline" :label="c" />
+      </div>
+    </Variant>
+
+    <Variant title="Colors — ghost">
+      <div class="p-6 bg-bg flex flex-wrap gap-3">
+        <TButton v-for="c in colors" :key="c" :color="c" variant="ghost" :label="c" />
+      </div>
+    </Variant>
+
+    <Variant title="Active states (idle vs active, every variant)">
+      <div class="p-6 bg-bg flex flex-col gap-4">
+        <div v-for="v in variants" :key="v" class="flex flex-wrap items-center gap-3">
+          <span class="w-16 text-xs text-ink-muted">{{ v }}</span>
+          <template v-for="c in colors" :key="c">
+            <TButton :color="c" :variant="v" :label="c" />
+            <TButton :color="c" :variant="v" :label="`${c} ✓`" active />
+          </template>
+        </div>
       </div>
     </Variant>
 
@@ -52,12 +78,13 @@
       </div>
     </Variant>
 
-    <Variant title="Icon buttons">
+    <Variant title="Square (icon-only)">
       <div class="p-6 bg-bg flex items-center gap-3">
-        <TButton color="icon" size="sm" icon="plus" />
-        <TButton color="icon" size="md" icon="plus" />
-        <TButton color="icon" size="lg" icon="plus" />
-        <TButton color="icon" icon="settings" active />
+        <TButton square size="sm" icon="plus" />
+        <TButton square size="md" icon="plus" />
+        <TButton square size="lg" icon="plus" />
+        <TButton square icon="settings" variant="ghost" />
+        <TButton square icon="settings" active />
       </div>
     </Variant>
 
@@ -95,14 +122,17 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import TButton from './TButton.vue'
-import type { ButtonColor, ButtonSize } from './TButton.vue'
+import type { ButtonColor, ButtonSize, ButtonVariant } from './TButton.vue'
 
-const colors: ButtonColor[] = ['neutral', 'success', 'error', 'warn', 'ghost', 'icon', 'white']
+const colors: ButtonColor[] = ['neutral', 'inverse', 'info', 'success', 'warning', 'error']
+const variants: ButtonVariant[] = ['default', 'outline', 'ghost']
 
 const state = reactive<{
   label: string
   color: ButtonColor
+  variant: ButtonVariant
   size: ButtonSize
+  square: boolean
   icon: string
   iconRight: boolean
   disabled: boolean
@@ -112,7 +142,9 @@ const state = reactive<{
 }>({
   label: 'Button',
   color: 'neutral',
+  variant: 'default',
   size: 'md',
+  square: false,
   icon: '',
   iconRight: false,
   disabled: false,
