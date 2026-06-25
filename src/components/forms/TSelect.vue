@@ -23,7 +23,7 @@
         v-if="isOpen"
         ref="dropdownRef"
         :style="floatingStyles"
-        class="z-100000 min-w-50 bg-elevated border border-line rounded-sm shadow-xl shadow-overlay overflow-hidden"
+        class="z-100000 min-w-50 w-max max-w-[min(24rem,calc(100vw-1rem))] bg-elevated border border-line rounded-sm shadow-xl shadow-overlay overflow-hidden"
       >
         <div class="max-h-50 overflow-y-auto">
           <button
@@ -39,10 +39,10 @@
               v-if="multiple"
               :name="isOptionSelected(option) ? 'square-check' : 'square'"
               size="sm"
-              class="mr-2"
+              class="mr-2 shrink-0"
               :class="isOptionSelected(option) ? 'text-success' : 'text-ink-subtle'"
             />
-            {{ option.label }}
+            <span class="flex-1 min-w-0 text-left truncate">{{ option.label }}</span>
           </button>
         </div>
       </div>
@@ -54,6 +54,7 @@
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import TIcon from '../TIcon.vue'
 import { useFormField } from '../../composables/useFormField'
+import { useAnchoredOverlay } from '../../composables/useAnchoredOverlay'
 
 export type TSelectSize = 'sm' | 'md' | 'lg'
 
@@ -101,7 +102,13 @@ const justOpened = ref(false)
 const highlightedIndex = ref(-1)
 const containerRef = ref<HTMLElement | null>(null)
 const dropdownRef = ref<HTMLElement | null>(null)
-const floatingStyles = ref<Record<string, string>>({})
+
+const { floatingStyles } = useAnchoredOverlay(containerRef, dropdownRef, isOpen, {
+  side: 'bottom',
+  align: 'start',
+  sideOffset: 4,
+  width: 'min-trigger',
+})
 
 const hasSelection = computed(() => {
   if (props.multiple) {
@@ -137,28 +144,6 @@ const isOptionSelected = (option: TSelectOption) => {
   return String(modelValueRef.value) === String(option.value)
 }
 
-const updatePosition = () => {
-  if (!containerRef.value || !isOpen.value) return
-
-  const rect = containerRef.value.getBoundingClientRect()
-  const viewportHeight = window.innerHeight
-  const spaceBelow = viewportHeight - rect.bottom
-  const spaceAbove = rect.top
-  const dropdownHeight = 200 // max-h-[200px]
-
-  // Determine if dropdown should appear above or below
-  const showAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow
-
-  floatingStyles.value = {
-    position: 'fixed',
-    left: `${rect.left}px`,
-    width: `${rect.width}px`,
-    ...(showAbove
-      ? { bottom: `${viewportHeight - rect.top + 4}px` }
-      : { top: `${rect.bottom + 4}px` }),
-  }
-}
-
 const toggle = () => {
   if (props.disabled) return
   isOpen.value = !isOpen.value
@@ -166,7 +151,6 @@ const toggle = () => {
     // Mark as just opened to skip the click-outside handler for this event cycle
     justOpened.value = true
     nextTick(() => {
-      updatePosition()
       // Set highlighted to current selection
       const currentIndex = props.options.findIndex(
         (opt) => String(opt.value) === String(modelValueRef.value),
@@ -266,22 +250,12 @@ const handleClickOutside = (event: MouseEvent) => {
   close()
 }
 
-const handleScroll = () => {
-  if (isOpen.value) {
-    updatePosition()
-  }
-}
-
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
-  window.addEventListener('scroll', handleScroll, true)
-  window.addEventListener('resize', updatePosition)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
-  window.removeEventListener('scroll', handleScroll, true)
-  window.removeEventListener('resize', updatePosition)
 })
 
 // Watch for external value changes

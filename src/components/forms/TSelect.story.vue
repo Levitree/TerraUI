@@ -41,6 +41,18 @@
       </div>
     </Variant>
 
+    <Variant title="Long labels (panel grows past a narrow trigger)">
+      <div class="p-6 bg-bg min-h-60">
+        <div class="max-w-48">
+          <TSelect :options="longOptions" placeholder="Pick a path" />
+        </div>
+        <p class="mt-3 text-xs text-ink-muted max-w-md">
+          The trigger is only 12rem, but the open panel sizes to its content (up to a
+          viewport-bounded cap) instead of clipping at the trigger width.
+        </p>
+      </div>
+    </Variant>
+
     <Variant title="Multiple selection">
       <div class="p-6 bg-bg min-h-60 max-w-md">
         <TSelect
@@ -114,6 +126,13 @@ const languageOptions: TSelectOption[] = [
   { value: 'py', label: 'Python' },
   { value: 'rb', label: 'Ruby', disabled: true },
   { value: 'php', label: 'PHP', disabled: true },
+]
+
+const longOptions: TSelectOption[] = [
+  { value: 'src', label: 'src/components/forms/TSelect.vue' },
+  { value: 'cfg', label: '/etc/very/deeply/nested/configuration/file.yaml' },
+  { value: 'short', label: 'README.md' },
+  { value: 'long', label: 'An extremely long option label that exceeds even the panel cap and should ellipsize gracefully' },
 ]
 
 const regionOptions: TSelectOption[] = [

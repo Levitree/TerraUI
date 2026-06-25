@@ -130,9 +130,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import TIcon from '../TIcon.vue'
 import { useFormField } from '../../composables/useFormField'
+import { useAnchoredOverlay } from '../../composables/useAnchoredOverlay'
 
 export type TDatePickerSize = 'sm' | 'md' | 'lg'
 /** Accepted value shape. Emits the same shape the user passed in. */
@@ -244,7 +245,13 @@ watch(
 const isOpen = ref(false)
 const containerRef = ref<HTMLElement | null>(null)
 const popupRef = ref<HTMLElement | null>(null)
-const floatingStyles = ref<Record<string, string>>({})
+
+const { floatingStyles } = useAnchoredOverlay(containerRef, popupRef, isOpen, {
+  side: 'bottom',
+  align: 'start',
+  sideOffset: 4,
+  width: 'min-trigger',
+})
 
 const locale = typeof navigator !== 'undefined' ? navigator.language : 'en-US'
 
@@ -367,30 +374,10 @@ const clear = () => {
   close()
 }
 
-const updatePosition = () => {
-  if (!containerRef.value || !isOpen.value) return
-  const rect = containerRef.value.getBoundingClientRect()
-  const viewportHeight = window.innerHeight
-  const popupHeight = 360
-  const spaceBelow = viewportHeight - rect.bottom
-  const spaceAbove = rect.top
-  const showAbove = spaceBelow < popupHeight && spaceAbove > spaceBelow
-
-  floatingStyles.value = {
-    position: 'fixed',
-    left: `${rect.left}px`,
-    minWidth: `${rect.width}px`,
-    ...(showAbove
-      ? { bottom: `${viewportHeight - rect.top + 4}px` }
-      : { top: `${rect.bottom + 4}px` }),
-  }
-}
-
 const open = () => {
   if (props.disabled) return
   isOpen.value = true
   resetView()
-  nextTick(updatePosition)
 }
 
 const close = () => {
@@ -417,10 +404,6 @@ const handleClickOutside = (event: MouseEvent) => {
   close()
 }
 
-const handleScroll = () => {
-  if (isOpen.value) updatePosition()
-}
-
 const handleEscape = (event: KeyboardEvent) => {
   if (event.key === 'Escape' && isOpen.value) close()
 }
@@ -428,15 +411,11 @@ const handleEscape = (event: KeyboardEvent) => {
 onMounted(() => {
   document.addEventListener('mousedown', handleClickOutside)
   document.addEventListener('keydown', handleEscape)
-  window.addEventListener('scroll', handleScroll, true)
-  window.addEventListener('resize', updatePosition)
 })
 
 onUnmounted(() => {
   document.removeEventListener('mousedown', handleClickOutside)
   document.removeEventListener('keydown', handleEscape)
-  window.removeEventListener('scroll', handleScroll, true)
-  window.removeEventListener('resize', updatePosition)
 })
 
 const hasError = computed(() => !!field.error.value)

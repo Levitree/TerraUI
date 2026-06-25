@@ -51,6 +51,7 @@ import { TButton } from '@terranovasystems/terraui/components'
 - [TCheckbox](dist/llms/components/TCheckbox.md)
 - [TCombobox](dist/llms/components/TCombobox.md)
 - [TDatePicker](dist/llms/components/TDatePicker.md)
+- [TDateTimeRange](dist/llms/components/TDateTimeRange.md)
 - [TFileInput](dist/llms/components/TFileInput.md)
 - [TForm](dist/llms/components/TForm.md)
 - [TFormField](dist/llms/components/TFormField.md)

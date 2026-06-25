@@ -42,7 +42,7 @@
         v-if="isOpen"
         ref="dropdownRef"
         :style="floatingStyles"
-        class="z-100000 min-w-50 bg-elevated border border-line rounded-sm shadow-xl shadow-overlay overflow-hidden"
+        class="z-100000 min-w-50 w-max max-w-[min(24rem,calc(100vw-1rem))] bg-elevated border border-line rounded-sm shadow-xl shadow-overlay overflow-hidden"
       >
         <div class="px-2 pt-2 pb-1 border-b border-line-subtle">
           <div class="relative">
@@ -86,7 +86,7 @@
               size="sm"
               class="mr-1 shrink-0 text-ink-muted"
             />
-            <span class="flex-1 text-left truncate">{{ option.label }}</span>
+            <span class="flex-1 min-w-0 text-left truncate">{{ option.label }}</span>
             <TIcon
               v-if="!multiple && isOptionSelected(option)"
               name="check"
@@ -111,6 +111,7 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import TIcon from '../TIcon.vue'
 import { useFormField } from '../../composables/useFormField'
+import { useAnchoredOverlay } from '../../composables/useAnchoredOverlay'
 
 export type TComboboxSize = 'sm' | 'md' | 'lg'
 
@@ -170,7 +171,13 @@ const query = ref('')
 const containerRef = ref<HTMLElement | null>(null)
 const dropdownRef = ref<HTMLElement | null>(null)
 const searchRef = ref<HTMLInputElement | null>(null)
-const floatingStyles = ref<Record<string, string>>({})
+
+const { floatingStyles } = useAnchoredOverlay(containerRef, dropdownRef, isOpen, {
+  side: 'bottom',
+  align: 'start',
+  sideOffset: 4,
+  width: 'min-trigger',
+})
 
 const normalized = (v: string | number) => String(v)
 
@@ -205,27 +212,6 @@ const filteredOptions = computed(() => {
   return props.options.filter((opt) => filterFn(opt, query.value))
 })
 
-const updatePosition = () => {
-  if (!containerRef.value || !isOpen.value) return
-
-  const rect = containerRef.value.getBoundingClientRect()
-  const viewportHeight = window.innerHeight
-  const spaceBelow = viewportHeight - rect.bottom
-  const spaceAbove = rect.top
-  const dropdownHeight = 320
-
-  const showAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow
-
-  floatingStyles.value = {
-    position: 'fixed',
-    left: `${rect.left}px`,
-    width: `${rect.width}px`,
-    ...(showAbove
-      ? { bottom: `${viewportHeight - rect.top + 4}px` }
-      : { top: `${rect.bottom + 4}px` }),
-  }
-}
-
 const toggle = () => {
   if (props.disabled) return
   if (isOpen.value) close()
@@ -237,7 +223,6 @@ const open = () => {
   justOpened.value = true
   query.value = ''
   nextTick(() => {
-    updatePosition()
     searchRef.value?.focus()
     highlightedIndex.value = filteredOptions.value.length > 0 ? 0 : -1
     setTimeout(() => {
@@ -326,20 +311,12 @@ const handleClickOutside = (event: MouseEvent) => {
   close()
 }
 
-const handleScroll = () => {
-  if (isOpen.value) updatePosition()
-}
-
 onMounted(() => {
   document.addEventListener('mousedown', handleClickOutside)
-  window.addEventListener('scroll', handleScroll, true)
-  window.addEventListener('resize', updatePosition)
 })
 
 onUnmounted(() => {
   document.removeEventListener('mousedown', handleClickOutside)
-  window.removeEventListener('scroll', handleScroll, true)
-  window.removeEventListener('resize', updatePosition)
 })
 
 watch(filteredOptions, (next) => {

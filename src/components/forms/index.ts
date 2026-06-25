@@ -13,6 +13,7 @@ export { default as TRadioGroup } from './TRadioGroup.vue'
 export { default as TPinInput } from './TPinInput.vue'
 export { default as TSlider } from './TSlider.vue'
 export { default as TDatePicker } from './TDatePicker.vue'
+export { default as TDateTimeRange, DEFAULT_PRESETS } from './TDateTimeRange.vue'
 
 export type { TSelectOption, TSelectSize } from './TSelect.vue'
 export type { TComboboxOption, TComboboxSize, TComboboxValue } from './TCombobox.vue'
@@ -22,4 +23,10 @@ export type { UrlValue } from './TUrlInput.vue'
 export type { TRadioItem } from './TRadioGroup.vue'
 export type { TSliderSize, TSliderColor, TSliderValue } from './TSlider.vue'
 export type { TDatePickerSize, TDatePickerValue } from './TDatePicker.vue'
+export type {
+  TDateTimeRangeSize,
+  TDateTimeRangeEndpoint,
+  TDateTimeRangeValue,
+  TDateRangePreset,
+} from './TDateTimeRange.vue'
 export { FORM_CONTEXT_KEY, FIELD_CONTEXT_KEY, type TFormContext, type TFieldContext } from './types'

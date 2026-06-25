@@ -9,9 +9,9 @@
           v-if="isOpen"
           ref="menuRef"
           role="menu"
-          :style="menuStyle"
+          :style="floatingStyles"
           :class="[
-            'fixed z-50 min-w-48 bg-elevated border border-line rounded-sm shadow-xl overflow-hidden',
+            'fixed z-50 min-w-48 max-w-[min(24rem,calc(100vw-1rem))] bg-elevated border border-line rounded-sm shadow-xl overflow-hidden',
             items ? 'py-1' : '',
             ui?.content,
           ]"
@@ -52,7 +52,7 @@
                   @click="handleSelect(item, $event)"
                 >
                   <TIcon v-if="item.icon" :name="item.icon" size="sm" class="shrink-0" />
-                  <span class="flex-1 text-left truncate">{{ item.label }}</span>
+                  <span class="flex-1 min-w-0 text-left truncate">{{ item.label }}</span>
                   <TIcon
                     v-if="item.type === 'checkbox' && item.checked"
                     name="check"
@@ -73,10 +73,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch, type CSSProperties } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import TAvatar from './TAvatar.vue'
 import TIcon from './TIcon.vue'
+import { useAnchoredOverlay } from '../composables/useAnchoredOverlay'
 
 export type TDropdownItemColor = 'success' | 'error' | 'warn' | 'neutral'
 
@@ -119,7 +120,12 @@ const isOpen = ref(false)
 const rootRef = ref<HTMLElement | null>(null)
 const triggerRef = ref<HTMLElement | null>(null)
 const menuRef = ref<HTMLElement | null>(null)
-const menuStyle = ref<CSSProperties>({})
+
+const { floatingStyles } = useAnchoredOverlay(triggerRef, menuRef, isOpen, {
+  side: () => props.content?.side ?? 'bottom',
+  align: () => props.content?.align ?? 'start',
+  sideOffset: () => props.content?.sideOffset ?? 4,
+})
 
 const groupedItems = computed<TDropdownItem[][]>(() => {
   if (!props.items || props.items.length === 0) return []
@@ -130,47 +136,8 @@ const groupedItems = computed<TDropdownItem[][]>(() => {
 
 // Teleport + position: fixed = menu is viewport-relative, so it can't be
 // clipped or trigger scroll in any ancestor (including overflow-hidden
-// sidebars and overflow-auto tables). We measure the trigger once per open,
-// compute coordinates for the requested side/align, and set left/right/top
-// as explicit px. Closing and re-opening re-measures, so normal interaction
-// picks up any layout changes naturally.
-const computePosition = () => {
-  const trigger = triggerRef.value
-  if (!trigger) return
-
-  const rect = trigger.getBoundingClientRect()
-  const side = props.content?.side ?? 'bottom'
-  const align = props.content?.align ?? 'start'
-  const offset = props.content?.sideOffset ?? 4
-
-  const style: CSSProperties = {}
-
-  if (side === 'bottom') {
-    style.top = `${rect.bottom + offset}px`
-  } else {
-    // Anchor from the viewport bottom so the menu grows upward from its top
-    // edge (trigger.top - offset) without needing to know its own height.
-    style.bottom = `${window.innerHeight - rect.top + offset}px`
-  }
-
-  if (align === 'start') {
-    style.left = `${rect.left}px`
-  } else if (align === 'end') {
-    style.right = `${window.innerWidth - rect.right}px`
-  } else {
-    style.left = `${rect.left + rect.width / 2}px`
-    style.transform = 'translateX(-50%)'
-  }
-
-  menuStyle.value = style
-}
-
-watch(isOpen, async (open) => {
-  if (!open) return
-  await nextTick()
-  computePosition()
-})
-
+// sidebars and overflow-auto tables). Placement, flip/shift, and scroll/resize
+// tracking are handled by useAnchoredOverlay.
 const toggle = () => {
   isOpen.value = !isOpen.value
 }

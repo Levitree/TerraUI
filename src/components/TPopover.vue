@@ -15,9 +15,9 @@
           v-if="isOpen"
           ref="panelRef"
           role="dialog"
-          :style="panelStyle"
+          :style="floatingStyles"
           :class="[
-            'fixed z-50 bg-elevated border border-line rounded-sm shadow-xl overflow-hidden',
+            'fixed z-50 max-w-[min(28rem,calc(100vw-1rem))] bg-elevated border border-line rounded-sm shadow-xl overflow-hidden',
             ui?.content,
           ]"
           @mouseenter="onPanelEnter"
@@ -31,7 +31,8 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref, watch, type CSSProperties } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { useAnchoredOverlay } from '../composables/useAnchoredOverlay'
 
 export type TPopoverMode = 'click' | 'hover'
 
@@ -71,8 +72,13 @@ const isOpen = ref(false)
 const rootRef = ref<HTMLElement | null>(null)
 const triggerRef = ref<HTMLElement | null>(null)
 const panelRef = ref<HTMLElement | null>(null)
-const panelStyle = ref<CSSProperties>({})
 let hoverTimer: ReturnType<typeof setTimeout> | null = null
+
+const { floatingStyles } = useAnchoredOverlay(triggerRef, panelRef, isOpen, {
+  side: () => props.content?.side ?? 'bottom',
+  align: () => props.content?.align ?? 'center',
+  sideOffset: () => props.content?.sideOffset ?? 6,
+})
 
 watch(
   () => props.open,
@@ -126,51 +132,8 @@ const onPanelLeave = () => {
 
 const close = () => setOpen(false)
 
-// Teleport + position: fixed, measured from the trigger's viewport rect so
-// the panel never clips inside scrolled/overflowed ancestors. Re-measured on
-// open, window resize, and scroll (with capture) while visible.
-const computePosition = () => {
-  const trigger = triggerRef.value
-  const panel = panelRef.value
-  if (!trigger || !panel) return
-
-  const rect = trigger.getBoundingClientRect()
-  const panelRect = panel.getBoundingClientRect()
-  const side = props.content?.side ?? 'bottom'
-  const align = props.content?.align ?? 'center'
-  const offset = props.content?.sideOffset ?? 6
-
-  const style: CSSProperties = {}
-
-  if (side === 'bottom') {
-    style.top = `${rect.bottom + offset}px`
-  } else if (side === 'top') {
-    style.top = `${rect.top - panelRect.height - offset}px`
-  } else if (side === 'right') {
-    style.left = `${rect.right + offset}px`
-  } else {
-    style.left = `${rect.left - panelRect.width - offset}px`
-  }
-
-  if (side === 'top' || side === 'bottom') {
-    if (align === 'start') style.left = `${rect.left}px`
-    else if (align === 'end') style.left = `${rect.right - panelRect.width}px`
-    else style.left = `${rect.left + rect.width / 2 - panelRect.width / 2}px`
-  } else {
-    if (align === 'start') style.top = `${rect.top}px`
-    else if (align === 'end') style.top = `${rect.bottom - panelRect.height}px`
-    else style.top = `${rect.top + rect.height / 2 - panelRect.height / 2}px`
-  }
-
-  panelStyle.value = style
-}
-
-watch(isOpen, async (open) => {
-  if (!open) return
-  await nextTick()
-  computePosition()
-})
-
+// Placement, flip/shift, and scroll/resize tracking are handled by
+// useAnchoredOverlay; this component only owns open/close and dismiss.
 const onDocumentClick = (event: MouseEvent) => {
   if (!isOpen.value || props.mode !== 'click') return
   const target = event.target as Node
@@ -183,22 +146,14 @@ const onEscape = (event: KeyboardEvent) => {
   if (event.key === 'Escape') close()
 }
 
-const onViewportChange = () => {
-  if (isOpen.value) computePosition()
-}
-
 onMounted(() => {
   document.addEventListener('mousedown', onDocumentClick)
   document.addEventListener('keydown', onEscape)
-  window.addEventListener('resize', onViewportChange)
-  window.addEventListener('scroll', onViewportChange, true)
 })
 
 onUnmounted(() => {
   document.removeEventListener('mousedown', onDocumentClick)
   document.removeEventListener('keydown', onEscape)
-  window.removeEventListener('resize', onViewportChange)
-  window.removeEventListener('scroll', onViewportChange, true)
   clearHoverTimer()
 })
 </script>
