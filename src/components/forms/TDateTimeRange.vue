@@ -47,12 +47,7 @@
               @click.stop="selectPreset(preset)"
             >
               <span class="truncate">{{ preset.label }}</span>
-              <TIcon
-                v-if="activePreset === preset.value"
-                name="check"
-                size="xs"
-                class="shrink-0"
-              />
+              <TIcon v-if="activePreset === preset.value" name="check" size="xs" class="shrink-0" />
             </button>
           </div>
 
@@ -337,7 +332,8 @@ const displayLabel = computed(() => {
 const emitRange = (start: Date | null, end: Date | null) => {
   const cur = field.modelValue.value
   const wantsIso = typeof cur?.start === 'string' || typeof cur?.end === 'string'
-  const conv = (d: Date | null): TDateTimeRangeEndpoint => (d == null ? null : wantsIso ? d.toISOString() : d)
+  const conv = (d: Date | null): TDateTimeRangeEndpoint =>
+    d == null ? null : wantsIso ? d.toISOString() : d
   field.setValue({ start: conv(start), end: conv(end) })
   emit('change', { start, end, preset: activePreset.value })
 }
@@ -482,12 +478,15 @@ const teardownLive = () => {
 const setupLive = () => {
   teardownLive()
   if (!props.live || !activePreset.value) return
-  liveTimer = setInterval(() => {
-    const p = resolvedPresets.value.find((x) => x.value === activePreset.value)
-    if (!p) return teardownLive()
-    const end = new Date()
-    emitRange(new Date(end.getTime() - p.duration), end)
-  }, Math.max(1000, props.liveInterval))
+  liveTimer = setInterval(
+    () => {
+      const p = resolvedPresets.value.find((x) => x.value === activePreset.value)
+      if (!p) return teardownLive()
+      const end = new Date()
+      emitRange(new Date(end.getTime() - p.duration), end)
+    },
+    Math.max(1000, props.liveInterval),
+  )
 }
 watch([() => props.live, () => props.liveInterval, activePreset], setupLive, { immediate: true })
 
@@ -565,7 +564,9 @@ const rowClasses = (active: boolean) => {
 
 // From / To step segments in the custom view.
 const stepClasses = (active: boolean) => {
-  const base = ['flex-1 min-w-0 rounded-sm border px-2.5 py-1.5 text-left transition-colors cursor-pointer']
+  const base = [
+    'flex-1 min-w-0 rounded-sm border px-2.5 py-1.5 text-left transition-colors cursor-pointer',
+  ]
   base.push(active ? 'border-line-strong bg-fill-strong' : 'border-line hover:border-line-strong')
   return base.join(' ')
 }

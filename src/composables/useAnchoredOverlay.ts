@@ -107,7 +107,8 @@ export function useAnchoredOverlay(
       const need = (isVertical(side) ? ph : pw) + offset + margin
       if (side === 'bottom' && vh - t.bottom < need && t.top > vh - t.bottom) resolvedSide = 'top'
       else if (side === 'top' && t.top < need && vh - t.bottom > t.top) resolvedSide = 'bottom'
-      else if (side === 'right' && vw - t.right < need && t.left > vw - t.right) resolvedSide = 'left'
+      else if (side === 'right' && vw - t.right < need && t.left > vw - t.right)
+        resolvedSide = 'left'
       else if (side === 'left' && t.left < need && vw - t.right > t.left) resolvedSide = 'right'
     }
 
@@ -152,7 +153,8 @@ export function useAnchoredOverlay(
       else style.bottom = `${vh - t.top + offset}px`
 
       if (constrainHeight) {
-        const space = resolvedSide === 'bottom' ? vh - t.bottom - offset - margin : t.top - offset - margin
+        const space =
+          resolvedSide === 'bottom' ? vh - t.bottom - offset - margin : t.top - offset - margin
         style.maxHeight = `${Math.max(0, space)}px`
       }
 

@@ -137,7 +137,9 @@ const parseInput = (value: Date | string | null | undefined): Date | null => {
 const stripTime = (date: Date) => new Date(date.getFullYear(), date.getMonth(), date.getDate())
 const today = () => stripTime(new Date())
 const sameDay = (a: Date, b: Date) =>
-  a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
+  a.getFullYear() === b.getFullYear() &&
+  a.getMonth() === b.getMonth() &&
+  a.getDate() === b.getDate()
 
 const viewMonth = ref(0)
 const viewYear = ref(0)

@@ -34,7 +34,11 @@
 
     <Variant title="Presets only">
       <div class="p-6 bg-bg min-h-112 max-w-sm">
-        <TDateTimeRange v-model="presetsOnly" v-model:preset="presetsOnlyId" :allow-custom="false" />
+        <TDateTimeRange
+          v-model="presetsOnly"
+          v-model:preset="presetsOnlyId"
+          :allow-custom="false"
+        />
         <p class="mt-3 text-xs text-ink-muted">Active preset: {{ presetsOnlyId ?? 'null' }}</p>
       </div>
     </Variant>
@@ -43,8 +47,8 @@
       <div class="p-6 bg-bg min-h-112 max-w-sm">
         <TDateTimeRange v-model="customValue" v-model:preset="customPreset" />
         <p class="mt-3 text-xs text-ink-muted">
-          Opens one calendar in a booking-style From → To flow: pick the start, it
-          advances to the end (with a live range preview), click ‘From’ to go back.
+          Opens one calendar in a booking-style From → To flow: pick the start, it advances to the
+          end (with a live range preview), click ‘From’ to go back.
         </p>
       </div>
     </Variant>

@@ -132,7 +132,11 @@ const longOptions: TSelectOption[] = [
   { value: 'src', label: 'src/components/forms/TSelect.vue' },
   { value: 'cfg', label: '/etc/very/deeply/nested/configuration/file.yaml' },
   { value: 'short', label: 'README.md' },
-  { value: 'long', label: 'An extremely long option label that exceeds even the panel cap and should ellipsize gracefully' },
+  {
+    value: 'long',
+    label:
+      'An extremely long option label that exceeds even the panel cap and should ellipsize gracefully',
+  },
 ]
 
 const regionOptions: TSelectOption[] = [
