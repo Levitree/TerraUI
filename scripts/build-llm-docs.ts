@@ -91,6 +91,7 @@ const DATA_DISPLAY = new Set([
   'TEmptyState',
   'TLoadingState',
   'TProgress',
+  'TPullToRefresh',
   'TStatTile',
   'TTable',
 ])

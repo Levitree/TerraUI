@@ -43,6 +43,7 @@ import { TButton } from '@terranovasystems/terraui/components'
 - [TEmptyState](dist/llms/components/TEmptyState.md)
 - [TLoadingState](dist/llms/components/TLoadingState.md)
 - [TProgress](dist/llms/components/TProgress.md)
+- [TPullToRefresh](dist/llms/components/TPullToRefresh.md)
 - [TStatTile](dist/llms/components/TStatTile.md)
 - [TTable](dist/llms/components/TTable.md)
 

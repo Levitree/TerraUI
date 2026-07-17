@@ -63,10 +63,11 @@
   --color-series-7: #ec4899;
   --color-series-8: #84cc16;
 
-  /* Gradients */
+  /* Gradients — warm brand wash derived from the logo sand (#f0d7bf) */
   --gradient-app:
-    radial-gradient(circle at 15% -20%, rgba(9, 154, 255, 0.2), transparent 45%),
-    radial-gradient(circle at 60% 0%, rgba(255, 110, 186, 0.15), transparent 40%);
+    radial-gradient(circle at 15% -20%, rgba(240, 215, 191, 0.12), transparent 45%),
+    radial-gradient(circle at 60% 0%, rgba(214, 160, 110, 0.1), transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(176, 122, 78, 0.08), transparent 45%);
 
   /* Fonts */
   --font-default: 'IBM Plex Mono', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -130,8 +131,9 @@
     --color-series-8: #65a30d;
 
     --gradient-app:
-      radial-gradient(circle at 15% -20%, rgba(59, 130, 246, 0.08), transparent 45%),
-      radial-gradient(circle at 60% 0%, rgba(236, 72, 153, 0.06), transparent 40%);
+      radial-gradient(circle at 15% -20%, rgba(214, 160, 110, 0.1), transparent 45%),
+      radial-gradient(circle at 60% 0%, rgba(240, 215, 191, 0.12), transparent 40%),
+      radial-gradient(circle at 90% 10%, rgba(176, 122, 78, 0.06), transparent 45%);
   }
 }
 
@@ -189,10 +191,11 @@
   --color-series-7: #db2777;
   --color-series-8: #65a30d;
 
-  /* Gradients — subtle tint on light background */
+  /* Gradients — subtle warm brand tint on light background */
   --gradient-app:
-    radial-gradient(circle at 15% -20%, rgba(59, 130, 246, 0.08), transparent 45%),
-    radial-gradient(circle at 60% 0%, rgba(236, 72, 153, 0.06), transparent 40%);
+    radial-gradient(circle at 15% -20%, rgba(214, 160, 110, 0.1), transparent 45%),
+    radial-gradient(circle at 60% 0%, rgba(240, 215, 191, 0.12), transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(176, 122, 78, 0.06), transparent 45%);
 }
 
 /*
