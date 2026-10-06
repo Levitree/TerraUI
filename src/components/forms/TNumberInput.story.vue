@@ -77,8 +77,8 @@
         <div>
           <p class="text-xs text-ink-muted mb-1">Disabled / readonly</p>
           <div class="flex flex-col gap-2">
-            <TNumberInput :model-value="5" stepper disabled />
-            <TNumberInput :model-value="5" stepper readonly />
+            <TNumberInput v-model="stepper2.qty" stepper disabled />
+            <TNumberInput v-model="stepper2.qty" stepper readonly />
           </div>
         </div>
       </div>
@@ -151,6 +151,7 @@ const state = reactive<{
 })
 
 const stepper = reactive<{ qty: number }>({ qty: 1 })
+const stepper2 = reactive<{ qty: number }>({ qty: 5 })
 
 const schema = z.object({
   age: z.number().int().min(18, 'Must be at least 18').max(120, 'Too high'),
