@@ -2,7 +2,7 @@
   <div v-if="stepper" class="flex items-center gap-2" :class="{ 'w-full': fullWidth }">
     <button
       type="button"
-      :disabled="disabled || atMin"
+      :disabled="disabled || atMin || readonly"
       :class="stepperButtonClasses"
       @click="adjust(-1)"
     >
@@ -32,7 +32,7 @@
     />
     <button
       type="button"
-      :disabled="disabled || atMax"
+      :disabled="disabled || atMax || readonly"
       :class="stepperButtonClasses"
       @click="adjust(1)"
     >
@@ -159,8 +159,8 @@ const handleBlur = (event: FocusEvent) => {
 const atMin = computed(() => props.min !== undefined && displayValue.value <= props.min)
 const atMax = computed(() => props.max !== undefined && displayValue.value >= props.max)
 
-const adjust = (direction: -1 | 1) => {
-  if (props.disabled) return
+const adjust = (direction: -1 | 1) => {``
+  if (props.disabled || props.readonly) return
   const next = clampValue(displayValue.value + direction * (props.step ?? 1))
   field.setValue(next)
   // Mirror a tab-out so consumers that commit on `@blur` also commit on step.
